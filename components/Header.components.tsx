@@ -9,7 +9,10 @@ export const Header = () => {
           <Link href="/">
             <h1 className="text-3xl font-bold">Doodlezilla</h1>
           </Link>
-          <ThemeButton />
+          <div className="flex justify-between gap-10">
+            <ThemeButton />
+            <Link href="/signup">Sign-Up</Link>
+          </div>
         </div>
       </header>
     </>
