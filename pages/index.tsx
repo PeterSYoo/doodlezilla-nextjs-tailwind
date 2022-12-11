@@ -8,7 +8,10 @@ export default function Home() {
       ) : (
         <>
           <div className="flex-grow h-full flex items-center justify-center">
-            Home Page
+            Login
+            <form>
+              <label>Username</label>
+            </form>
           </div>
         </>
       )}
