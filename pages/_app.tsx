@@ -11,6 +11,7 @@ import { Open_Sans } from '@next/font/google';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
+  variable: '--font-openSans',
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -42,32 +43,27 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <style jsx global>
-        {`
-          :root {
-            --openSans-font: ${openSans.style.fontFamily};
-          }
-        `}
-      </style>
       <Head>
-        <title>Doodlezilla</title>
+        <title>Nudoodle - Share doodles with your friends!</title>
       </Head>
       {loading ? (
         <LoaderSpinner />
       ) : (
-        <ThemeProvider enableSystem={true} attribute="class">
-          <div className="min-h-screen min-w-screen flex flex-col">
-            {!isIndexPage && <Header />}
-            <main className="flex flex-col flex-grow">
-              <Component {...pageProps} />
-            </main>
-            {!isIndexPage && (
-              <div className="flex md:hidden">
-                <Footer />
-              </div>
-            )}
-          </div>
-        </ThemeProvider>
+        <main className={`${openSans.variable} font-openSans`}>
+          <ThemeProvider enableSystem={true} attribute="class">
+            <div className="min-h-screen min-w-screen flex flex-col">
+              {!isIndexPage && <Header />}
+              <main className="flex flex-col flex-grow">
+                <Component {...pageProps} />
+              </main>
+              {!isIndexPage && (
+                <div className="flex md:hidden">
+                  <Footer />
+                </div>
+              )}
+            </div>
+          </ThemeProvider>
+        </main>
       )}
     </>
   );
