@@ -13,8 +13,14 @@ module.exports = {
         spinFast: 'spin 0.35s linear infinite',
       },
       fontFamily: {
-        primary: ['var(--openSans-font)', ...fontFamily.sans],
-        serif: ['var(--openSans-font)', ...fontFamily.serif],
+        openSans: ['var(--openSans)'],
+      },
+      colors: {
+        cobalt: '#0095F6',
+        sunset: '#FE446D',
+        grayLight: '#EFEFEF',
+        grayText: '#B2B2B2',
+        placeHolder: '#8E8E8E',
       },
     },
     screens: {
