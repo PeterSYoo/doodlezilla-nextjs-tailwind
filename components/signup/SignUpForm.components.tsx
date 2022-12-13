@@ -1,4 +1,5 @@
 import { Resolver, useForm } from 'react-hook-form';
+import { FaRegEye } from 'react-icons/fa';
 
 type FormValues = {
   username: string;
@@ -37,7 +38,7 @@ const resolver: Resolver<FormValues> = async (values: any) => {
   };
 };
 
-export const SignUpForm = () => {
+export const SignupForm = () => {
   const {
     handleSubmit,
     register,
@@ -50,53 +51,46 @@ export const SignUpForm = () => {
 
   return (
     <>
-      <section className="flex-grow h-full w-full flex flex-col items-center justify-center bg-gray-300">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-10"
-        >
-          <div className="flex flex-col gap-5">
-            <label className="flex flex-col gap-2">
-              Username:
-              <input
-                type="text"
-                {...register('username', {
-                  required: 'Required',
-                })}
-              />
-            </label>
-            {errors.username && errors.username.message}
-            <label className="flex flex-col gap-2">
-              Email:
-              <input
-                type="text"
-                {...register('email', {
-                  required: 'Required',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'invalid email address',
-                  },
-                })}
-              />
-              {errors.email && errors.email.message}
-            </label>
-            <label className="flex flex-col gap-2">
-              Password:
-              <input type="text" {...register('password')} />
-            </label>
-            <label className="flex flex-col gap-2">
-              Confirm Password:
-              <input type="text" {...register('cpassword')} />
-            </label>
-          </div>
+      <form>
+        <div className="flex flex-col gap-3">
+          <label className="w-[278px] bg-grayLight py-2 px-4 rounded-full">
+            <input
+              placeholder="Username"
+              type="text"
+              className="w-full bg-grayLight focus:outline-none"
+            />
+          </label>
+          <label className="w-[278px] bg-grayLight py-2 px-4 rounded-full">
+            <input
+              placeholder="Email"
+              type="text"
+              className="w-full bg-grayLight focus:outline-none"
+            />
+          </label>
+          <label className="w-[278px] bg-grayLight py-2 pl-4 rounded-full flex items-center">
+            <input
+              placeholder="Password"
+              type="text"
+              className="w-10/12 bg-grayLight focus:outline-none"
+            />
+            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeHolder cursor-pointer hover:text-neutral-800" />
+          </label>
+          <label className="w-[278px] bg-grayLight py-2 pl-4 rounded-full flex items-center">
+            <input
+              placeholder="Confirm Password"
+              type="text"
+              className="w-10/12 bg-grayLight focus:outline-none"
+            />
+            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeHolder cursor-pointer hover:text-neutral-800" />
+          </label>
           <button
             type="submit"
-            className="bg-blue-600 text-white w-full py-1 rounded-md"
+            className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold hover:from-neutral-800 hover:to-neutral-800"
           >
-            Sign-Up
+            Sign up
           </button>
-        </form>
-      </section>
+        </div>
+      </form>
     </>
   );
 };
