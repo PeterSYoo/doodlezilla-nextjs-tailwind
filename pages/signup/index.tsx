@@ -39,7 +39,7 @@ const SignUp = () => {
                 {/*  */}
                 <div className="flex w-[278px] items-center justify-center">
                   <span className="border-b border-neutral-300 w-5/12 py-2 -mt-4"></span>
-                  <span className="w-2/12 flex justify-center text-placeHolder">
+                  <span className="w-2/12 flex justify-center text-placeholder">
                     OR
                   </span>
                   <span className="border-b border-neutral-300 w-5/12 py-2 -mt-4"></span>
@@ -47,11 +47,11 @@ const SignUp = () => {
                 {/* Login Form Component */}
                 <SignupForm />
                 {/*  */}
-                <p className="text-xs text-placeHolder flex justify-center">
+                <p className="text-xs text-placeholder flex justify-center">
                   Already have an account?&nbsp;
                   <Link
                     href={'/'}
-                    className="text-cobalt hover:text-placeHolder"
+                    className="text-cobalt hover:text-placeholder"
                   >
                     Login here
                   </Link>
@@ -59,7 +59,7 @@ const SignUp = () => {
                 </p>
               </div>
             </div>
-            <p className="text-xs text-placeHolder flex items-end pt-20 md:pt-0 pb-5 justify-center">
+            <p className="text-xs text-placeholder flex items-end pt-20 md:pt-0 pb-5 justify-center">
               ©2022 Coded and Designed by Peter Yoo.
             </p>
           </div>
