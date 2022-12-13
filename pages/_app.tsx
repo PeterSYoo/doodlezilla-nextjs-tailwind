@@ -1,13 +1,16 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import { ThemeProvider } from 'next-themes';
-import { Header } from '../components/Header.components';
-import { Footer } from '../components/Footer.components';
 import { useEffect, useState } from 'react';
 import { Router, useRouter } from 'next/router';
-import { LoaderSpinner } from '../components/LoaderSpinner.components';
+import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
 import { Open_Sans } from '@next/font/google';
+import { Footer } from '../components/Footer.components';
+import { LoaderSpinner } from '../components/LoaderSpinner.components';
+import { LoaderSpinnerLogin } from '../components/LoaderSpinnerLogin.components';
+import { NavBar } from '../components/NavBar.components';
+import { RightBar } from '../components/RightBar.components';
+import { HeaderFeed } from '../components/HeaderFeed.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -19,7 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
-  const isIndexPage = router.pathname === '/';
+  const isLoginPage = router.asPath === '/';
+  const isSignupPage = router.asPath === '/signup';
+  const isFeedPage = router.asPath === '/feed';
 
   useEffect(() => {
     const start = () => {
@@ -47,16 +52,30 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>Nudoodle - Share doodles with your friends!</title>
       </Head>
       {loading ? (
-        <LoaderSpinner />
+        <>
+          {isLoginPage || isSignupPage ? (
+            <LoaderSpinnerLogin />
+          ) : (
+            <LoaderSpinner />
+          )}
+        </>
       ) : (
         <main className={`${openSans.variable} font-openSans`}>
           <ThemeProvider enableSystem={true} attribute="class">
             <div className="min-h-screen min-w-screen flex flex-col">
-              {!isIndexPage && <Header />}
-              <main className="flex flex-col flex-grow">
-                <Component {...pageProps} />
-              </main>
-              {!isIndexPage && (
+              {isLoginPage || isSignupPage ? (
+                <main className="flex flex-col flex-grow">
+                  <Component {...pageProps} />
+                </main>
+              ) : (
+                <div className="flex flex-col flex-grow">
+                  <HeaderFeed />
+                  <NavBar />
+                  {isFeedPage ? <RightBar /> : null}
+                  <Component {...pageProps} />
+                </div>
+              )}
+              {isLoginPage || isSignupPage ? null : (
                 <div className="flex md:hidden">
                   <Footer />
                 </div>
