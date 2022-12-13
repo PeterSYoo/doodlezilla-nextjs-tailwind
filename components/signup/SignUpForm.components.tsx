@@ -73,7 +73,7 @@ export const SignupForm = () => {
               type="text"
               className="w-10/12 bg-grayLight focus:outline-none"
             />
-            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeHolder cursor-pointer hover:text-neutral-800" />
+            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeholder cursor-pointer hover:text-neutral-800" />
           </label>
           <label className="w-[278px] bg-grayLight py-2 pl-4 rounded-full flex items-center">
             <input
@@ -81,7 +81,7 @@ export const SignupForm = () => {
               type="text"
               className="w-10/12 bg-grayLight focus:outline-none"
             />
-            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeHolder cursor-pointer hover:text-neutral-800" />
+            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeholder cursor-pointer hover:text-neutral-800" />
           </label>
           <button
             type="submit"
