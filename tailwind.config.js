@@ -20,8 +20,8 @@ module.exports = {
         sunset: '#FE446D',
         grayLight: '#EFEFEF',
         grayText: '#B2B2B2',
-        placeHolder: '#8E8E8E',
-        grayBorder: '#F3F3F3',
+        placeholder: '#8E8E8E',
+        grayBorder: '#EBEBEB',
       },
     },
     screens: {
