@@ -11,6 +11,8 @@ import { LoaderSpinnerLogin } from '../components/LoaderSpinnerLogin.components'
 import { NavBar } from '../components/NavBar.components';
 import { RightBar } from '../components/feed/RightBar.components';
 import { HeaderFeed } from '../components/HeaderFeed.components';
+import { Header } from '../components/Header.components';
+import { CreateFooter } from '../components/create/CreateFooter.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -22,10 +24,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
-  /* Grabs URL */
+  /* Grabs URL Pathname */
   const isLoginPage = router.asPath === '/';
   const isSignupPage = router.asPath === '/signup';
   const isFeedPage = router.asPath === '/feed';
+  const isCreatePage = router.asPath === '/create';
   /*  */
 
   useEffect(() => {
@@ -71,10 +74,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 </div>
               ) : (
                 <div className="flex flex-col flex-grow">
-                  <HeaderFeed />
+                  {isFeedPage ? <HeaderFeed /> : <Header />}
                   <NavBar />
                   {isFeedPage ? <RightBar /> : null}
                   <Component {...pageProps} />
+                  {isCreatePage ? <CreateFooter /> : null}
                 </div>
               )}
               {isLoginPage || isSignupPage ? null : (
