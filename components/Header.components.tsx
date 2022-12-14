@@ -6,10 +6,11 @@ import { ThemeButton } from './ThemeButton.components';
 export const Header = () => {
   return (
     <>
-      <header className="z-40 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:ml-24 lg:-ml-5.5 lg:mr-[258px] md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75">
-        <div className="flex items-center max-w-[375px] md:max-w-[769px] lg:max-w-[1000px] mx-auto justify-between w-full md:justify-start">
-          <Link href="/">
-            <button className="hover:opacity-50 mt-1 md:hidden">
+      <header className="z-40 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75 md:ml-[80px] md:pr-[80px] lg:ml-[199px] lg:pr-[199px]">
+        <div className="flex items-center max-w-[375px] mx-auto justify-between w-full  md:justify-center lg:justify-center md:max-w-none lg:max-w-[1000px] md:px-20 lg:px-20">
+          {/* Logo Mobile */}
+          <Link href="/feed">
+            <button className="mt-1 md:hidden">
               <Image
                 src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670911646/nudoodle/assets/logo-sm_enm9mh.png"
                 alt="logo small"
@@ -18,12 +19,17 @@ export const Header = () => {
               />
             </button>
           </Link>
+          {/*  */}
+          {/* Search Input */}
           <div className="md:w-5/12 lg:w-11/12 md:flex md:justify-center">
             <SearchInput />
           </div>
+          {/*  */}
+          {/* Theme Changer Button */}
           <div className="flex justify-center items-center mt-1 md:justify-center md:w-2/12 lg:justify-end lg:mr-10">
             <ThemeButton />
           </div>
+          {/*  */}
           {/* Create new Doodle for Mobile */}
           <button className="bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] aspect-square w-[39px] rounded-full text-white text-3xl flex justify-center md:hidden transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%]">
             +
@@ -36,7 +42,7 @@ export const Header = () => {
                 +
               </div>
               <span className="text-xs font-semibold text-white">
-                Default Header
+                Create new Doodle
               </span>
             </button>
           </div>
