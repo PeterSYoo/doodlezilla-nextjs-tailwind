@@ -11,6 +11,18 @@ module.exports = {
     extend: {
       animation: {
         spinFast: 'spin 0.35s linear infinite',
+        border: 'border 2s ease infinite',
+        button: 'border 2s ease infinite',
+      },
+      keyframes: {
+        border: {
+          '0%, 100%': { backgroundPosition: '0% 100%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        button: {
+          '0%, 100%': { backgroundPosition: '50% 100%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
       },
       fontFamily: {
         openSans: ['var(--openSans)'],
