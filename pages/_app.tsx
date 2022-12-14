@@ -9,7 +9,7 @@ import { Footer } from '../components/Footer.components';
 import { LoaderSpinner } from '../components/LoaderSpinner.components';
 import { LoaderSpinnerLogin } from '../components/LoaderSpinnerLogin.components';
 import { NavBar } from '../components/NavBar.components';
-import { RightBar } from '../components/RightBar.components';
+import { RightBar } from '../components/feed/RightBar.components';
 import { HeaderFeed } from '../components/HeaderFeed.components';
 
 const openSans = Open_Sans({
@@ -22,9 +22,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
+  /* Grabs URL */
   const isLoginPage = router.asPath === '/';
   const isSignupPage = router.asPath === '/signup';
   const isFeedPage = router.asPath === '/feed';
+  /*  */
 
   useEffect(() => {
     const start = () => {
@@ -60,13 +62,13 @@ export default function App({ Component, pageProps }: AppProps) {
           )}
         </>
       ) : (
-        <main className={`${openSans.variable} font-openSans`}>
+        <div className={`${openSans.variable} font-openSans`}>
           <ThemeProvider enableSystem={true} attribute="class">
             <div className="min-h-screen min-w-screen flex flex-col">
               {isLoginPage || isSignupPage ? (
-                <main className="flex flex-col flex-grow">
+                <div className="flex flex-col flex-grow">
                   <Component {...pageProps} />
-                </main>
+                </div>
               ) : (
                 <div className="flex flex-col flex-grow">
                   <HeaderFeed />
@@ -82,7 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
               )}
             </div>
           </ThemeProvider>
-        </main>
+        </div>
       )}
     </>
   );
