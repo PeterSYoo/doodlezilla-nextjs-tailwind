@@ -9,7 +9,7 @@ export const HeaderFeed = () => {
       <header className="z-40 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:-ml-5 lg:-ml-5.5 lg:mr-[258px] md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75">
         <div className="flex items-center max-w-[375px] md:max-w-[500px] lg:max-w-[700px] mx-auto justify-between w-full md:justify-start">
           <Link href="/">
-            <button className="hover:opacity-50 mt-1 md:hidden">
+            <button className="mt-1 md:hidden">
               <Image
                 src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670911646/nudoodle/assets/logo-sm_enm9mh.png"
                 alt="logo small"
@@ -25,13 +25,13 @@ export const HeaderFeed = () => {
             <ThemeButton />
           </div>
           {/* Create new Doodle for Mobile */}
-          <button className="bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] aspect-square w-[39px] rounded-full text-white text-3xl flex justify-center hover:bg-gradient-to-tl md:hidden transition duration-500 ease-in-out">
+          <button className="bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] aspect-square w-[39px] rounded-full text-white text-3xl flex justify-center md:hidden transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%]">
             +
           </button>
           {/*  */}
           {/* Create new Doodle for Desktop */}
           <div className="md:w-[184px] md:flex md:justify-end">
-            <button className="hidden bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] w-[184px] h-[39px] rounded-full md:flex justify-center hover:bg-gradient-to-tl items-center gap-2.5 transition duration-300 ease-in-out">
+            <button className="hidden bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] w-[184px] h-[39px] rounded-full md:flex justify-center items-center gap-2.5 transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%]">
               <div className="aspect-square w-[19px] h-[19px] bg-white bg-opacity-30 rounded-full flex justify-center items-center text-white pb-[2px] mb-0.5 text">
                 +
               </div>
