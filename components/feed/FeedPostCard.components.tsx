@@ -6,7 +6,7 @@ import { FaRegComment } from 'react-icons/fa';
 export const FeedPostCard = () => {
   return (
     <>
-      <div className="bg-white border border-grayBorder w-full max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8">
+      <div className="bg-white border border-grayBorder w-full max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[474px] lg:max-w-[733px]">
         {/* Post Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
           <div className="flex gap-3 items-center">
