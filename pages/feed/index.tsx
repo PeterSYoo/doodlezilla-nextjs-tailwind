@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FeedPostCard } from '../../components/feed/FeedPostCard.components';
+import { FeedDoodleCard } from '../../components/feed/FeedDoodleCard.components';
 import { FeedSponsoredCard } from '../../components/feed/FeedSponsoredCard.components';
 
 const FeedPage = () => {
@@ -9,10 +9,10 @@ const FeedPage = () => {
         <h1 className="hidden font-bold text-2xl md:flex justify-start md:w-[474px] lg:w-[733px] md:mt-5">
           Feeds
         </h1>
-        <FeedPostCard />
+        <FeedDoodleCard />
         <FeedSponsoredCard />
-        <FeedPostCard />
-        <FeedPostCard />
+        <FeedDoodleCard />
+        <FeedDoodleCard />
       </div>
     </>
   );
