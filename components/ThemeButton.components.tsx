@@ -19,7 +19,7 @@ export const ThemeButton = () => {
       return (
         <>
           <button onClick={() => setTheme('light')} type="button">
-            <BsFillSunFill className="text-3xl text-grayText hover:text-neutral-800 md:text-2xl" />
+            <BsFillSunFill className="text-3xl text-grayText hover:text-neutral-800 md:text-3xl" />
           </button>
         </>
       );
@@ -27,7 +27,7 @@ export const ThemeButton = () => {
       return (
         <>
           <button onClick={() => setTheme('dark')} type="button">
-            <BsMoonStars className="text-3xl text-grayText hover:text-neutral-800 md:text-2xl" />
+            <BsMoonStars className="text-3xl text-grayText hover:text-neutral-800 md:text-3xl" />
           </button>
         </>
       );
