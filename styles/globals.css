@@ -5,3 +5,7 @@
 html {
   @apply text-neutral-800 bg-zinc-50 transition-all duration-500 ease-in-out;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
