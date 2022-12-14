@@ -6,19 +6,17 @@ export const SearchInput = () => {
 
   return (
     <>
-      <form>
-        <div className="bg-zinc-50 w-[188px] flex items-center gap-4 rounded-full border border-grayBorder px-4 h-[39px]">
-          {!hasValue && <MdSearch className="text-placeholder text-xl" />}
-          <input
-            placeholder="Search"
-            type="text"
-            onChange={(e) => setHasValue(e.target.value)}
-            className="bg-zinc-50 focus:outline-none w-full"
-          />
-          {hasValue && (
-            <MdClear className="text-xl text-placeholder cursor-pointer" />
-          )}
-        </div>
+      <form className="md:w-full bg-zinc-50 w-[188px] flex items-center gap-4 rounded-full border border-grayBorder px-4 h-[39px]">
+        {!hasValue && <MdSearch className="text-placeholder text-xl" />}
+        <input
+          placeholder="Search"
+          type="text"
+          onChange={(e) => setHasValue(e.target.value)}
+          className="bg-zinc-50 focus:outline-none w-full"
+        />
+        {hasValue && (
+          <MdClear className="text-xl text-placeholder cursor-pointer" />
+        )}
       </form>
     </>
   );
