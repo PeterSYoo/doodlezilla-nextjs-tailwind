@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiLogIn } from 'react-icons/fi';
-import { FcGoogle } from 'react-icons/fc';
+import { AiOutlineGoogle } from 'react-icons/ai';
 import { LoginForm } from '../components/login/LoginForm.components';
+import { FcGoogle } from 'react-icons/fc';
 
 export default function Home() {
   return (
@@ -36,8 +37,9 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-3 md:mx-auto">
                 {/* Google Sign in */}
-                <button className="border border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:bg-neutral-800 hover:text-white md:max-w-[278px]">
-                  <FcGoogle className="text-3xl" />
+                <button className="border bg-gradient-to-t from-white to-white border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:text-white md:max-w-[278px] transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:border-white group">
+                  <FcGoogle className="text-3xl group-hover:hidden" />
+                  <AiOutlineGoogle className="text-3xl group-hover:block hidden" />
                   <span className="font-semibold">Sign In with Google</span>
                 </button>
                 {/*  */}
