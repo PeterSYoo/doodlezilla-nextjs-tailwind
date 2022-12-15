@@ -59,14 +59,14 @@ export const CreateFooter = () => {
             {/*  */}
             {/* Clear Button */}
             <div className="flex justify-center w-2/12 border-r border-grayBorder h-full items-center">
-              <span className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer">
+              <span className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center">
                 Clear
               </span>
             </div>
             {/*  */}
             {/* Upload Button */}
             <div className="flex justify-center w-2/12 items-center">
-              <button className="bg-cobalt text-white rounded-2xl py-3 px-6 font-semibold">
+              <button className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]">
                 Upload
               </button>
             </div>
@@ -83,7 +83,7 @@ export const CreateFooter = () => {
               </span>
             </div>
             <div className="flex items-center h-full w-1/2 justify-center">
-              <button className="bg-cobalt text-white rounded-2xl py-3 px-6 font-semibold">
+              <button className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold">
                 Upload
               </button>
             </div>
