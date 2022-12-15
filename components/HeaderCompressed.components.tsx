@@ -3,12 +3,11 @@ import Link from 'next/link';
 import { SearchInput } from './search/SearchInput.components';
 import { ThemeButton } from './ThemeButton.components';
 
-export const Header = () => {
+export const HeaderCompressed = () => {
   return (
     <>
-      <header className="z-30 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75 md:ml-[80px] md:pr-[80px] lg:ml-[199px] lg:pr-[199px]">
-        <div className="flex items-center max-w-[375px] mx-auto justify-between w-full  md:justify-center lg:justify-center md:max-w-none lg:max-w-[1000px] md:px-20 lg:px-20">
-          {/* Logo Mobile */}
+      <header className="z-30 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:-ml-5 lg:-ml-5.5 lg:mr-[258px] md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75">
+        <div className="flex items-center max-w-[375px] md:max-w-[500px] lg:max-w-[700px] mx-auto justify-between w-full md:justify-start">
           <Link href="/feed">
             <button className="mt-1 md:hidden">
               <Image
@@ -19,17 +18,12 @@ export const Header = () => {
               />
             </button>
           </Link>
-          {/*  */}
-          {/* Search Input */}
           <div className="md:w-5/12 lg:w-11/12 md:flex md:justify-center">
             <SearchInput />
           </div>
-          {/*  */}
-          {/* Theme Changer Button */}
           <div className="flex justify-center items-center mt-1 md:justify-center md:w-2/12 lg:justify-end lg:mr-10">
             <ThemeButton />
           </div>
-          {/*  */}
           {/* Create new Doodle for Mobile */}
           <Link href="/create">
             <button className="bg-gradient-to-tr from-[#F97E1C] via-sunset to-[#D055D3] aspect-square w-[39px] rounded-full text-white text-3xl flex justify-center md:hidden transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%]">
