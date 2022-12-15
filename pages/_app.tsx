@@ -9,10 +9,12 @@ import { Footer } from '../components/Footer.components';
 import { LoaderSpinner } from '../components/LoaderSpinner.components';
 import { LoaderSpinnerLogin } from '../components/LoaderSpinnerLogin.components';
 import { NavBar } from '../components/NavBar.components';
-import { RightBar } from '../components/feed/RightBar.components';
-import { HeaderFeed } from '../components/HeaderFeed.components';
+import { FeedRightBar } from '../components/feed/FeedRightBar.components';
+import { HeaderCompressed } from '../components/HeaderCompressed.components';
 import { Header } from '../components/Header.components';
 import { CreateFooter } from '../components/create/CreateFooter.components';
+import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
+import { ProfileOtherUsersRightBar } from '../components/profile/ProfileOtherUsersRightBar.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -27,8 +29,10 @@ export default function App({ Component, pageProps }: AppProps) {
   /* Grabs URL Pathname */
   const isLoginPage = router.asPath === '/';
   const isSignupPage = router.asPath === '/signup';
+  const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
+  const isUserIdPage = router.pathname === '/profile/[username]';
   /*  */
 
   useEffect(() => {
@@ -74,9 +78,15 @@ export default function App({ Component, pageProps }: AppProps) {
                 </div>
               ) : (
                 <div className="flex flex-col flex-grow">
-                  {isFeedPage ? <HeaderFeed /> : <Header />}
+                  {isFeedPage || isProfilePage || isUserIdPage ? (
+                    <HeaderCompressed />
+                  ) : (
+                    <Header />
+                  )}
                   <NavBar />
-                  {isFeedPage ? <RightBar /> : null}
+                  {isFeedPage ? <FeedRightBar /> : null}
+                  {isProfilePage ? <ProfileRightBar /> : null}
+                  {isUserIdPage ? <ProfileOtherUsersRightBar /> : null}
                   <Component {...pageProps} />
                   {isCreatePage ? <CreateFooter /> : null}
                 </div>
