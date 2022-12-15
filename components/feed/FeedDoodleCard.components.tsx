@@ -25,7 +25,7 @@ export const FeedDoodleCard = () => {
           </div>
           <HiDotsHorizontal
             onClick={() => setIsModal(true)}
-            className="text-2xl cursor-pointer text-placeholder hover:text-neutral-800"
+            className="text-2xl cursor-pointer hover:text-sunset"
           />
         </div>
         {/*  */}
