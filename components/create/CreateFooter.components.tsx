@@ -59,7 +59,7 @@ export const CreateFooter = () => {
             {/*  */}
             {/* Clear Button */}
             <div className="flex justify-center w-2/12 border-r border-grayBorder h-full items-center">
-              <span className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center">
+              <span className="border border-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-transparent hover:text-white flex justify-center items-center">
                 Clear
               </span>
             </div>
