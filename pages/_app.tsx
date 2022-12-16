@@ -15,6 +15,7 @@ import { Header } from '../components/Header.components';
 import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
 import { ProfileOtherUsersRightBar } from '../components/profile/ProfileOtherUsersRightBar.components';
+import { CanvasProvider } from '../contexts/CanvasContext';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -71,32 +72,34 @@ export default function App({ Component, pageProps }: AppProps) {
       ) : (
         <div className={`${openSans.variable} font-openSans`}>
           <ThemeProvider enableSystem={true} attribute="class">
-            <div className="min-h-screen min-w-screen flex flex-col">
-              {isLoginPage || isSignupPage ? (
-                <div className="flex flex-col flex-grow">
-                  <Component {...pageProps} />
-                </div>
-              ) : (
-                <div className="flex flex-col flex-grow">
-                  {isFeedPage || isProfilePage || isUsernamePage ? (
-                    <HeaderCompressed />
-                  ) : (
-                    <Header />
-                  )}
-                  <NavBar />
-                  {isFeedPage ? <FeedRightBar /> : null}
-                  {isProfilePage ? <ProfileRightBar /> : null}
-                  {isUsernamePage ? <ProfileOtherUsersRightBar /> : null}
-                  <Component {...pageProps} />
-                  {isCreatePage ? <CreateFooter /> : null}
-                </div>
-              )}
-              {isLoginPage || isSignupPage ? null : (
-                <div className="flex md:hidden">
-                  <Footer />
-                </div>
-              )}
-            </div>
+            <CanvasProvider>
+              <div className="min-h-screen min-w-screen flex flex-col">
+                {isLoginPage || isSignupPage ? (
+                  <div className="flex flex-col flex-grow">
+                    <Component {...pageProps} />
+                  </div>
+                ) : (
+                  <div className="flex flex-col flex-grow">
+                    {isFeedPage || isProfilePage || isUsernamePage ? (
+                      <HeaderCompressed />
+                    ) : (
+                      <Header />
+                    )}
+                    <NavBar />
+                    {isFeedPage ? <FeedRightBar /> : null}
+                    {isProfilePage ? <ProfileRightBar /> : null}
+                    {isUsernamePage ? <ProfileOtherUsersRightBar /> : null}
+                    <Component {...pageProps} />
+                    {isCreatePage ? <CreateFooter /> : null}
+                  </div>
+                )}
+                {isLoginPage || isSignupPage ? null : (
+                  <div className="flex md:hidden">
+                    <Footer />
+                  </div>
+                )}
+              </div>
+            </CanvasProvider>
           </ThemeProvider>
         </div>
       )}
