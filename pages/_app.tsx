@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
-  const isUserIdPage = router.pathname === '/profile/[username]';
+  const isUsernamePage = router.pathname === '/profile/[username]';
   /*  */
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 </div>
               ) : (
                 <div className="flex flex-col flex-grow">
-                  {isFeedPage || isProfilePage || isUserIdPage ? (
+                  {isFeedPage || isProfilePage || isUsernamePage ? (
                     <HeaderCompressed />
                   ) : (
                     <Header />
@@ -86,7 +86,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   <NavBar />
                   {isFeedPage ? <FeedRightBar /> : null}
                   {isProfilePage ? <ProfileRightBar /> : null}
-                  {isUserIdPage ? <ProfileOtherUsersRightBar /> : null}
+                  {isUsernamePage ? <ProfileOtherUsersRightBar /> : null}
                   <Component {...pageProps} />
                   {isCreatePage ? <CreateFooter /> : null}
                 </div>
