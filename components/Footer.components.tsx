@@ -69,8 +69,8 @@ export const Footer = () => {
           ) : (
             <div className="-mt-1 flex flex-col justify-between items-center">
               <Link href="/profile">
-                <div className="animate-border rounded-full from-white via-white to-white bg-[length:400%_400%] p-0.5 bg-black bg-gradient-to-tr duration-300">
-                  <button className="bg-white rounded-full p-0.5 flex justify-center items-center">
+                <div className="animate-border rounded-full from-transparent via-transparent to-transparent bg-[length:400%_400%] p-0.5 bg-transparent bg-gradient-to-tr duration-300">
+                  <button className="bg-transparent rounded-full p-0.5 flex justify-center items-center">
                     <Image
                       src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670910840/nudoodle/assets/cat_avatar_cmp6xf.png"
                       alt="avatar 36px"
