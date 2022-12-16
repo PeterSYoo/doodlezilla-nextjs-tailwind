@@ -1,9 +1,29 @@
-const CreatePage = () => {
+import { useEffect, useRef, useState } from 'react';
+import { useCanvas } from '../../contexts/CanvasContext';
+
+const CreatePage: React.FC = () => {
+  const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw }: any =
+    useCanvas();
+
+  useEffect(() => {
+    prepareCanvas();
+  }, []);
+
   return (
     <>
-      <div className="md:ml-[94px] lg:ml-[213px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start">
-        <div className="h-[2000px] flex justify-center items-center">
-          Create Page
+      <div className="md:ml-[94px] lg:ml-[213px] flex-grow flex flex-col justify-center items-center gap-5 md:justify-start">
+        <div className="flex justify-center items-center h-screen">
+          <canvas
+            id="drawing-canvas"
+            onMouseDown={startDrawing}
+            onMouseUp={finishDrawing}
+            onMouseMove={draw}
+            onTouchStart={startDrawing}
+            onTouchEnd={finishDrawing}
+            onTouchMove={draw}
+            ref={canvasRef}
+            className="h-screen w-screen bg-zinc-400"
+          />
         </div>
       </div>
     </>
