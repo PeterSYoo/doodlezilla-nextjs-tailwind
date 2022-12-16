@@ -11,8 +11,8 @@ const ProfilePage = () => {
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
         {/* Profile Avatar & bio */}
-        <div className="md:hidden grid grid-cols-12 w-[375px]">
-          <div className="col-start-1 col-span-4 flex flex-col items-center gap-4">
+        <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
+          <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-borderGray rounded-2xl py-4">
             <div className="flex flex-col items-center gap-1">
               <Image
                 src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671059751/nudoodle/assets/download_2_qkqj5l.png"
@@ -35,7 +35,7 @@ const ProfilePage = () => {
               Edit
             </button>
           </div>
-          <div className="col-start-5 col-span-8 mt-3 flex flex-col gap-3">
+          <div className="col-start-5 col-span-8 mt-4 flex flex-col gap-3">
             <p className="text-xs">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
               quibusdam officiis cum excepturi libero harum quaerat aliquid
