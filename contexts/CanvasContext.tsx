@@ -11,15 +11,17 @@ type CanvasContextValue = {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
   contextRef: React.MutableRefObject<CanvasRenderingContext2D | null>;
   prepareCanvas: () => void;
-  startDrawing: (event: MouseEvent<HTMLCanvasElement>) => void;
+  startDrawing: (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => void;
   finishDrawing: () => void;
-  /*   setPenColor: (color: string) => void;
-  setBackgroundColor: (color: string) => void; */
   setColor: (color: string, isBackground: boolean) => void;
   setPenWidth: (width: number) => void;
   clearCanvas: () => void;
   uploadImage: () => void;
-  draw: (event: MouseEvent<HTMLCanvasElement>) => void;
+  draw: (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => void;
 };
 
 const CanvasContext = React.createContext<CanvasContextValue>(
@@ -51,22 +53,26 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     contextRef.current = context;
   };
 
-  const startDrawing = (event: any) => {
+  const startDrawing = (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => {
     let offsetX: number;
     let offsetY: number;
     if (event.type === 'touchstart' && 'touches' in event) {
       offsetX = event.touches[0].pageX;
       offsetY = event.touches[0].pageY;
     } else {
-      offsetX = event.nativeEvent.offsetX;
-      offsetY = event.nativeEvent.offsetY;
+      offsetX = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetX;
+      offsetY = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetY;
     }
     contextRef.current!.beginPath();
     contextRef.current!.moveTo(offsetX, offsetY);
     setIsDrawing(true);
   };
 
-  const draw = (event: any) => {
+  const draw = (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => {
     if (!isDrawing) {
       return;
     }
@@ -76,8 +82,8 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
       offsetX = event.touches[0].pageX;
       offsetY = event.touches[0].pageY;
     } else {
-      offsetX = event.nativeEvent.offsetX;
-      offsetY = event.nativeEvent.offsetY;
+      offsetX = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetX;
+      offsetY = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetY;
     }
     contextRef.current!.lineTo(offsetX, offsetY);
     contextRef.current!.stroke();
@@ -90,7 +96,7 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
 
   const setColor = (color: string, isBackground: boolean) => {
     const canvas = canvasRef.current!;
-    const ctx: any = canvas.getContext('2d');
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
 
     if (isBackground) {
       // Set the global composite operation and fill style
@@ -102,31 +108,9 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     }
   };
 
-  /*   const setPenColor = (color: string) => {
-    const canvas = canvasRef.current!;
-    const ctx: any = canvas.getContext('2d');
-    ctx.strokeStyle = color;
-  };
-
-  const setBackgroundColor = (color: string) => {
-    console.log('bg color:', color);
-    const canvas = canvasRef.current!;
-    const ctx: any = canvas.getContext('2d');
-    ctx.save();
-
-    // Set the global composite operation and fill style
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = color;
-
-    // Fill the entire canvas
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.restore();
-  }; */
-
   const setPenWidth = (width: number) => {
     const canvas = canvasRef.current!;
-    const ctx: any = canvas.getContext('2d');
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
     ctx.lineWidth = width;
   };
 
