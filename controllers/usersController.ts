@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Users from '../models/Users';
 
-// GET all users
+/* GET all Users */
 export const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const users = await Users.find({});
@@ -13,7 +13,7 @@ export const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// GET single user
+/* GET a Single User */
 export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId } = req.query;
@@ -27,7 +27,7 @@ export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// PUT single user
+/* PUT a Single User */
 export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId } = req.query;
@@ -42,7 +42,7 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-// POST
+/* POST a User */
 export const postUsers = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const formData = req.body;
