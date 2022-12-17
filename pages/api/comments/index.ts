@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import usersConnect from '../../../database/usersConnect';
-import { getUsers, postUsers } from '../../../controllers/usersController';
 
-export default async function usersApi(
+export default async function tickersApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -14,10 +13,8 @@ export default async function usersApi(
 
   switch (method) {
     case 'GET':
-      getUsers(req, res);
       break;
     case 'POST':
-      postUsers(req, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
