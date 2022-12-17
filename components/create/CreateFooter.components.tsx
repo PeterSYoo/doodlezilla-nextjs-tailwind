@@ -1,11 +1,12 @@
 import { useCanvas } from '../../contexts/CanvasContext';
 import { HexColorPicker } from 'react-colorful';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
 
 export const CreateFooter = () => {
-  const [penColorState, setPenColorState] = useState('#000000');
-  const [backgroundColorState, setBackgroundColorState] = useState('#fafafa');
+  const [penColorState, setPenColorState] = useState<string>('#000000');
+  const [backgroundColorState, setBackgroundColorState] =
+    useState<string>('#fafafa');
   const [isPenColorModal, setIsPenColorModal] = useState<boolean>(false);
   const [isBackgroundColorModal, setIsBackgroundColorModal] =
     useState<boolean>(false);
@@ -19,10 +20,12 @@ export const CreateFooter = () => {
     setTimeout(() => setIsUploadDisabled(false), 5000);
   };
 
-  const handlePenWidthChange = (event: any) => {
+  const handlePenWidthChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     event.preventDefault();
-    const selectedOption = event.target.value;
-    setPenWidth(selectedOption);
+    const selectedOption = event.currentTarget.value;
+    setPenWidth(parseInt(selectedOption, 10));
   };
 
   useEffect(() => {
@@ -124,6 +127,7 @@ export const CreateFooter = () => {
                 <div className="border border-placeholder py-1 px-2 rounded-lg">
                   <select
                     onChange={handlePenWidthChange}
+                    defaultValue="5"
                     className="focus:outline-none bg-transparent"
                   >
                     <option value="1">1</option>
@@ -199,7 +203,7 @@ export const CreateFooter = () => {
               {/* Clear Button */}
               <span
                 onClick={clearCanvas}
-                className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer"
+                className="border border-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer"
               >
                 Clear
               </span>
@@ -208,8 +212,13 @@ export const CreateFooter = () => {
             <div className="flex items-center h-full w-1/2 justify-center">
               {/* Upload Button */}
               <button
-                onClick={uploadImage}
-                className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold"
+                onClick={handleUploadClick}
+                disabled={isUploadDisabled}
+                className={
+                  isUploadDisabled
+                    ? 'bg-gradient-to-t from-gray-500 to-gray-700 text-gray-400 rounded-2xl py-3 px-6 font-semibold'
+                    : 'bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
+                }
               >
                 Upload
               </button>
@@ -297,6 +306,7 @@ export const CreateFooter = () => {
                 <div className="border border-placeholder py-1 px-2 rounded-lg">
                   <select
                     onChange={handlePenWidthChange}
+                    defaultValue="5"
                     className="focus:outline-none bg-transparent"
                   >
                     <option value="1">1</option>
