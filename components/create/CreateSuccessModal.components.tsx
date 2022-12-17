@@ -1,7 +1,11 @@
 import { useRouter } from 'next/router';
 import { RiCloseFill } from 'react-icons/ri';
 
-export const CreateSuccessModal = ({ setIsSuccessModal }: any) => {
+type Props = {
+  setIsSuccessModal: (value: boolean) => void;
+};
+
+export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
   const router = useRouter();
 
   return (
