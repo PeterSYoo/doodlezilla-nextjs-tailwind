@@ -5,6 +5,7 @@ import React, {
   MouseEvent,
   TouchEvent,
 } from 'react';
+import { CreateSuccessModal } from '../components/create/CreateSuccessModal.components';
 
 type CanvasContextValue = {
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>;
@@ -12,11 +13,12 @@ type CanvasContextValue = {
   prepareCanvas: () => void;
   startDrawing: (event: MouseEvent<HTMLCanvasElement>) => void;
   finishDrawing: () => void;
-  setPenColor: (color: string) => void;
-  setBackgroundColor: (color: string) => void;
+  /*   setPenColor: (color: string) => void;
+  setBackgroundColor: (color: string) => void; */
+  setColor: (color: string, isBackground: boolean) => void;
   setPenWidth: (width: number) => void;
   clearCanvas: () => void;
-  saveImage: () => void;
+  uploadImage: () => void;
   draw: (event: MouseEvent<HTMLCanvasElement>) => void;
 };
 
@@ -29,6 +31,7 @@ type CanvasProviderProps = {
 };
 
 export const CanvasProvider = ({ children }: CanvasProviderProps) => {
+  const [isSuccessModal, setIsSuccessModal] = useState<boolean>(false);
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -85,21 +88,41 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     setIsDrawing(false);
   };
 
-  const setPenColor = (color: string) => {
+  const setColor = (color: string, isBackground: boolean) => {
+    const canvas = canvasRef.current!;
+    const ctx: any = canvas.getContext('2d');
+
+    if (isBackground) {
+      // Set the global composite operation and fill style
+      ctx.fillStyle = color;
+      // Fill the entire canvas
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    } else {
+      ctx.strokeStyle = color; // Set the stroke style
+    }
+  };
+
+  /*   const setPenColor = (color: string) => {
     const canvas = canvasRef.current!;
     const ctx: any = canvas.getContext('2d');
     ctx.strokeStyle = color;
   };
 
   const setBackgroundColor = (color: string) => {
+    console.log('bg color:', color);
     const canvas = canvasRef.current!;
     const ctx: any = canvas.getContext('2d');
     ctx.save();
-    ctx.globalCompositeOperation = 'destination-over';
+
+    // Set the global composite operation and fill style
+    ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = color;
+
+    // Fill the entire canvas
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.restore();
-  };
+  }; */
 
   const setPenWidth = (width: number) => {
     const canvas = canvasRef.current!;
@@ -109,35 +132,61 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
 
   const clearCanvas = () => {
     const canvas = canvasRef.current!;
-    const context = canvas.getContext('2d')!;
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext('2d')!;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
 
-  const saveImage = () => {
-    const ctx = canvasRef.current!.getContext('2d');
-    const imageData = ctx!.canvas.toDataURL();
-    console.log(imageData);
+  const uploadImage = async () => {
+    try {
+      const ctx = canvasRef.current!.getContext('2d');
+      const dataURL = ctx!.canvas.toDataURL();
+      const formData = new FormData();
+      formData.append('file', dataURL);
+      formData.append('upload_preset', 'Nudoodle');
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setIsSuccessModal(true);
+      } else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <CanvasContext.Provider
-      value={{
-        canvasRef,
-        contextRef,
-        prepareCanvas,
-        startDrawing,
-        finishDrawing,
-        setPenColor,
-        setBackgroundColor,
-        setPenWidth,
-        clearCanvas,
-        saveImage,
-        draw,
-      }}
-    >
-      {children}
-    </CanvasContext.Provider>
+    <>
+      {isSuccessModal ? (
+        <CreateSuccessModal setIsSuccessModal={setIsSuccessModal} />
+      ) : null}
+      <CanvasContext.Provider
+        value={{
+          canvasRef,
+          contextRef,
+          prepareCanvas,
+          startDrawing,
+          finishDrawing,
+          setColor,
+          setPenWidth,
+          clearCanvas,
+          uploadImage,
+          draw,
+        }}
+      >
+        {children}
+      </CanvasContext.Provider>
+    </>
   );
 };
 
