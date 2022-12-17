@@ -5,12 +5,19 @@ import { RiCloseFill } from 'react-icons/ri';
 
 export const CreateFooter = () => {
   const [penColorState, setPenColorState] = useState('#000000');
-  const [backgroundColorState, setBackgroundColorState] = useState('#ffffff');
+  const [backgroundColorState, setBackgroundColorState] = useState('#fafafa');
   const [isPenColorModal, setIsPenColorModal] = useState<boolean>(false);
   const [isBackgroundColorModal, setIsBackgroundColorModal] =
     useState<boolean>(false);
+  const [isUploadDisabled, setIsUploadDisabled] = useState<boolean>(false);
 
   const { clearCanvas, uploadImage, setColor, setPenWidth } = useCanvas();
+
+  const handleUploadClick = () => {
+    uploadImage();
+    setIsUploadDisabled(true);
+    setTimeout(() => setIsUploadDisabled(false), 5000);
+  };
 
   const handlePenWidthChange = (event: any) => {
     event.preventDefault();
@@ -28,48 +35,38 @@ export const CreateFooter = () => {
 
   return (
     <>
-      <footer className="z-40 fixed bottom-[75px] md:bottom-0 w-full bg-white h-[130px] border-t border-grayBorder backdrop-blur-sm bg-opacity-75 flex md:flex flex-col md:h-[75px] md:ml-[94px] md:pr-[94px] lg:ml-[213px] lg:pr-[213px]">
-        {/* Pen Color Picker Modal */}
-        {isPenColorModal ? (
-          <div className="ml-[20px] bottom-[70px] md:mb-80 md:ml-5 lg:ml-20 fixed md:-bottom-[250px]">
-            <div className="flex justify-end bg-black w-full bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
-              <span
-                onClick={() => setIsPenColorModal(false)}
-                className="text-3xl text-white cursor-pointer"
-              >
-                <RiCloseFill />
-              </span>
-            </div>
-            <HexColorPicker color={penColorState} onChange={setPenColorState} />
-          </div>
-        ) : null}
-        {/*  */}
-        {/* Background Color Picker Modal */}
-        {isBackgroundColorModal ? (
-          <div className="ml-[20px] bottom-[70px] md:mb-80 md:ml-[300px] lg:ml-[380px] fixed md:-bottom-[250px]">
-            <div className="flex justify-end bg-black w-full bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
-              <span
-                onClick={() => setIsBackgroundColorModal(false)}
-                className="text-3xl text-white cursor-pointer"
-              >
-                <RiCloseFill />
-              </span>
-            </div>
-            <HexColorPicker
-              color={backgroundColorState}
-              onChange={setBackgroundColorState}
-            />
-          </div>
-        ) : null}
-        {/*  */}
+      <footer className="z-40 fixed bottom-[75px] md:bottom-0 w-full h-[130px] backdrop-blur-sm bg-opacity-75 flex md:flex flex-col md:h-[75px] md:ml-[94px] md:pr-[94px] lg:ml-[213px] lg:pr-[213px]">
         {/* Drawings Tools Desktop */}
-        <div className="md:flex w-full justify-center hidden h-full items-center">
-          <div className="flex justify-between w-full h-full items-center">
+        <div className="md:flex md:flex-col w-full justify-center hidden h-full items-center">
+          <div className="flex justify-between w-full h-[75px] items-center bg-opacity-75 bg-white border-t border-grayBorder">
             {/* Pen Color */}
             <div className="flex justify-center w-3/12 border-r border-grayBorder h-full items-center">
+              {/* Pen Color Picker Modal */}
+              {isPenColorModal ? (
+                <div className="flex flex-col justify-center items-center absolute mb-[290px]">
+                  <div className="flex justify-end bg-black w-[200px] bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
+                    <span
+                      onClick={() => setIsPenColorModal(false)}
+                      className="text-3xl text-white cursor-pointer"
+                    >
+                      <RiCloseFill />
+                    </span>
+                  </div>
+                  <HexColorPicker
+                    color={penColorState}
+                    onChange={setPenColorState}
+                  />
+
+                  <div className="w-3/12 px-1"></div>
+                  <div className="w-2/12 px-1"></div>
+                  <div className="w-2/12 px-1"></div>
+                  <div className="w-2/12 px-1"></div>
+                </div>
+              ) : null}
+              {/*  */}
               <div className="flex gap-3 items-center">
                 <span
-                  onClick={() => setIsPenColorModal(true)}
+                  onClick={() => setIsPenColorModal(!isPenColorModal)}
                   className="aspect-square lg:aspect-auto border border-placeholder w-[91px] h-[47px] flex items-center justify-center rounded-xl cursor-pointer"
                 >
                   <span
@@ -86,10 +83,30 @@ export const CreateFooter = () => {
             {/*  */}
             {/* Background Color */}
             <div className="flex justify-center w-3/12 border-r border-grayBorder h-full items-center">
+              {/* Background Color Picker Modal */}
+              {isBackgroundColorModal ? (
+                <div className="flex flex-col justify-center items-center absolute mb-[290px]">
+                  <div className="flex justify-end bg-black w-[200px] bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
+                    <span
+                      onClick={() => setIsBackgroundColorModal(false)}
+                      className="text-3xl text-white cursor-pointer"
+                    >
+                      <RiCloseFill />
+                    </span>
+                  </div>
+                  <HexColorPicker
+                    color={backgroundColorState}
+                    onChange={setBackgroundColorState}
+                  />
+                </div>
+              ) : null}
+              {/*  */}
               <div className="flex gap-3 items-center">
                 <span className="aspect-square lg:aspect-auto border border-placeholder w-[91px] h-[47px] flex items-center justify-center rounded-xl">
                   <span
-                    onClick={() => setIsBackgroundColorModal(true)}
+                    onClick={() =>
+                      setIsBackgroundColorModal(!isBackgroundColorModal)
+                    }
                     className="aspect-square lg:aspect-auto border border-placeholder w-[74px] h-[31px] flex items-center justify-center rounded-lg cursor-pointer"
                     style={{ backgroundColor: backgroundColorState }}
                   ></span>
@@ -160,8 +177,13 @@ export const CreateFooter = () => {
             {/* Upload Button */}
             <div className="flex justify-center w-2/12 items-center">
               <button
-                onClick={uploadImage}
-                className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]"
+                onClick={handleUploadClick}
+                disabled={isUploadDisabled}
+                className={
+                  isUploadDisabled
+                    ? 'bg-gradient-to-t from-gray-500 to-gray-700 text-gray-400 rounded-2xl py-3 px-6 font-semibold'
+                    : 'bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
+                }
               >
                 Upload
               </button>
@@ -171,18 +193,24 @@ export const CreateFooter = () => {
         </div>
         {/*  */}
         {/* Drawing Tools Mobile 1st Panel */}
-        <div className="h-[65px] border-t border-grayBorder w-full md:hidden">
+        <div className="h-[65px] border-t border-grayBorder w-full md:hidden bg-white bg-opacity-75">
           <div className="flex justify-center w-[375px] mx-auto h-full">
             <div className="border-r border-grayBorder h-full flex items-center w-1/2 justify-center">
               {/* Clear Button */}
-              <span className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer">
+              <span
+                onClick={clearCanvas}
+                className="border border-placeholder text-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer"
+              >
                 Clear
               </span>
               {/*  */}
             </div>
             <div className="flex items-center h-full w-1/2 justify-center">
               {/* Upload Button */}
-              <button className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold">
+              <button
+                onClick={uploadImage}
+                className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold"
+              >
                 Upload
               </button>
               {/*  */}
@@ -191,26 +219,73 @@ export const CreateFooter = () => {
         </div>
         {/*  */}
         {/* Drawing Tools Mobile 2nd Panel */}
-        <div className="h-[65px] border-t border-grayBorder w-full md:hidden">
+        <div className="h-[65px] border-t border-grayBorder w-full md:hidden bg-white bg-opacity-75">
           <div className="flex justify-center w-[375px] mx-auto h-full px-5">
             <div className="border-r border-grayBorder h-full flex items-center w-1/3 justify-start">
+              {/* Pen Color Picker Modal */}
+              {isPenColorModal ? (
+                <div className="flex flex-col justify-center items-center absolute mb-[290px]">
+                  <div className="flex justify-end bg-black w-[200px] bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
+                    <span
+                      onClick={() => setIsPenColorModal(false)}
+                      className="text-3xl text-white cursor-pointer"
+                    >
+                      <RiCloseFill />
+                    </span>
+                  </div>
+                  <HexColorPicker
+                    color={penColorState}
+                    onChange={setPenColorState}
+                  />
+                </div>
+              ) : null}
+              {/*  */}
               {/* Pen Color */}
               <div className="flex gap-3 items-center">
                 <span
-                  onClick={() => setIsPenColorModal(true)}
+                  onClick={() => setIsPenColorModal(!isPenColorModal)}
                   className="aspect-square border border-placeholder h-[47px] flex items-center justify-center rounded-xl cursor-pointer"
                 >
-                  <span className="aspect-square border border-placeholder h-[31px] flex items-center justify-center rounded-lg bg-sunset"></span>
+                  <span
+                    className="aspect-square border border-placeholder h-[31px] flex items-center justify-center rounded-lg"
+                    style={{ backgroundColor: penColorState }}
+                  ></span>
                 </span>
                 <p className="font-semibold text-sm">Pen</p>
               </div>
               {/*  */}
             </div>
             <div className="h-full flex items-center w-1/3 justify-center">
+              {/* Background Color Picker Modal */}
+              {isBackgroundColorModal ? (
+                <div className="flex flex-col justify-center items-center absolute mb-[290px] ml-[160px]">
+                  <div className="flex justify-end bg-black w-[200px] bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
+                    <span
+                      onClick={() => setIsBackgroundColorModal(false)}
+                      className="text-3xl text-white cursor-pointer"
+                    >
+                      <RiCloseFill />
+                    </span>
+                  </div>
+                  <HexColorPicker
+                    color={backgroundColorState}
+                    onChange={setBackgroundColorState}
+                  />
+                </div>
+              ) : null}
+              {/*  */}
               {/* Background Color */}
               <div className="flex gap-3 items-center">
-                <span className="aspect-square border border-placeholder h-[47px] flex items-center justify-center rounded-xl cursor-pointer">
-                  <span className="aspect-square border border-placeholder h-[31px] flex items-center justify-center rounded-lg bg-purple-300"></span>
+                <span
+                  onClick={() =>
+                    setIsBackgroundColorModal(!isBackgroundColorModal)
+                  }
+                  className="aspect-square border border-placeholder h-[47px] flex items-center justify-center rounded-xl cursor-pointer"
+                >
+                  <span
+                    className="aspect-square border border-placeholder h-[31px] flex items-center justify-center rounded-lg"
+                    style={{ backgroundColor: backgroundColorState }}
+                  ></span>
                 </span>
                 <p className="font-semibold text-sm">BG</p>
               </div>
