@@ -12,7 +12,7 @@ const ProfilePage = () => {
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
         {/* Profile Avatar & bio */}
         <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
-          <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-borderGray rounded-2xl py-4">
+          <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
             <div className="flex flex-col items-center gap-1">
               <Image
                 src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671059751/nudoodle/assets/download_2_qkqj5l.png"
