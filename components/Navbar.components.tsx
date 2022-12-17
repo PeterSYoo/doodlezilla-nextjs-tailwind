@@ -13,7 +13,7 @@ export const NavBar = () => {
 
   return (
     <>
-      <div className="z-50 fixed bg-white h-full hidden md:flex md:w-[94px] lg:w-[213px] md:mr-[159px] lg:mr-[258px] border-r border-grayBorder md:flex-col">
+      <div className="z-40 fixed bg-white h-full hidden md:flex md:w-[94px] lg:w-[213px] md:mr-[159px] lg:mr-[258px] border-r border-grayBorder md:flex-col">
         <div className="w-full h-[362px] border-b border-grayBorder flex flex-col justify-between">
           {/* Logo for Mobile and Desktop */}
           <div className="w-full h-[41px] flex flex-col items-center justify-center mt-[19px]">
