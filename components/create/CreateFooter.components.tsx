@@ -10,13 +10,7 @@ export const CreateFooter = () => {
   const [isBackgroundColorModal, setIsBackgroundColorModal] =
     useState<boolean>(false);
 
-  const {
-    clearCanvas,
-    saveImage,
-    setPenColor,
-    setBackgroundColor,
-    setPenWidth,
-  } = useCanvas();
+  const { clearCanvas, uploadImage, setColor, setPenWidth } = useCanvas();
 
   const handlePenWidthChange = (event: any) => {
     event.preventDefault();
@@ -25,10 +19,12 @@ export const CreateFooter = () => {
   };
 
   useEffect(() => {
-    setPenColor(penColorState);
-    setBackgroundColor(backgroundColorState);
-    console.log(backgroundColorState);
-  }, [penColorState, backgroundColorState]);
+    setColor(penColorState, false);
+  }, [penColorState]);
+
+  useEffect(() => {
+    setColor(backgroundColorState, true);
+  }, [backgroundColorState]);
 
   return (
     <>
@@ -77,7 +73,8 @@ export const CreateFooter = () => {
                   className="aspect-square lg:aspect-auto border border-placeholder w-[91px] h-[47px] flex items-center justify-center rounded-xl cursor-pointer"
                 >
                   <span
-                    className={`aspect-square lg:aspect-auto border border-placeholder w-[74px] h-[31px] flex items-center justify-center rounded-lg bg-[${penColorState}]`}
+                    className="aspect-square lg:aspect-auto border border-placeholder w-[74px] h-[31px] flex items-center justify-center rounded-lg"
+                    style={{ backgroundColor: penColorState }}
                   ></span>
                 </span>
                 <p className="font-semibold text-sm md:block lg:hidden">Pen</p>
@@ -93,7 +90,8 @@ export const CreateFooter = () => {
                 <span className="aspect-square lg:aspect-auto border border-placeholder w-[91px] h-[47px] flex items-center justify-center rounded-xl">
                   <span
                     onClick={() => setIsBackgroundColorModal(true)}
-                    className="aspect-square lg:aspect-auto border border-placeholder w-[74px] h-[31px] flex items-center justify-center rounded-lg bg-purple-300 cursor-pointer"
+                    className="aspect-square lg:aspect-auto border border-placeholder w-[74px] h-[31px] flex items-center justify-center rounded-lg cursor-pointer"
+                    style={{ backgroundColor: backgroundColorState }}
                   ></span>
                 </span>
                 <p className="font-semibold text-sm md:block lg:hidden">BG</p>
@@ -162,7 +160,7 @@ export const CreateFooter = () => {
             {/* Upload Button */}
             <div className="flex justify-center w-2/12 items-center">
               <button
-                onClick={saveImage}
+                onClick={uploadImage}
                 className="bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]"
               >
                 Upload
@@ -222,7 +220,10 @@ export const CreateFooter = () => {
               {/* Pen Width */}
               <div className="flex gap-3 items-center">
                 <div className="border border-placeholder py-1 px-2 rounded-lg">
-                  <select className="focus:outline-none bg-transparent">
+                  <select
+                    onChange={handlePenWidthChange}
+                    className="focus:outline-none bg-transparent"
+                  >
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
