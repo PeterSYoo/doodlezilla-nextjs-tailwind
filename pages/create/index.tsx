@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { useCanvas } from '../../contexts/CanvasContext';
 
 const CreatePage: React.FC = () => {
-  const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw }: any =
+  const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw } =
     useCanvas();
 
   useEffect(() => {
@@ -15,12 +15,13 @@ const CreatePage: React.FC = () => {
         <div className="flex justify-center items-center h-screen">
           <canvas
             id="drawing-canvas"
-            onMouseDown={startDrawing}
-            onMouseUp={finishDrawing}
-            onMouseMove={draw}
-            onTouchStart={startDrawing}
-            onTouchEnd={finishDrawing}
-            onTouchMove={draw}
+            onMouseDown={(event) => startDrawing(event)}
+            onMouseUp={() => finishDrawing()}
+            onMouseMove={(event) => draw(event)}
+            onTouchStart={(event) => startDrawing(event)}
+            onTouchEnd={() => finishDrawing()}
+            onTouchMove={(event) => draw(event)}
+            onTouchCancel={() => finishDrawing()}
             ref={canvasRef}
             className="h-screen w-screen bg-zinc-400"
           />
