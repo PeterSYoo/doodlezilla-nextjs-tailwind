@@ -2,7 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Users from '../models/Users';
 
 /* GET all Users */
-export const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAllUsers = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
     const users = await Users.find({});
 

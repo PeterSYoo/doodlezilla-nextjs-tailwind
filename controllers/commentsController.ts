@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Comments from '../models/Comments';
 
 /* GET all Comments */
-export const getComments = async (
+export const getAllComments = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -32,11 +32,12 @@ export const putComment = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 /* POST a Comment */
-export const postComments = async (
+export const postComment = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   try {
+    const { commentId } = req.query;
     const formData = req.body;
 
     if (!formData) {
@@ -52,7 +53,7 @@ export const postComments = async (
 };
 
 /* DELETE a Comment */
-export const deleteComments = async (
+export const deleteComment = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -65,27 +66,5 @@ export const deleteComments = async (
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while deleting Comments' });
-  }
-};
-
-/* PUT Increment Likes Prop on a Single Comment by 1 */
-export const putCommentLikes = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  try {
-    const { commentId } = req.query;
-    const formData = req.body;
-
-    if (commentId && formData) {
-      const comment = await Comments.findOneAndUpdate(
-        { _id: commentId },
-        { $inc: { likes: 1 } },
-        { new: true }
-      ).then((likes) => console.log(likes.likes));
-      res.status(200).json(comment);
-    }
-  } catch (error) {
-    res.status(404).json({ error: 'Error While Updating the Comment!' });
   }
 };

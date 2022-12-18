@@ -2,7 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Doodles from '../models/Doodles';
 
 /* GET all Doodles */
-export const getDoodles = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getAllDoodles = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
     const doodles = await Doodles.find({});
 
@@ -43,10 +46,7 @@ export const putDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 /* POST a Doodle */
-export const postDoodles = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+export const postDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const formData = req.body;
 
@@ -63,18 +63,40 @@ export const postDoodles = async (
 };
 
 /* DELETE a Doodle */
-export const deleteDoodles = async (
+export const deleteDoodle = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   try {
-    const { doodlesId }: any = req.query;
+    const { doodleId }: any = req.query;
 
-    if (doodlesId) {
-      const doodles = await Doodles.findByIdAndDelete(doodlesId);
+    if (doodleId) {
+      const doodles = await Doodles.findByIdAndDelete(doodleId);
       res.status(200).json(doodles);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while deleting Doodles' });
+  }
+};
+
+/* PUT Increment Likes Prop on a Single Comment by 1 */
+export const putDoodleLikes = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { doodleId } = req.query;
+    const formData = req.body;
+
+    if (doodleId && formData) {
+      const doodle = await Doodles.findOneAndUpdate(
+        { _id: doodleId },
+        { $inc: { likes: 1 } },
+        { new: true }
+      ).then((likes) => console.log(likes.likes));
+      res.status(200).json(doodle);
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Error While Updating the Doodle!' });
   }
 };
