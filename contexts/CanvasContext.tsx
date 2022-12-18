@@ -139,7 +139,6 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setIsSuccessModal(true);
       } else {
         throw new Error(response.statusText);
