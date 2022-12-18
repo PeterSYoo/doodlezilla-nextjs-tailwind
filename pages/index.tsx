@@ -4,10 +4,25 @@ import { FiLogIn } from 'react-icons/fi';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { LoginForm } from '../components/login/LoginForm.components';
 import { FcGoogle } from 'react-icons/fc';
+import { getSession, signIn, signOut } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Home() {
+  /* Google Handler Function */
+  const handleGoogleSignin = async () => {
+    signIn('google', {
+      callbackUrl: process.env.NEXT_PUBLIC_APP_URL,
+    });
+  };
+  /*  */
+
   return (
     <>
+      <button onClick={() => signOut()} className="border p-2 text-xl">
+        Sign Out
+      </button>
       <div className="flex-grow h-full flex items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">
         <div className="bg-white flex flex-col w-[375px] md:w-full md:max-w-[1136px] justify-center items-center pt-14 rounded-[50px] gap-3 shadow-md shadow-gray-800 md:mx-10 md:max-h-[666px] md:h-full md:grid md:grid-cols-2 md:pt-0">
           {/* Logo for Mobile */}
@@ -37,7 +52,10 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-3 md:mx-auto">
                 {/* Google Sign in */}
-                <button className="border bg-gradient-to-t from-white to-white border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:text-white md:max-w-[278px] transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:border-white group">
+                <button
+                  onClick={handleGoogleSignin}
+                  className="border bg-gradient-to-t from-white to-white border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:text-white md:max-w-[278px] transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:border-white group"
+                >
                   <FcGoogle className="text-3xl group-hover:hidden" />
                   <AiOutlineGoogle className="text-3xl group-hover:block hidden" />
                   <span className="font-semibold">Sign In with Google</span>
@@ -74,3 +92,26 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/feed',
+      },
+    };
+  }
+
+  return {
+    props: {
+      session: session,
+    },
+  };
+};
