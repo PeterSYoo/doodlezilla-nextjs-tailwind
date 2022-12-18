@@ -6,6 +6,10 @@ import { FaRegEye } from 'react-icons/fa';
 import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
+import { SignupUsernameErrorModal } from './SignupUsernameErrorModal.components';
+import { SignupEmailErrorModal } from './SignupEmailErrorModal.components';
+import { SignupSuccessModal } from './SignupSuccessModal.components';
 
 type Inputs = {
   username: string;
@@ -36,7 +40,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const SignupForm = () => {
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
+  const [isUsernameErrorModalOpen, setIsUsernameErrorModalOpen] =
+    useState<boolean>(false);
+  const [isEmailErrorModalOpen, setIsEmailErrorModalOpen] =
+    useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -50,7 +59,11 @@ export const SignupForm = () => {
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        username: data.username.toLowerCase(),
+        email: data.email,
+        password: data.password,
+      }),
     };
 
     await fetch(
@@ -60,12 +73,12 @@ export const SignupForm = () => {
       response.json().then((data) => {
         if (response.status === 422) {
           if (data.message === 'Username already exists!') {
-            console.error(data.message);
-          } else {
-            console.error(data.message);
+            setIsUsernameErrorModalOpen(true);
+          } else if (data.message === 'Email already exists!') {
+            setIsEmailErrorModalOpen(true);
           }
         } else {
-          router.push('/');
+          setIsSuccessModalOpen(true);
         }
       })
     );
@@ -79,6 +92,25 @@ export const SignupForm = () => {
 
   return (
     <>
+      {isUsernameErrorModalOpen ||
+      isEmailErrorModalOpen ||
+      isSuccessModalOpen ? (
+        <>
+          {isSuccessModalOpen && (
+            <SignupSuccessModal setIsSuccessModalOpen={setIsSuccessModalOpen} />
+          )}
+          {isUsernameErrorModalOpen && (
+            <SignupUsernameErrorModal
+              setIsUsernameErrorModalOpen={setIsUsernameErrorModalOpen}
+            />
+          )}
+          {isEmailErrorModalOpen && (
+            <SignupEmailErrorModal
+              setIsEmailErrorModalOpen={setIsEmailErrorModalOpen}
+            />
+          )}
+        </>
+      ) : null}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3">
           {/* Username */}
@@ -93,11 +125,7 @@ export const SignupForm = () => {
               placeholder="Username"
               type="text"
               className="w-full bg-grayLight focus:outline-none"
-              {...register('username', {
-                required: true,
-                maxLength: 10,
-                pattern: /^[0-9a-zA-Z]+$/,
-              })}
+              {...register('username')}
             />
           </label>
           {errors.username && (
@@ -155,11 +183,14 @@ export const SignupForm = () => {
           >
             <input
               placeholder="Password"
-              type="text"
-              className="w-10/12 bg-grayLight focus:outline-none"
+              type={`${showPassword ? 'text' : 'password'}`}
+              className="w-11/12 bg-grayLight focus:outline-none"
               {...register('password')}
             />
-            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeholder cursor-pointer hover:text-neutral-800" />
+            <FaRegEye
+              onClick={() => setShowPassword(!showPassword)}
+              className="w-1/12 flex justify-end text-xl text-placeholder cursor-pointer hover:text-neutral-800"
+            />
           </label>
           {errors.password && (
             <>
@@ -187,11 +218,14 @@ export const SignupForm = () => {
           >
             <input
               placeholder="Confirm Password"
-              type="text"
-              className="w-10/12 bg-grayLight focus:outline-none"
+              type={`${showPassword ? 'text' : 'password'}`}
+              className="w-11/12 bg-grayLight focus:outline-none"
               {...register('cpassword')}
             />
-            <FaRegEye className="w-2/12 flex justify-end pr-2 text-xl text-placeholder cursor-pointer hover:text-neutral-800" />
+            <FaRegEye
+              onClick={() => setShowPassword(!showPassword)}
+              className="w-1/12 flex justify-end text-xl text-placeholder cursor-pointer hover:text-neutral-800"
+            />
           </label>
           {errors.cpassword && (
             <>
