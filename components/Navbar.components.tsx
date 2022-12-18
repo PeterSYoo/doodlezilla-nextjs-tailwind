@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -167,12 +168,17 @@ export const NavBar = () => {
         </div>
         {/*  */}
         <div className="w-full">
-          <button className="text-[22px] flex items-center justify-center mt-11 ml-[37px] lg:ml-[48px] text-grayText hover:text-sunset lg:gap-5">
+          {/* Logout */}
+          <button
+            onClick={() => signOut()}
+            className="text-[22px] flex items-center justify-center mt-11 ml-[37px] lg:ml-[48px] text-grayText hover:text-sunset lg:gap-5"
+          >
             <FiLogOut />
             <span className="text-[15px] font-bold hidden lg:block">
               Logout
             </span>
           </button>
+          {/*  */}
         </div>
       </div>
     </>
