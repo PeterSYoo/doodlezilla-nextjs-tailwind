@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { putDoodleLikes } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
 export default async function tickersApi(
@@ -12,12 +13,11 @@ export default async function tickersApi(
   const { method } = req;
 
   switch (method) {
-    case 'GET':
-      break;
     case 'PUT':
+      putDoodleLikes(req, res);
       break;
     default:
-      res.setHeader('Allow', ['GET', 'PUT']);
+      res.setHeader('Allow', ['PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }

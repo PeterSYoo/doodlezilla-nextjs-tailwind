@@ -1,7 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  deleteDoodle,
+  getDoodle,
+  putDoodle,
+} from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function tickersApi(
+export default async function tickersIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -13,11 +18,16 @@ export default async function tickersApi(
 
   switch (method) {
     case 'GET':
+      getDoodle(req, res);
       break;
-    case 'POST':
+    case 'PUT':
+      putDoodle(req, res);
+      break;
+    case 'DELETE':
+      deleteDoodle(req, res);
       break;
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }

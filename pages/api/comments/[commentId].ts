@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  deleteComment,
+  putComment,
+} from '../../../controllers/commentsController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function tickersIdApi(
+export default async function tickersApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -12,14 +16,14 @@ export default async function tickersIdApi(
   const { method } = req;
 
   switch (method) {
-    case 'GET':
-      break;
-    case 'POST':
+    case 'PUT':
+      putComment(req, res);
       break;
     case 'DELETE':
+      deleteComment(req, res);
       break;
     default:
-      res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
+      res.setHeader('Allow', ['PUT', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
