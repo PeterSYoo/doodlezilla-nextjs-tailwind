@@ -3,6 +3,12 @@ import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import { Router, useRouter } from 'next/router';
 import Head from 'next/head';
+import { SessionProvider } from 'next-auth/react';
+import {
+  QueryClientProvider,
+  QueryClient,
+  Hydrate,
+} from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Open_Sans } from '@next/font/google';
 import { Footer } from '../components/Footer.components';
@@ -21,6 +27,8 @@ const openSans = Open_Sans({
   subsets: ['latin'],
   variable: '--font-openSans',
 });
+
+const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -71,36 +79,44 @@ export default function App({ Component, pageProps }: AppProps) {
         </>
       ) : (
         <div className={`${openSans.variable} font-openSans`}>
-          <ThemeProvider enableSystem={true} attribute="class">
-            <CanvasProvider>
-              <div className="min-h-screen min-w-screen flex flex-col">
-                {isLoginPage || isSignupPage ? (
-                  <div className="flex flex-col flex-grow">
-                    <Component {...pageProps} />
-                  </div>
-                ) : (
-                  <div className="flex flex-col flex-grow">
-                    {isFeedPage || isProfilePage || isUsernamePage ? (
-                      <HeaderCompressed />
-                    ) : (
-                      <Header />
-                    )}
-                    <NavBar />
-                    {isFeedPage ? <FeedRightBar /> : null}
-                    {isProfilePage ? <ProfileRightBar /> : null}
-                    {isUsernamePage ? <ProfileOtherUsersRightBar /> : null}
-                    <Component {...pageProps} />
-                    {isCreatePage ? <CreateFooter /> : null}
-                  </div>
-                )}
-                {isLoginPage || isSignupPage ? null : (
-                  <div className="flex md:hidden">
-                    <Footer />
-                  </div>
-                )}
-              </div>
-            </CanvasProvider>
-          </ThemeProvider>
+          <SessionProvider session={pageProps.session}>
+            <QueryClientProvider client={queryClient}>
+              <Hydrate state={pageProps.dehydratedState}>
+                <ThemeProvider enableSystem={true} attribute="class">
+                  <CanvasProvider>
+                    <div className="min-h-screen min-w-screen flex flex-col">
+                      {isLoginPage || isSignupPage ? (
+                        <div className="flex flex-col flex-grow">
+                          <Component {...pageProps} />
+                        </div>
+                      ) : (
+                        <div className="flex flex-col flex-grow">
+                          {isFeedPage || isProfilePage || isUsernamePage ? (
+                            <HeaderCompressed />
+                          ) : (
+                            <Header />
+                          )}
+                          <NavBar />
+                          {isFeedPage ? <FeedRightBar /> : null}
+                          {isProfilePage ? <ProfileRightBar /> : null}
+                          {isUsernamePage ? (
+                            <ProfileOtherUsersRightBar />
+                          ) : null}
+                          <Component {...pageProps} />
+                          {isCreatePage ? <CreateFooter /> : null}
+                        </div>
+                      )}
+                      {isLoginPage || isSignupPage ? null : (
+                        <div className="flex md:hidden">
+                          <Footer />
+                        </div>
+                      )}
+                    </div>
+                  </CanvasProvider>
+                </ThemeProvider>
+              </Hydrate>
+            </QueryClientProvider>
+          </SessionProvider>
         </div>
       )}
     </>
