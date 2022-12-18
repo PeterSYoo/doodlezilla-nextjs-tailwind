@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import usersConnect from '../../../database/usersConnect';
-import { getUsers, postUsers } from '../../../controllers/usersController';
+import { getAllUsers, postUsers } from '../../../controllers/usersController';
 
 export default async function usersApi(
   req: NextApiRequest,
@@ -14,7 +14,7 @@ export default async function usersApi(
 
   switch (method) {
     case 'GET':
-      getUsers(req, res);
+      getAllUsers(req, res);
       break;
     case 'POST':
       postUsers(req, res);

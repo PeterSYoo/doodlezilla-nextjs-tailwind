@@ -1,4 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  getAllComments,
+  postComment,
+} from '../../../controllers/commentsController';
 import usersConnect from '../../../database/usersConnect';
 
 export default async function tickersApi(
@@ -13,8 +17,10 @@ export default async function tickersApi(
 
   switch (method) {
     case 'GET':
+      getAllComments(req, res);
       break;
     case 'POST':
+      postComment(req, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);

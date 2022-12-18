@@ -1,4 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+  getAllDoodles,
+  postDoodle,
+} from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
 export default async function tickersApi(
@@ -13,8 +17,10 @@ export default async function tickersApi(
 
   switch (method) {
     case 'GET':
+      getAllDoodles(req, res);
       break;
     case 'POST':
+      postDoodle(req, res);
       break;
     default:
       res.setHeader('Allow', ['GET', 'POST']);
