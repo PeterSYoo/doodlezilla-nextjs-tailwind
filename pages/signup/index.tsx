@@ -7,8 +7,17 @@ import { SignupForm } from '../../components/signup/SignupForm.components';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { signIn } from 'next-auth/react';
 
 const SignUp = () => {
+  /* Google Handler Function */
+  const handleGoogleSignin = async () => {
+    signIn('google', {
+      callbackUrl: process.env.NEXT_PUBLIC_APP_URL,
+    });
+  };
+  /*  */
+
   return (
     <>
       <div className="flex-grow h-full flex items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">
@@ -36,7 +45,10 @@ const SignUp = () => {
               </div>
               <div className="flex flex-col gap-3 md:mx-auto">
                 {/* Google Sign in */}
-                <button className="border bg-gradient-to-t from-white to-white border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:text-white md:max-w-[278px] transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:border-white group">
+                <button
+                  onClick={handleGoogleSignin}
+                  className="border bg-gradient-to-t from-white to-white border-neutral-300 py-2 px-10 flex items-center gap-3 rounded-full hover:text-white md:max-w-[278px] transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:border-white group"
+                >
                   <FcGoogle className="text-3xl group-hover:hidden" />
                   <AiOutlineGoogle className="text-3xl group-hover:block hidden" />
                   <span className="font-semibold">Sign In with Google</span>
