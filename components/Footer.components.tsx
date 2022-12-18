@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -83,7 +84,7 @@ export const Footer = () => {
               <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl invisible"></div>
             </div>
           )}
-          <button className="text-[35px] flex">
+          <button onClick={() => signOut()} className="text-[35px] flex">
             <FiLogOut />
           </button>
         </div>
