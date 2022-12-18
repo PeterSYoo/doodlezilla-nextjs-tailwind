@@ -20,9 +20,6 @@ export default function Home() {
 
   return (
     <>
-      <button onClick={() => signOut()} className="border p-2 text-xl">
-        Sign Out
-      </button>
       <div className="flex-grow h-full flex items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">
         <div className="bg-white flex flex-col w-[375px] md:w-full md:max-w-[1136px] justify-center items-center pt-14 rounded-[50px] gap-3 shadow-md shadow-gray-800 md:mx-10 md:max-h-[666px] md:h-full md:grid md:grid-cols-2 md:pt-0">
           {/* Logo for Mobile */}
