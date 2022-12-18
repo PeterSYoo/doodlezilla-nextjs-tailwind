@@ -12,7 +12,7 @@ const SignUp = () => {
   return (
     <>
       <div className="flex-grow h-full flex items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">
-        <div className="bg-white flex flex-col w-[375px] md:w-full md:max-w-[1136px] justify-center items-center pt-14 rounded-[50px] gap-3 shadow-md shadow-gray-800 md:mx-10 md:max-h-[666px] md:h-full md:grid md:grid-cols-2 md:pt-0 md:min-w-[813px]">
+        <div className="bg-white flex flex-col w-[375px] md:w-full md:max-w-[1136px] justify-center items-center pt-14 rounded-[50px] gap-3 shadow-md shadow-gray-800 md:mx-10 md:max-h-[888px] md:h-full md:grid md:grid-cols-2 md:pt-0 md:min-w-[813px]">
           <Image
             src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670833562/nudoodle/assets/Nudoodle_gtxp6j.png"
             alt="logo"
@@ -22,10 +22,10 @@ const SignUp = () => {
           />
           <div className="md:col-start-1 md:col-span-1">
             <Image
-              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670880059/nudoodle/assets/logo-xl_orn8x3.png"
+              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671345057/nudoodle/assets/signup-splash_n4bfqy.png"
               alt="logo xl"
               width={562}
-              height={667}
+              height={888}
               className="hidden md:block rounded-l-[50px]"
             />
           </div>
