@@ -54,7 +54,7 @@ export const postDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(404).json({ error: 'Form data not provided!' });
     }
 
-    Doodles.create(formData, (err: any, data: any) => {
+    Doodles.create(formData, (err: Error, data: any) => {
       return res.status(200).json(data);
     });
   } catch (error) {
