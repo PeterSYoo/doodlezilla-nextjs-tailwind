@@ -9,9 +9,7 @@ const commentSchema = new Schema(
     comment: String,
   },
   {
-    timestamps: {
-      createdAt: 'created_at',
-    },
+    timestamps: true,
   }
 );
 
