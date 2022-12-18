@@ -34,7 +34,7 @@ export default async function handler(
         email,
         password: await hash(password, 12),
       },
-      function (err: any, data: any) {
+      function (err: Error | null, data: any) {
         if (err) return res.status(404).json({ err });
         res.status(201).json({ status: true, user: data });
       }
