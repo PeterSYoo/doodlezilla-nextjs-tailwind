@@ -2,6 +2,8 @@ import { useCanvas } from '../../contexts/CanvasContext';
 import { HexColorPicker } from 'react-colorful';
 import React, { useEffect, useState } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
+import { useMutation } from '@tanstack/react-query';
+import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 
 export const CreateFooter = () => {
   const [penColorState, setPenColorState] = useState<string>('#000000');
@@ -10,15 +12,8 @@ export const CreateFooter = () => {
   const [isPenColorModal, setIsPenColorModal] = useState<boolean>(false);
   const [isBackgroundColorModal, setIsBackgroundColorModal] =
     useState<boolean>(false);
-  const [isUploadDisabled, setIsUploadDisabled] = useState<boolean>(false);
 
   const { clearCanvas, uploadImage, setColor, setPenWidth } = useCanvas();
-
-  const handleUploadClick = () => {
-    uploadImage();
-    setIsUploadDisabled(true);
-    setTimeout(() => setIsUploadDisabled(false), 5000);
-  };
 
   const handlePenWidthChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -27,6 +22,8 @@ export const CreateFooter = () => {
     const selectedOption = event.currentTarget.value;
     setPenWidth(parseInt(selectedOption, 10));
   };
+
+  const { mutate, isLoading } = useMutation(async () => uploadImage());
 
   useEffect(() => {
     setColor(penColorState, false);
@@ -181,15 +178,15 @@ export const CreateFooter = () => {
             {/* Upload Button */}
             <div className="flex justify-center w-2/12 items-center">
               <button
-                onClick={handleUploadClick}
-                disabled={isUploadDisabled}
+                onClick={() => mutate()}
+                disabled={isLoading ? true : false}
                 className={
-                  isUploadDisabled
-                    ? 'bg-gradient-to-t from-gray-500 to-gray-700 text-gray-400 rounded-2xl py-3 px-6 font-semibold'
+                  isLoading
+                    ? 'bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 rounded-2xl py-3 px-10 font-semibold'
                     : 'bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
                 }
               >
-                Upload
+                {isLoading ? <LoaderSpinnerInline /> : <>Submit</>}
               </button>
             </div>
             {/*  */}
@@ -203,7 +200,7 @@ export const CreateFooter = () => {
               {/* Clear Button */}
               <span
                 onClick={clearCanvas}
-                className="border border-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer"
+                className="border border-placeholder rounded-2xl py-3 px-6 font-semibold cursor-pointer transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-transparent hover:text-white flex justify-center items-center"
               >
                 Clear
               </span>
@@ -212,15 +209,15 @@ export const CreateFooter = () => {
             <div className="flex items-center h-full w-1/2 justify-center">
               {/* Upload Button */}
               <button
-                onClick={handleUploadClick}
-                disabled={isUploadDisabled}
+                onClick={() => mutate()}
+                disabled={isLoading ? true : false}
                 className={
-                  isUploadDisabled
-                    ? 'bg-gradient-to-t from-gray-500 to-gray-700 text-gray-400 rounded-2xl py-3 px-6 font-semibold'
+                  isLoading
+                    ? 'bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 rounded-2xl py-3 px-10 font-semibold'
                     : 'bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
                 }
               >
-                Upload
+                {isLoading ? <LoaderSpinnerInline /> : <>Upload</>}
               </button>
               {/*  */}
             </div>
