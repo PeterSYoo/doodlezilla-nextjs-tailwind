@@ -1,6 +1,8 @@
-import Image from 'next/image';
+import { GetServerSideProps } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import { FeedDoodleCard } from '../../components/feed/FeedDoodleCard.components';
 import { FeedSponsoredCard } from '../../components/feed/FeedSponsoredCard.components';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const FeedPage = () => {
   return (
@@ -19,3 +21,26 @@ const FeedPage = () => {
 };
 
 export default FeedPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+
+  return {
+    props: {
+      session: session,
+    },
+  };
+};

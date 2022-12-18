@@ -1,6 +1,9 @@
+import { GetServerSideProps } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { useState } from 'react';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const UserIdPage = () => {
   const [isModal, setIsModal] = useState<boolean>();
@@ -76,3 +79,26 @@ const UserIdPage = () => {
 };
 
 export default UserIdPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
+
+  return {
+    props: {
+      session: session,
+    },
+  };
+};

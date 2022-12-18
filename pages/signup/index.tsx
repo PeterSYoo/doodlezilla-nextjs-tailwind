@@ -4,6 +4,9 @@ import { FaUserPlus } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import Link from 'next/link';
 import { SignupForm } from '../../components/signup/SignupForm.components';
+import { GetServerSideProps } from 'next';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]';
 
 const SignUp = () => {
   return (
@@ -72,3 +75,26 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/feed',
+      },
+    };
+  }
+
+  return {
+    props: {
+      session: session,
+    },
+  };
+};
