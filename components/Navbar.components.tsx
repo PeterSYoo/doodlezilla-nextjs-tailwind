@@ -11,8 +11,10 @@ import { LoaderSpinner } from './LoaderSpinner.components';
 export const NavBar = () => {
   const { data: session }: any = useSession();
 
-  const { userData, userIsLoading, userError } = useFetchUser(session.user.id);
-  const { userDoodlesData, userDoodlesIsLoading, userDoodlesError } =
+  const { userData, userIsLoading, userIsError } = useFetchUser(
+    session.user.id
+  );
+  const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
     useFetchUserDoodles(session.user.id);
 
   const router = useRouter();
@@ -22,7 +24,7 @@ export const NavBar = () => {
   const isCreatePage = router.asPath === '/create';
 
   if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
-  if (userError || userDoodlesError) return <>Error</>;
+  if (userIsError || userDoodlesIsError) return <>Error</>;
 
   return (
     <>
