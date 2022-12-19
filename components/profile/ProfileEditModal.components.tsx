@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { useMutation } from '@tanstack/react-query';
 import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
+import { BiChevronsRight } from 'react-icons/bi';
 
 type Inputs = {
   username: string;
@@ -34,10 +35,9 @@ export interface DoodleCardModalProps {
   setIsModal: (isModal: boolean) => void;
 }
 export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
-  const [imageSrc, setImageSrc] = useState<any>();
-  const inputFileRef = useRef<any>(null);
-
   const { data: session }: any = useSession();
+  const [imageSrc, setImageSrc] = useState<string>(session.user.image);
+  const inputFileRef = useRef<any>(null);
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
     session.user.id
@@ -91,10 +91,6 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
 
     if (!data.error) {
       setImageSrc(data.secure_url);
-      await mutateProfileAsync({
-        image: data.secure_url,
-      });
-      await userRefetch();
     }
   };
 
@@ -126,18 +122,28 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         <div className="container mx-auto w-11/12 md:max-w-[768px]">
           <div className="relative py-12 bg-white rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
             {/* Edit Avatar Photo */}
-            <div className="flex flex-col justify-center items-center gap-5 md:col-start-1 md:col-span-5 md:items-center md:ml-20">
-              <Image
-                src={
-                  userData.image
-                    ? userData.image
-                    : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                }
-                width={150}
-                height={150}
-                alt="profile avatar mobile"
-                className="rounded-full aspect-square"
-              />
+            <div className="flex flex-col justify-center items-center gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full">
+              <div className="flex justify-center md:justify-between w-full items-center gap-6 md:gap-0">
+                <Image
+                  src={
+                    userData.image
+                      ? userData.image
+                      : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                  }
+                  width={110}
+                  height={110}
+                  alt="profile avatar mobile"
+                  className="rounded-full aspect-square"
+                />
+                <BiChevronsRight className="text-xl text-placeholder" />
+                <Image
+                  src={imageSrc}
+                  width={110}
+                  height={110}
+                  alt="profile avatar mobile"
+                  className="rounded-full aspect-square"
+                />
+              </div>
               <input
                 type="file"
                 name="file"
@@ -145,24 +151,18 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 ref={inputFileRef}
                 hidden
               />
-              {mutateProfileIsLoading ? (
-                <span className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-white font-semibold cursor-default">
-                  <LoaderSpinnerInline />
-                </span>
-              ) : (
-                <button
-                  onClick={handleInputFileClick}
-                  className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer"
-                >
-                  Edit Avatar Photo
-                </button>
-              )}
+              <button
+                onClick={handleInputFileClick}
+                className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer"
+              >
+                Edit Avatar Photo
+              </button>
             </div>
             {/*  */}
             {/* Start of Form */}
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="md:col-start-6 md:col-span-7"
+              className="md:col-start-5 md:col-span-8"
             >
               <div className="flex flex-col items-center justify-center gap-3 mb-10">
                 {/* Username */}
