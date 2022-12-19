@@ -30,7 +30,7 @@ const UserIdPage = ({ session, username }: any) => {
           <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
             {/* Profile Avatar & bio */}
             <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
-              <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
+              <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
                 <div className="flex flex-col items-center gap-2">
                   <Image
                     src={
@@ -41,7 +41,7 @@ const UserIdPage = ({ session, username }: any) => {
                     width={75}
                     height={75}
                     alt="profile avatar mobile"
-                    className="rounded-full"
+                    className="rounded-full aspect-square"
                   />
                 </div>
                 <div className="flex flex-col items-center">
@@ -58,7 +58,7 @@ const UserIdPage = ({ session, username }: any) => {
                   {userData.location ? userData.location : null}
                 </p>
               </div>
-              <div className="col-start-5 col-span-8 mt-4 flex flex-col gap-3">
+              <div className="col-start-6 col-span-7 mt-4 flex flex-col gap-3">
                 <p className="text-xs">
                   {userData.biography ? (
                     userData.biography
