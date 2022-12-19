@@ -15,10 +15,10 @@ export default async function handler(
       return res
         .status(404)
         .json({ error: `Don't have form DataTransfer...!` });
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     // check duplicate username
-    const checkExistingUsername = await Users.findOne({ username });
+    const checkExistingUsername = await Users.findOne({ name });
     if (checkExistingUsername)
       return res.status(422).json({ message: 'Username already exists!' });
 
@@ -30,7 +30,7 @@ export default async function handler(
     // hash password
     Users.create(
       {
-        username,
+        name,
         email,
         password: await hash(password, 12),
       },
