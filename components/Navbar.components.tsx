@@ -29,7 +29,7 @@ export const NavBar = () => {
   return (
     <>
       <div className="z-40 fixed bg-white h-full hidden md:flex md:w-[94px] lg:w-[213px] md:mr-[159px] lg:mr-[258px] border-r border-grayBorder md:flex-col">
-        <div className="w-full h-[362px] border-b border-grayBorder flex flex-col justify-between">
+        <div className="w-full h-[425px] border-b border-grayBorder flex flex-col justify-between">
           {/* Logo for Mobile and Desktop */}
           <div className="w-full h-[41px] flex flex-col items-center justify-center mt-[19px]">
             <Link href="/feed">
@@ -105,9 +105,14 @@ export const NavBar = () => {
               {userData.name}
             </p>
             {/*  */}
+            {/* Location */}
+            <p className="mt-1 w-full break-words px-2 text-center text-xs text-grayText">
+              {userData.location}
+            </p>
+            {/*  */}
             {/* Number of Doodles */}
             <div className="flex flex-col items-center my-9">
-              <p className="text-xs font-bold">{userDoodlesData.length}</p>
+              <p className="text-xs font-semibold">{userDoodlesData.length}</p>
               <p className="text-xs text-grayText">DOODLES</p>
             </div>
             {/*  */}
