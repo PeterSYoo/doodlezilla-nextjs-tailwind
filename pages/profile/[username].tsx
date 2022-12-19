@@ -30,7 +30,7 @@ const UserIdPage = ({ session, username }: any) => {
           <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
             {/* Profile Avatar & bio */}
             <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
-              <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
+              <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4 px-2">
                 <div className="flex flex-col items-center gap-2">
                   <Image
                     src={
