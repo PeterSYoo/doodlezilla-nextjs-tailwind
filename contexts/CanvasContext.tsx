@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import React, {
   useContext,
   useRef,
@@ -37,6 +38,8 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  const { data: session }: any = useSession();
 
   const prepareCanvas = () => {
     const canvas = canvasRef.current!;
@@ -139,7 +142,25 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
 
       if (response.ok) {
         const data = await response.json();
-        setIsSuccessModal(true);
+
+        try {
+          const Options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user: session?.user.id,
+              likes: 0,
+              image: data.secure_url,
+            }),
+          };
+
+          const response = await fetch(`/api/doodles/`, Options);
+          const json = await response.json();
+          setIsSuccessModal(true);
+          return json;
+        } catch (error) {
+          return error;
+        }
       } else {
         throw new Error(response.statusText);
       }
