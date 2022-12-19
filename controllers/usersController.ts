@@ -61,3 +61,22 @@ export const postUsers = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(404).json({ error });
   }
 };
+
+/* GET a Single User by Username */
+export const getUserByUsername = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { username } = req.query;
+
+    const user = await Users.findOne({ name: username });
+    if (!user) {
+      throw new Error('No user found with that Username!');
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Cannot get the User!' });
+  }
+};
