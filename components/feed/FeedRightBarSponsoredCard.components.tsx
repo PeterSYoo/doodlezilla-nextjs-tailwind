@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const RightBarSponsoredCard = () => {
+export const FeedRightBarSponsoredCard = () => {
   return (
     <>
       <div className="flex flex-col gap-2 lg:w-[187px]">
