@@ -162,7 +162,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
             {/* Start of Form */}
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="md:col-start-5 md:col-span-8"
+              className="md:col-start-6 md:col-span-7"
             >
               <div className="flex flex-col items-center justify-center gap-3 mb-10">
                 {/* Username */}
@@ -586,7 +586,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 )}
                 {/*  */}
               </div>
-              <div className="flex justify-end gap-5 w-full mr-22 md:justify-center">
+              <div className="flex gap-5 w-full mr-22 justify-center">
                 {/* Cancel Button */}
                 <span
                   onClick={() => setIsModal(false)}
