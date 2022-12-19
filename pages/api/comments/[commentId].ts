@@ -5,7 +5,7 @@ import {
 } from '../../../controllers/commentsController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function tickersApi(
+export default async function commentIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

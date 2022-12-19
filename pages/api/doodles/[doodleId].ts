@@ -6,7 +6,7 @@ import {
 } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function tickersIdApi(
+export default async function doodleIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

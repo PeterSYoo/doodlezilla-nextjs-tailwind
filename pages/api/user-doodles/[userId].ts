@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserDoodles } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function usersIdApi(
+export default async function userIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

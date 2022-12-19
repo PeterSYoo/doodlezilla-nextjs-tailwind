@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { putDoodleLikes } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function tickersApi(
+export default async function doodleIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

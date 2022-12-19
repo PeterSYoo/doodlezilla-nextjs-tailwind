@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import usersConnect from '../../../database/usersConnect';
 import { getUser, putUser } from '../../../controllers/usersController';
 
-export default async function usersIdApi(
+export default async function userIdApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
