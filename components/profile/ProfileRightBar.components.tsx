@@ -1,10 +1,24 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useState } from 'react';
-import { HiDotsHorizontal } from 'react-icons/hi';
+import useFetchUser from '../../hooks/useFetchUser';
+import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
+import { LoaderSpinner } from '../LoaderSpinner.components';
 import { ProfileEditModal } from './ProfileEditModal.components';
 
 export const ProfileRightBar = () => {
   const [isModal, setIsModal] = useState<boolean>();
+
+  const { data: session }: any = useSession();
+
+  const { userData, userIsLoading, userIsError } = useFetchUser(
+    session.user.id
+  );
+  const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
+    useFetchUserDoodles(session.user.id);
+
+  if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
+  if (userIsError || userDoodlesIsError) return <>Error</>;
 
   return (
     <>
@@ -23,46 +37,61 @@ export const ProfileRightBar = () => {
           {/* Profile Avatar */}
           <div className="flex justify-center">
             <Image
-              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671059751/nudoodle/assets/download_2_qkqj5l.png"
+              src={
+                userData.image
+                  ? userData.image
+                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+              }
               width={140}
               height={140}
               alt="profile avatar"
-              className="lg:hidden"
+              className="lg:hidden rounded-full"
             />
             <Image
-              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671059751/nudoodle/assets/download_2_qkqj5l.png"
+              src={
+                userData.image
+                  ? userData.image
+                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+              }
               width={200}
               height={200}
               alt="profile avatar"
-              className="md:hidden lg:block"
+              className="md:hidden lg:block rounded-full"
             />
           </div>
           {/*  */}
           <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-center lg:items-start">
             {/* Username */}
-            <h1 className="font-bold w-full break-all text-lg">APPLE</h1>
+            <h1 className="font-bold w-full break-all text-lg">
+              {userData.name.toUpperCase()}
+            </h1>
             {/*  */}
             <div className="flex flex-col justify-between lg:items-start gap-6">
               {/* Doodles Count */}
               <p className="font-semibold text-xs">
-                20 <span className="text-placeholder">Doodles</span>
+                {userDoodlesData.length}&nbsp;
+                <span className="text-placeholder">Doodles</span>
               </p>
               {/*  */}
               {/* Bio */}
               <p className="text-xs text-placeholder">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Facilis, tenetur earum id ducimus ipsam fuga error sit odio in
-                harum voluptatibus debitis cumque maiores unde vitae a! Veniam,
-                voluptatum nam?
-              </p>
-              <p className="text-xs text-placeholder">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                {userData.biography ? (
+                  userData.biography
+                ) : (
+                  <>Please edit your profile to write your biography.</>
+                )}
               </p>
               {/*  */}
               {/* Location */}
               <div className="flex flex-col lg:px-0 gap-1 lg:items-start">
                 <p className="font-semibold text-xs">Location</p>
-                <p className="text-xs text-placeholder">Based in Japan.</p>
+                <p className="text-xs text-placeholder">
+                  {userData.location ? (
+                    userData.location
+                  ) : (
+                    <>Please edit your profile for location.</>
+                  )}
+                </p>
               </div>
               {/*  */}
             </div>
