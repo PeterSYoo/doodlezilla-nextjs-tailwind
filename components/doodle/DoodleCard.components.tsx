@@ -103,6 +103,7 @@ export const DoodleCard = () => {
           </div>
         </div>
         <div className="w-full border-t border-grayBorder">
+          {/* Write a Comment and Post Button */}
           <div className="w-11/12 flex justify-between mx-auto items-center px-4 mt-3 gap-5">
             <textarea className="w-full h-6 focus:outline-none focus:h-20 overflow-auto" />
 
@@ -110,6 +111,7 @@ export const DoodleCard = () => {
               Post
             </button>
           </div>
+          {/*  */}
         </div>
       </div>
     </>
