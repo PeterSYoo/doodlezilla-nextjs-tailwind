@@ -1,16 +1,28 @@
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AiFillHome } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
+import useFetchUser from '../hooks/useFetchUser';
+import useFetchUserDoodles from '../hooks/useFetchUsersDoodles';
+import { LoaderSpinner } from './LoaderSpinner.components';
 
 export const NavBar = () => {
+  const { data: session }: any = useSession();
+
+  const { userData, userIsLoading, userError } = useFetchUser(session.user.id);
+  const { userDoodlesData, userDoodlesIsLoading, userDoodlesError } =
+    useFetchUserDoodles(session.user.id);
+
   const router = useRouter();
 
   const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
+
+  if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
+  if (userError || userDoodlesError) return <>Error</>;
 
   return (
     <>
@@ -46,10 +58,15 @@ export const NavBar = () => {
                     <div className="animate-border rounded-full from-[#D055D3] via-sunset to-[#F97E1C] bg-[length:200%_200%] p-0.5 bg-black bg-gradient-to-tr duration-500">
                       <div className="bg-white rounded-full p-0.5 flex justify-center items-center h-[60px] w-[60px] lg:h-[72px] lg:w-[72px]">
                         <Image
-                          src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670910840/nudoodle/assets/cat_avatar_cmp6xf.png"
+                          src={
+                            userData.image
+                              ? userData.image
+                              : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                          }
                           alt="avatar"
                           width={72}
                           height={72}
+                          className="rounded-full"
                         />
                       </div>
                     </div>
@@ -64,10 +81,15 @@ export const NavBar = () => {
                     <div className="hover:animate-border rounded-full hover:from-[#D055D3] hover:via-sunset hover:to-[#F97E1C] bg-[length:200%_200%] p-0.5 bg-white bg-gradient-to-tr duration-500">
                       <div className="bg-white rounded-full p-0.5 flex justify-center items-center h-[60px] w-[60px] lg:h-[72px] lg:w-[72px]">
                         <Image
-                          src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670910840/nudoodle/assets/cat_avatar_cmp6xf.png"
+                          src={
+                            userData.image
+                              ? userData.image
+                              : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                          }
                           alt="avatar"
                           width={72}
                           height={72}
+                          className="rounded-full"
                         />
                       </div>
                     </div>
@@ -78,12 +100,12 @@ export const NavBar = () => {
             {/*  */}
             {/* Username */}
             <p className="font-semibold mt-6 w-full break-words px-2 text-center">
-              Apple
+              {userData.name}
             </p>
             {/*  */}
             {/* Number of Doodles */}
             <div className="flex flex-col items-center my-9">
-              <p className="text-xs font-bold">20</p>
+              <p className="text-xs font-bold">{userDoodlesData.length}</p>
               <p className="text-xs text-grayText">DOODLES</p>
             </div>
             {/*  */}
