@@ -4,14 +4,14 @@ import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
 import { LoaderSpinner } from '../LoaderSpinner.components';
 import useFetchUserDoodlesByUsername from '../../hooks/useFetchUsersDoodlesByUsername';
 
-export const ProfileOtherUsersRightBar = ({ session, username }: any) => {
+export const ProfileOtherUsersRightBar = ({ username }: any) => {
   const { userData, userIsLoading, userIsError } =
     useFetchUserByUsername(username);
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
     useFetchUserDoodlesByUsername(username);
 
   if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
-  if (userIsError) return <>Error</>;
+  if (userIsError || userDoodlesIsError) return <>Error</>;
 
   return (
     <>
