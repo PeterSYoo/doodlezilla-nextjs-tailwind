@@ -99,9 +99,6 @@ export default function App({ Component, pageProps }: AppProps) {
                           <NavBar />
                           {isFeedPage ? <FeedRightBar /> : null}
                           {isProfilePage ? <ProfileRightBar /> : null}
-                          {isUsernamePage ? (
-                            <ProfileOtherUsersRightBar />
-                          ) : null}
                           <Component {...pageProps} />
                           {isCreatePage ? <CreateFooter /> : null}
                         </div>
