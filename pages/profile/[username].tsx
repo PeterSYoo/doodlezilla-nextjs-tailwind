@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
@@ -11,16 +10,13 @@ import useFetchUserDoodlesByUsername from '../../hooks/useFetchUsersDoodlesByUse
 import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
 import { authOptions } from '../api/auth/[...nextauth]';
 
-const UserIdPage = ({ session }: any) => {
+const UserIdPage = ({ session, username }: any) => {
   const [isModal, setIsModal] = useState<boolean>();
-
-  const router = useRouter();
-  const { username }: any = router.query;
 
   const { userData, userIsLoading, userIsError } =
     useFetchUserByUsername(username);
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
-    useFetchUserDoodlesByUsername(username._id);
+    useFetchUserDoodlesByUsername(username);
 
   if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
   if (userIsError || userDoodlesIsError) return <>Error</>;
@@ -64,13 +60,11 @@ const UserIdPage = ({ session }: any) => {
               </div>
               <div className="col-start-5 col-span-8 mt-4 flex flex-col gap-3">
                 <p className="text-xs">
-                  <p className="text-xs">
-                    {userData.biography ? (
-                      userData.biography
-                    ) : (
-                      <>This user hasn&apos;t written anything here yet.</>
-                    )}
-                  </p>
+                  {userData.biography ? (
+                    userData.biography
+                  ) : (
+                    <>This user hasn&apos;t written anything here yet.</>
+                  )}
                 </p>
               </div>
             </div>
@@ -152,6 +146,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       session: session,
+      username,
     },
   };
 };
