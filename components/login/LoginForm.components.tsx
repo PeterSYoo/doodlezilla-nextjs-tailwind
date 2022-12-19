@@ -49,7 +49,7 @@ export const LoginForm = () => {
   const handleSignin = async (data: any) => {
     const status: any = await signIn('credentials', {
       redirect: false,
-      username: data.username.toLowerCase(),
+      name: data.username.toLowerCase(),
       password: data.password,
       callbackUrl: '/feed',
     });

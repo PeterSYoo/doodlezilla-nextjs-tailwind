@@ -60,7 +60,7 @@ export const SignupForm = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: data.username.toLowerCase(),
+        name: data.username.toLowerCase(),
         email: data.email,
         password: data.password,
       }),
