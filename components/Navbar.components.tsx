@@ -68,7 +68,7 @@ export const NavBar = () => {
                           alt="avatar"
                           width={72}
                           height={72}
-                          className="rounded-full"
+                          className="rounded-full aspect-square"
                         />
                       </div>
                     </div>
@@ -91,7 +91,7 @@ export const NavBar = () => {
                           alt="avatar"
                           width={72}
                           height={72}
-                          className="rounded-full"
+                          className="rounded-full aspect-square"
                         />
                       </div>
                     </div>

@@ -45,7 +45,7 @@ export const ProfileRightBar = () => {
               width={140}
               height={140}
               alt="profile avatar"
-              className="lg:hidden rounded-full"
+              className="lg:hidden rounded-full aspect-square"
             />
             <Image
               src={
@@ -56,17 +56,17 @@ export const ProfileRightBar = () => {
               width={200}
               height={200}
               alt="profile avatar"
-              className="md:hidden lg:block rounded-full"
+              className="md:hidden lg:block rounded-full aspect-square"
             />
           </div>
           {/*  */}
           <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-center lg:items-start">
             {/* Username */}
-            <h1 className="font-bold w-full break-all text-lg">
+            <h1 className="font-bold break-all text-lg lg:items-start w-3/4 lg:w-full">
               {userData.name.toUpperCase()}
             </h1>
             {/*  */}
-            <div className="flex flex-col justify-between lg:items-start gap-6">
+            <div className="flex flex-col justify-between lg:items-start gap-6 w-3/4 lg:w-full">
               {/* Doodles Count */}
               <p className="font-semibold text-xs">
                 {userDoodlesData.length}&nbsp;

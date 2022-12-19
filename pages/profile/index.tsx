@@ -26,7 +26,7 @@ const ProfilePage = ({ session }: any) => {
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
         {/* Profile Avatar & bio */}
         <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
-          <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
+          <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4 px-2">
             <div className="flex flex-col items-center gap-1">
               <Image
                 src={
@@ -37,9 +37,11 @@ const ProfilePage = ({ session }: any) => {
                 width={75}
                 height={75}
                 alt="profile avatar mobile"
-                className="rounded-full"
+                className="rounded-full aspect-square"
               />
-              <h1 className="font-bold break-all">{userData.name}</h1>
+              <h1 className="font-bold break-all text-center">
+                {userData.name}
+              </h1>
               <p className="font-semibold text-xs">
                 {userDoodlesData.length}&nbsp;
                 <span className="font-normal text-placeholder">DOODLES</span>
@@ -55,7 +57,7 @@ const ProfilePage = ({ session }: any) => {
               Edit
             </button>
           </div>
-          <div className="col-start-5 col-span-8 mt-4 flex flex-col gap-3">
+          <div className="col-start-6 col-span-7 mt-4 flex flex-col gap-3">
             <p className="text-xs">
               {userData.biography ? (
                 userData.biography
