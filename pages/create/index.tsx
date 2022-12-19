@@ -14,21 +14,18 @@ const CreatePage: React.FC = () => {
 
   return (
     <>
-      <div className="md:ml-[94px] lg:ml-[213px] flex-grow flex flex-col justify-center items-center gap-5 md:justify-start">
-        <div className="flex justify-center items-center h-screen">
-          <canvas
-            id="drawing-canvas"
-            onMouseDown={(event) => startDrawing(event)}
-            onMouseUp={() => finishDrawing()}
-            onMouseMove={(event) => draw(event)}
-            onTouchStart={(event) => startDrawing(event)}
-            onTouchEnd={() => finishDrawing()}
-            onTouchMove={(event) => draw(event)}
-            onTouchCancel={() => finishDrawing()}
-            ref={canvasRef}
-            className="h-screen w-screen bg-zinc-400"
-          />
-        </div>
+      <div className="md:ml-[94px] md:my-[75px] lg:ml-[213px] bg-zinc-50 flex justify-center">
+        <canvas
+          id="drawing-canvas"
+          onMouseDown={(event) => startDrawing(event)}
+          onMouseUp={() => finishDrawing()}
+          onMouseMove={(event) => draw(event)}
+          onTouchStart={(event) => startDrawing(event)}
+          onTouchEnd={() => finishDrawing()}
+          onTouchMove={(event) => draw(event)}
+          onTouchCancel={() => finishDrawing()}
+          ref={canvasRef}
+        />
       </div>
     </>
   );
