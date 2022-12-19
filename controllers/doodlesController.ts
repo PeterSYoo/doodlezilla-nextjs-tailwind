@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Doodles from '../models/Doodles';
+import Users from '../models/Users';
 
 /* GET all Doodles */
 export const getAllDoodles = async (
@@ -113,6 +114,26 @@ export const getUserDoodles = async (
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.status(200).json(user);
   } catch (error) {
-    res.status(404).json({ error: 'Error while fetching users ticker' });
+    res.status(404).json({ error: 'Error while fetching users doodles' });
+  }
+};
+
+/* GET all User's Doodles by Username */
+export const getUserDoodlesByUsername = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { username } = req.query;
+    const user = await Users.findOne({ name: username });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (user) {
+      const doodles = await Doodles.find({ user: user._id });
+      if (!doodles) return res.status(404).json({ error: 'Doodle not found' });
+      res.status(200).json(doodles);
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Error while fetching users doodles' });
   }
 };
