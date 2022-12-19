@@ -2,12 +2,23 @@ import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { useState } from 'react';
-import { HiDotsHorizontal } from 'react-icons/hi';
+import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
+import useFetchUser from '../../hooks/useFetchUser';
+import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
 import { authOptions } from '../api/auth/[...nextauth]';
 
-const ProfilePage = () => {
+const ProfilePage = ({ session }: any) => {
   const [isModal, setIsModal] = useState<boolean>();
+
+  const { userData, userIsLoading, userIsError } = useFetchUser(
+    session.user.id
+  );
+  const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
+    useFetchUserDoodles(session.user.id);
+
+  if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
+  if (userIsError || userDoodlesIsError) return <>Error</>;
 
   return (
     <>
@@ -18,18 +29,24 @@ const ProfilePage = () => {
           <div className="col-start-1 col-span-4 flex flex-col items-center gap-4 border border-grayBorder rounded-2xl py-4">
             <div className="flex flex-col items-center gap-1">
               <Image
-                src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1671059751/nudoodle/assets/download_2_qkqj5l.png"
+                src={
+                  userData.image
+                    ? userData.image
+                    : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                }
                 width={75}
                 height={75}
                 alt="profile avatar mobile"
+                className="rounded-full"
               />
-              <h1 className="font-bold break-all">Apple</h1>
+              <h1 className="font-bold break-all">{userData.name}</h1>
               <p className="font-semibold text-xs">
-                20 <span className="font-normal text-placeholder">DOODLES</span>
+                {userDoodlesData.length}&nbsp;
+                <span className="font-normal text-placeholder">DOODLES</span>
               </p>
             </div>
             <p className="font-semibold text-xs text-placeholder">
-              Based in Japan
+              {userData.location ? userData.location : null}
             </p>
             <button
               onClick={() => setIsModal(true)}
@@ -40,13 +57,11 @@ const ProfilePage = () => {
           </div>
           <div className="col-start-5 col-span-8 mt-4 flex flex-col gap-3">
             <p className="text-xs">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-              quibusdam officiis cum excepturi libero harum quaerat aliquid
-              veritatis? Quis aliquid eligendi obcaecati aperiam voluptas veniam
-              est qui quam molestias mollitia!
-            </p>
-            <p className="text-xs">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              {userData.biography ? (
+                userData.biography
+              ) : (
+                <>Please edit your profile to write your biography.</>
+              )}
             </p>
           </div>
         </div>
