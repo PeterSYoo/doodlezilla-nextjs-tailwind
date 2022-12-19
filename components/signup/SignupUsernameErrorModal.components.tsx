@@ -21,7 +21,7 @@ export const SignupUsernameErrorModal: React.FC<Props> = ({
         {/*  */}
         <div className="container mx-auto w-11/12 md:w-8/12 lg:max-w-[600px]">
           <div className="relative py-14 bg-white rounded-3xl flex flex-col gap-10 items-center">
-            <BsFillExclamationCircleFill className="text-red-600 text-4xl" />
+            <BsFillExclamationCircleFill className="text-sunset text-4xl" />
             <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center">
               That Username Already Exists!
             </h1>
