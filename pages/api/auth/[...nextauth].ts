@@ -35,7 +35,7 @@ export const authOptions: any = {
         });
 
         /* Check User Existance */
-        const result = await Users.findOne({ username: credentials?.username });
+        const result = await Users.findOne({ name: credentials?.name });
         if (!result) {
           throw new Error('No user found with that Username!');
         }
