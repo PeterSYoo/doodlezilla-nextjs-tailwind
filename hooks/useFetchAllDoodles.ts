@@ -4,7 +4,7 @@ const useFetchAllDoodles = () => {
   const {
     data: doodlesData,
     isLoading: doodlesIsLoading,
-    error: doodlesError,
+    isError: doodlesIsError,
   } = useQuery(['allDoodles'], async () => {
     try {
       const response = await fetch(`/api/doodles`);
@@ -14,7 +14,7 @@ const useFetchAllDoodles = () => {
     }
   });
 
-  return { doodlesData, doodlesIsLoading, doodlesError };
+  return { doodlesData, doodlesIsLoading, doodlesIsError };
 };
 
 export default useFetchAllDoodles;

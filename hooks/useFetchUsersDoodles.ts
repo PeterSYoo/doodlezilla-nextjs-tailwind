@@ -4,7 +4,7 @@ const useFetchUserDoodles = (userId: string) => {
   const {
     data: userDoodlesData,
     isLoading: userDoodlesIsLoading,
-    error: userDoodlesError,
+    isError: userDoodlesIsError,
   } = useQuery(['userDoodles'], async () => {
     try {
       const response = await fetch(`/api/user-doodles/${userId}`);
@@ -14,7 +14,7 @@ const useFetchUserDoodles = (userId: string) => {
     }
   });
 
-  return { userDoodlesData, userDoodlesIsLoading, userDoodlesError };
+  return { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError };
 };
 
 export default useFetchUserDoodles;

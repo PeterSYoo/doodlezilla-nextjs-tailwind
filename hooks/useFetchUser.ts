@@ -4,7 +4,7 @@ const useFetchUser = (objectId: string) => {
   const {
     data: userData,
     isLoading: userIsLoading,
-    error: userError,
+    isError: userIsError,
   } = useQuery(['user'], async () => {
     try {
       const response = await fetch(`/api/users/${objectId}`);
@@ -14,7 +14,7 @@ const useFetchUser = (objectId: string) => {
     }
   });
 
-  return { userData, userIsLoading, userError };
+  return { userData, userIsLoading, userIsError };
 };
 
 export default useFetchUser;
