@@ -5,6 +5,8 @@ const userSchema = new Schema({
   email: String,
   image: String,
   password: String,
+  biography: String,
+  location: String,
 });
 
 const Users = models.user || model('user', userSchema);
