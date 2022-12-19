@@ -100,3 +100,19 @@ export const putDoodleLikes = async (
     res.status(404).json({ error: 'Error While Updating the Doodle!' });
   }
 };
+
+/* GET all User's Doodles */
+export const getUserDoodles = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { userId } = req.query;
+    const user = await Doodles.find({ user: userId });
+
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: 'Error while fetching users ticker' });
+  }
+};
