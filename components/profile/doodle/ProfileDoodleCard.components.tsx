@@ -1,56 +1,55 @@
 import Image from 'next/image';
-import { HiDotsHorizontal } from 'react-icons/hi';
+import { useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
-import { DoodleCardModal } from '../DoodleCardModal.components';
-import { useRef, useState } from 'react';
+import { HiDotsHorizontal } from 'react-icons/hi';
+import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
 
-export const DoodleCard = () => {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  const inputRef = useRef(null);
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
+export const ProfileDoodleCard = ({
+  doodleWithCommentsData,
+  userData,
+}: any) => {
+  const [isModal, setIsModal] = useState<boolean>(false);
 
   return (
     <>
-      {/*       {isModal ? <DoodleCardModal setIsModal={setIsModal} /> : null} */}
-      <div className="bg-white border border-grayBorder w-full max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[474px] lg:max-w-[733px]">
+      {isModal ? <ProfileDoodleOptionsModal setIsModal={setIsModal} /> : null}
+      <div className="bg-white border border-grayBorder w-full h-full max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
           <div className="flex gap-3 items-center">
             <Image
-              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670910840/nudoodle/assets/cat_avatar_cmp6xf.png"
+              src={
+                userData.image
+                  ? userData.image
+                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+              }
               width={43}
               height={43}
               alt="avatar feed"
             />
-            <span className="font-semibold">Apple</span>
+            <span className="font-semibold">{userData.name}</span>
           </div>
-          {/*           <HiDotsHorizontal
+          <HiDotsHorizontal
             onClick={() => setIsModal(true)}
             className="text-2xl cursor-pointer hover:text-sunset"
-          /> */}
-        </div>
-        {/*  */}
-        {/* Doodle Image */}
-        <div className="bg-zinc-50 border border-grayBorder rounded-[50px] w-11/12 flex justify-center items-center py-2">
-          <Image
-            src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670922076/nudoodle/assets/image_3_6_gifnqn.png"
-            width={272}
-            height={400}
-            alt="tree"
           />
         </div>
         {/*  */}
-        <div className="h-48 overflow-y-scroll flex flex-col items-center">
+        {/* Doodle Image */}
+
+        <Image
+          src={doodleWithCommentsData.doodle.image}
+          width={533}
+          height={900}
+          alt="tree"
+          className="object-container shrink rounded-3xl w-2/3 mb-3"
+        />
+
+        {/*  */}
+        <div className="h-[600px] overflow-y-scroll flex flex-col items-center">
           {/* Likes and Comments */}
-          <div className="flex flex-col w-10/12 gap-4 mt-4">
+          <div className="flex flex-col w-10/12 gap-1 mt-4">
             <div className="flex flex-col w-full">
               <div className="text-sm">
                 <span className="font-semibold">Apple</span>&nbsp;
@@ -58,20 +57,15 @@ export const DoodleCard = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat...
+                  laboris nisi ut aliquip ex ea commodo consequat
                 </span>
-                &nbsp;
-                <span className="text-placeholder">more</span>
               </div>
             </div>
-            <p className="font-bold text-placeholder text-sm">
-              View all 4 comments
-            </p>
             <p className="text-[10px] text-placeholder">2 HOURS AGO</p>
           </div>
           {/*  */}
           {/* Likes and Comments */}
-          <div className="flex flex-col w-10/12 gap-4 mt-4">
+          <div className="flex flex-col w-10/12 gap-1 mt-4">
             <div className="flex flex-col w-full">
               <div className="text-sm">
                 <span className="font-semibold">Apple</span>&nbsp;
@@ -79,15 +73,10 @@ export const DoodleCard = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat...
+                  laboris nisi ut aliquip ex ea commodo consequat
                 </span>
-                &nbsp;
-                <span className="text-placeholder">more</span>
               </div>
             </div>
-            <p className="font-bold text-placeholder text-sm">
-              View all 4 comments
-            </p>
             <p className="text-[10px] text-placeholder">2 HOURS AGO</p>
           </div>
           {/*  */}

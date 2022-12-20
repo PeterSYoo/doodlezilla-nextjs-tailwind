@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
-import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
-import { LoaderSpinner } from '../LoaderSpinner.components';
-import useFetchUserDoodlesByUsername from '../../hooks/useFetchUsersDoodlesByUsername';
+import useFetchUserDoodles from '../../../hooks/useFetchUsersDoodles';
+import useFetchUserByUsername from '../../../hooks/useFetchUserByUsername';
+import { LoaderSpinner } from '../../LoaderSpinner.components';
+import useFetchUserDoodlesByUsername from '../../../hooks/useFetchUsersDoodlesByUsername';
 
-export const ProfileOtherUsersRightBar = ({ username }: any) => {
+export const ProfileSlugUsersRightBar = ({ username }: any) => {
   const { userData, userIsLoading, userIsError } =
     useFetchUserByUsername(username);
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
