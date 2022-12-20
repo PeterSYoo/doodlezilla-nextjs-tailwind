@@ -105,17 +105,17 @@ const ProfilePage = ({ session }: any) => {
             <Fragment key={doodle.doodle._id}>
               <div
                 onClick={() => handleModalClick(doodle.doodle._id)}
-                className="overlay-container rounded-xl w-full h-full overflow-hidden relative group"
+                className="overlay-container rounded-xl overflow-hidden relative group h-[200px]"
               >
                 <Image
                   src={doodle.doodle.image}
                   alt="doodle card"
                   width={244}
                   height={325}
-                  className="rounded-xl border border-grayBorder"
+                  className="rounded-xl border border-grayBorder object-cover h-full"
                 />
-                <div className="overlay group-hover:bg-black opacity-50 absolute top-0 w-full h-full cursor-pointer">
-                  <div className="overlay-text text-white p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
+                <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white">
+                  <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
                     <div className="flex items-center gap-2">
                       <AiFillHeart />
                       {doodle.doodle.likes}
