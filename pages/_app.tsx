@@ -20,8 +20,11 @@ import { HeaderCompressed } from '../components/HeaderCompressed.components';
 import { Header } from '../components/Header.components';
 import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
-import { ProfileOtherUsersRightBar } from '../components/profile/ProfileOtherUsersRightBar.components';
 import { CanvasProvider } from '../contexts/CanvasContext';
+import {
+  ReactQueryDevtools,
+  ReactQueryDevtoolsPanel,
+} from '@tanstack/react-query-devtools';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -109,6 +112,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         </div>
                       )}
                     </div>
+                    <ReactQueryDevtools />
                   </CanvasProvider>
                 </ThemeProvider>
               </Hydrate>
