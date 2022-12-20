@@ -4,8 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
-import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
-import { ProfileOtherUsersRightBar } from '../../components/profile/ProfileOtherUsersRightBar.components';
+import { ProfileSlugUsersRightBar } from '../../components/profile/slug/ProfileSlugUsersRightBar.components';
 import useFetchUserDoodlesByUsername from '../../hooks/useFetchUsersDoodlesByUsername';
 import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
 import { authOptions } from '../api/auth/[...nextauth]';
@@ -23,10 +22,10 @@ const UserIdPage = ({ session, username }: any) => {
 
   return (
     <>
-      <ProfileOtherUsersRightBar username={username} session={session} />
+      <ProfileSlugUsersRightBar username={username} session={session} />
       {userData._id ? (
         <>
-          {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
+          {/* {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null} */}
           <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col items-center gap-5 mt-24 mb-32 md:justify-start">
             {/* Profile Avatar & bio */}
             <div className="md:hidden grid grid-cols-12 w-[375px] gap-3">
@@ -124,8 +123,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context.res,
     authOptions
   );
-
-  console.log(username);
 
   if (!session) {
     return {
