@@ -154,17 +154,23 @@ export const LoginForm = () => {
           )}
           {/*  */}
           {/* Login Button */}
-          <button
-            type="submit"
-            disabled={isLoading ? true : false}
-            className={
-              isLoading
-                ? 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold cursor-pointer'
-                : 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer'
-            }
-          >
-            {isLoading ? <LoaderSpinnerInline /> : <>Login</>}
-          </button>
+          {errors.username || errors.password ? (
+            <span className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold cursor-default">
+              Login
+            </span>
+          ) : (
+            <button
+              type="submit"
+              disabled={isLoading ? true : false}
+              className={
+                isLoading
+                  ? 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold cursor-pointer'
+                  : 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer'
+              }
+            >
+              {isLoading ? <LoaderSpinnerInline /> : <>Login</>}
+            </button>
+          )}
           {/*  */}
         </div>
       </form>
