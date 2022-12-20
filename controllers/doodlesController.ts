@@ -80,25 +80,55 @@ export const deleteDoodle = async (
   }
 };
 
-/* PUT Increment Likes Prop on a Single Comment by 1 */
-export const putDoodleLikes = async (
+/* PUT Increment Likes Prop, if likesTrueFalse is True, then increment likes by 1 */
+export const putDoodleLikesTrue = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   try {
     const { doodleId } = req.query;
-    const formData = req.body;
 
-    if (doodleId && formData) {
-      const doodle = await Doodles.findOneAndUpdate(
-        { _id: doodleId },
-        { $inc: { likes: 1 } },
-        { new: true }
-      ).then((likes) => console.log(likes.likes));
-      res.status(200).json(doodle);
+    if (doodleId) {
+      const doodle = await Doodles.findByIdAndUpdate(doodleId, {
+        likesTrueFalse: true,
+      });
+      if (!doodle) return res.status(404).json({ error: 'Doodle not found' });
+
+      if (doodle) {
+        const doodleLikesIncrement = await Doodles.findByIdAndUpdate(doodleId, {
+          $inc: { likes: 1 },
+        });
+        res.status(200).json(doodleLikesIncrement);
+      }
     }
   } catch (error) {
-    res.status(404).json({ error: 'Error While Updating the Doodle!' });
+    res.status(404).json({ error: 'Error While Incrementing the Likes!' });
+  }
+};
+
+/* PUT Decrement Likes Prop, if likesTrueFalse is False, then decrement likes by 1 */
+export const putDoodleLikesFalse = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { doodleId } = req.query;
+
+    if (doodleId) {
+      const doodle = await Doodles.findByIdAndUpdate(doodleId, {
+        likesTrueFalse: false,
+      });
+      if (!doodle) return res.status(404).json({ error: 'Doodle not found' });
+
+      if (doodle) {
+        const doodleLikesDecrement = await Doodles.findByIdAndUpdate(doodleId, {
+          $inc: { likes: -1 },
+        });
+        res.status(200).json(doodleLikesDecrement);
+      }
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Error While Decrementing the Likes!' });
   }
 };
 
