@@ -122,8 +122,8 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         <div className="container mx-auto w-11/12 md:max-w-[768px]">
           <div className="relative py-12 bg-white rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
             {/* Edit Avatar Photo */}
-            <div className="flex flex-col justify-center items-center gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full">
-              <div className="flex justify-center md:justify-between w-full items-center gap-6 md:gap-0">
+            <div className="flex flex-col justify-end items-center gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
+              <div className="flex justify-center md:justify-between w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
                 <Image
                   src={
                     userData.image
@@ -153,7 +153,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
               />
               <button
                 onClick={handleInputFileClick}
-                className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer"
+                className="border py-2 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
               >
                 Edit Avatar Photo
               </button>
@@ -172,15 +172,15 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 <label
                   className={
                     errors.username
-                      ? 'w-[310px] bg-grayLight py-2 px-4 rounded-full border border-red-600'
-                      : 'w-[310px] bg-grayLight py-2 px-4 rounded-full border border-transparent'
+                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
                   }
                 >
                   <input
                     placeholder="Username"
                     defaultValue={userData.name ? userData.name : null}
                     type="text"
-                    className="w-full bg-grayLight focus:outline-none"
+                    className="w-full bg-zinc-50 focus:outline-none"
                     {...register('username')}
                   />
                 </label>
@@ -207,14 +207,14 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 <label
                   className={
                     errors.biography
-                      ? 'w-[310px] bg-grayLight py-2 px-4 rounded-xl border border-red-600'
-                      : 'w-[310px] bg-grayLight py-2 px-4 rounded-xl border border-transparent'
+                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
                   }
                 >
                   <textarea
                     placeholder="Biography"
                     defaultValue={userData.biography ? userData.biography : ''}
-                    className="w-full bg-grayLight focus:outline-none overflow-auto rounded-xl"
+                    className="w-full bg-zinc-50 focus:outline-none overflow-auto rounded-xl"
                     {...register('biography')}
                   />
                 </label>
@@ -243,13 +243,13 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 <label
                   className={
                     errors.location
-                      ? 'w-[310px] bg-grayLight py-2 px-4 rounded-full border border-red-600'
-                      : 'w-[310px] bg-grayLight py-2 px-4 rounded-full border border-transparent'
+                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
                   }
                 >
                   <select
                     defaultValue={userData.location ? userData.location : ''}
-                    className="w-full bg-grayLight focus:outline-none"
+                    className="w-full bg-zinc-50 focus:outline-none"
                     {...register('location')}
                   >
                     <option value="">Select a Country</option>
