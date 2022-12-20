@@ -1,16 +1,75 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
+import { ProfileDoodlePostSuccessModal } from './ProfileDoodlePostSuccessModal.components';
+import * as Yup from 'yup';
+
+type Inputs = {
+  comment: String;
+};
+
+const CommentSchema = Yup.object().shape({
+  comment: Yup.string()
+    .min(2, 'too short!')
+    .max(500, 'too long!')
+    .matches(/^[0-9a-zA-Z]/, 'Only letters and numbers allowed, no spaces.'),
+});
 
 export const ProfileDoodleCard = ({
   doodleWithCommentsData,
+  userDoodlesWithAllCommentsRefetch,
+  doodleWithCommentsRefetch,
   userData,
 }: any) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
+  console.log(doodleWithCommentsData);
+  const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
+  const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    formState: { isSubmitSuccessful },
+    reset,
+  } = useForm<Inputs>({ resolver: yupResolver(CommentSchema) });
+
+  const { mutateAsync, isLoading } = useMutation(async (dataObject: any) => {
+    try {
+      const Options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataObject),
+      };
+
+      const response = await fetch(`/api/comments/`, Options);
+      const json = await response.json();
+
+      if (json) {
+        setIsPostSuccessModal(true);
+        return json;
+      }
+    } catch (error) {
+      return error;
+    }
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    reset({ comment: '' });
+    await mutateAsync({
+      doodle: doodleWithCommentsData.doodle._id,
+      user: doodleWithCommentsData.doodle.user,
+      comment: data.comment,
+    });
+    await userDoodlesWithAllCommentsRefetch();
+    await doodleWithCommentsRefetch();
+  };
 
   const getDayDifference = (dateTime: string) => {
     /* Get the current time in Pacific Standard Time */
@@ -97,10 +156,15 @@ export const ProfileDoodleCard = ({
 
   return (
     <>
-      {isModal ? (
+      {isOptionsModal ? (
         <ProfileDoodleOptionsModal
-          setIsModal={setIsModal}
+          setIsOptionsModal={setIsOptionsModal}
           doodleWithCommentsData={doodleWithCommentsData}
+        />
+      ) : null}
+      {isPostSuccessModal ? (
+        <ProfileDoodlePostSuccessModal
+          setIsPostSuccessModal={setIsPostSuccessModal}
         />
       ) : null}
       <div className="bg-white border border-grayBorder w-full h-full max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
@@ -117,6 +181,7 @@ export const ProfileDoodleCard = ({
                 width={43}
                 height={43}
                 alt="avatar feed"
+                className="rounded-full"
               />
             </Link>
             <Link href={`/profile/${userData.name}`}>
@@ -124,7 +189,7 @@ export const ProfileDoodleCard = ({
             </Link>
           </div>
           <HiDotsHorizontal
-            onClick={() => setIsModal(true)}
+            onClick={() => setIsOptionsModal(true)}
             className="text-2xl cursor-pointer hover:text-sunset"
           />
         </div>
@@ -139,7 +204,7 @@ export const ProfileDoodleCard = ({
         />
 
         {/*  */}
-        <div className="h-[600px] w-full overflow-y-scroll flex flex-col items-center">
+        <div className="h-[600px] w-full overflow-y-scroll flex flex-col items-center pb-10">
           {/* Likes and Comments */}
           {doodleWithCommentsData.usersAndComments.map((data: any) => (
             <Fragment key={data.comments._id}>
@@ -149,7 +214,11 @@ export const ProfileDoodleCard = ({
               >
                 <div className="flex flex-col w-full">
                   <div className="text-sm">
-                    <span className="font-semibold">{data.user.name}</span>
+                    <span className="font-semibold hover:text-sunset">
+                      <Link href={`/profile/${data.user.name}`}>
+                        {data.user.name}
+                      </Link>
+                    </span>
                     &nbsp;
                     <span className="">{data.comments.comment}</span>
                   </div>
@@ -183,14 +252,19 @@ export const ProfileDoodleCard = ({
           {/*  */}
         </div>
         <div className="w-full border-t border-grayBorder">
-          <div className="w-11/12 flex flex-col mx-auto gap-3 my-3 px-4">
-            <div className="flex gap-6">
+          <div className="w-11/12 mx-auto gap-3 my-3 px-4 grid grid-cols-12">
+            <div className="col-start-1 col-span-3 flex gap-1 items-center">
               <AiOutlineHeart className="text-2xl" />
-              <FaRegComment className="text-[22px] mt-[1px]" />
+              <p className="font-semibold text-xs">
+                {doodleWithCommentsData.doodle.likes} likes
+              </p>
             </div>
-            <p className="font-semibold text-xs">
-              {doodleWithCommentsData.doodle.likes} likes
-            </p>
+            <div className="col-start-4 col-span-9 flex gap-2 items-center">
+              <FaRegComment className="text-[22px] transform -scale-x-100" />
+              <p className="font-semibold text-xs">
+                {doodleWithCommentsData.usersAndComments.length} comments
+              </p>
+            </div>
             <p className="text-xs text-placeholder">
               {getDayDifference(doodleWithCommentsData.doodle.created_at) >
               0 ? (
@@ -234,14 +308,33 @@ export const ProfileDoodleCard = ({
           </div>
         </div>
         <div className="w-full border-t border-grayBorder">
-          {/* Write a Comment and Post Button */}
-          <div className="w-11/12 flex justify-between mx-auto items-center px-4 mt-3 gap-5">
-            <textarea className="w-full h-6 focus:outline-none focus:h-20 overflow-auto" />
-
-            <button type="submit" className="text-cobalt font-semibold text-sm">
-              Post
-            </button>
-          </div>
+          {/* Comments Form */}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-11/12 flex justify-center mx-auto items-center px-4 mt-3 gap-5 border border-transparent h-8 hover:h-20"
+          >
+            <textarea
+              placeholder="Comment"
+              className={
+                errors.comment
+                  ? 'w-full h-full focus:outline-none overflow-auto resize-none border border-red-600 rounded-md px-2 py-1 text-sm'
+                  : 'w-full h-full focus:outline-none overflow-auto resize-none rounded-md px-2 py-1 text-sm'
+              }
+              {...register('comment')}
+            />
+            {errors.comment ? (
+              <span className="text-grayText font-semibold text-sm cursor-default">
+                Post
+              </span>
+            ) : (
+              <button
+                type="submit"
+                className="text-cobalt font-semibold text-sm hover:text-sunset"
+              >
+                Post
+              </button>
+            )}
+          </form>
           {/*  */}
         </div>
       </div>
