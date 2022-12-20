@@ -7,11 +7,13 @@ export const ProfileDoodleCardModal = ({
   setIsDoodleModal,
   userData,
   doodleId,
+  userDoodlesWithAllCommentsRefetch,
 }: any) => {
   const {
     doodleWithCommentsData,
     doodleWithCommentsIsLoading,
     doodleWithCommentsIsError,
+    doodleWithCommentsRefetch,
   } = useFetchDoodleWithAllComments(doodleId);
 
   if (doodleWithCommentsIsLoading) return <LoaderSpinner />;
@@ -31,6 +33,8 @@ export const ProfileDoodleCardModal = ({
         <ProfileDoodleCard
           doodleWithCommentsData={doodleWithCommentsData}
           userData={userData}
+          doodleWithCommentsRefetch={doodleWithCommentsRefetch}
+          userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
         />
       </div>
     </>

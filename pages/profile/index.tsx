@@ -26,6 +26,7 @@ const ProfilePage = ({ session }: any) => {
     userDoodlesWithAllCommentsData,
     userDoodlesWithAllCommentsIsLoading,
     userDoodlesWithAllCommentsIsError,
+    userDoodlesWithAllCommentsRefetch,
   } = useFetchUserDoodlesWithAllComments(session.user.id);
 
   const handleModalClick = (doodleId: string) => {
@@ -99,6 +100,9 @@ const ProfilePage = ({ session }: any) => {
               setIsDoodleModal={setIsDoodleModal}
               userData={userData}
               doodleId={tempDoodleId}
+              userDoodlesWithAllCommentsRefetch={
+                userDoodlesWithAllCommentsRefetch
+              }
             />
           ) : null}
           {userDoodlesWithAllCommentsData.map((doodle: any) => (
