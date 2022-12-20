@@ -1,4 +1,5 @@
 import { Schema, model, models, SchemaTypes } from 'mongoose';
+import momentTimezone from 'moment-timezone';
 
 const commentSchema = new Schema(
   {
@@ -6,10 +7,18 @@ const commentSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: 'doodle',
     },
+    user: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
+    },
     comment: String,
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      default: () => momentTimezone().tz('America/Los_Angeles').format(),
+    },
   }
 );
 

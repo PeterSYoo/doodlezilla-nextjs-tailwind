@@ -1,4 +1,5 @@
 import { Schema, model, models, SchemaTypes } from 'mongoose';
+import momentTimezone from 'moment-timezone';
 
 const doodleSchema = new Schema(
   {
@@ -13,7 +14,11 @@ const doodleSchema = new Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      default: () => momentTimezone().tz('America/Los_Angeles').format(),
+    },
   }
 );
 
