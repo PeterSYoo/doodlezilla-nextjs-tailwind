@@ -3,14 +3,13 @@ import { HiDotsHorizontal } from 'react-icons/hi';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { useState } from 'react';
-import { DoodleCardModal } from '../DoodleCardModal.components';
 
 export const FeedDoodleCard = () => {
   const [isModal, setIsModal] = useState<boolean>();
 
   return (
     <>
-      {isModal ? <DoodleCardModal setIsModal={setIsModal} /> : null}
+      {/* {isModal ? <DoodleCardModal setIsModal={setIsModal} /> : null} */}
       <div className="bg-white border border-grayBorder w-full max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[474px] lg:max-w-[733px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
