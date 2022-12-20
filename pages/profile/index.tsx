@@ -1,25 +1,43 @@
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 import useFetchUser from '../../hooks/useFetchUser';
 import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { AiFillHeart } from 'react-icons/ai';
+import { FaComment } from 'react-icons/fa';
+import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
+import useFetchAllDoodlesWithAllComments from '../../hooks/useFetchAllDooodlesWithAllComments';
+import useFetchUserDoodlesWithAllComments from '../../hooks/useFetchUserDoodlesWithAllComments';
 
 const ProfilePage = ({ session }: any) => {
-  const [isModal, setIsModal] = useState<boolean>();
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
+  const [tempDoodleId, setTempDoodleId] = useState<string>('');
 
   const { userData, userIsLoading, userIsError } = useFetchUser(
     session.user.id
   );
-  const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
-    useFetchUserDoodles(session.user.id);
 
-  if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
-  if (userIsError || userDoodlesIsError) return <>Error</>;
+  const {
+    userDoodlesWithAllCommentsData,
+    userDoodlesWithAllCommentsIsLoading,
+    userDoodlesWithAllCommentsIsError,
+  } = useFetchUserDoodlesWithAllComments(session.user.id);
 
+  const handleModalClick = (doodleId: string) => {
+    setTempDoodleId(doodleId);
+    setIsDoodleModal(true);
+  };
+
+  if (userIsLoading || userDoodlesWithAllCommentsIsLoading)
+    return <LoaderSpinner />;
+  if (userIsError || userDoodlesWithAllCommentsIsError) return <>Error</>;
+
+  console.log(userDoodlesWithAllCommentsData);
   return (
     <>
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
@@ -43,7 +61,7 @@ const ProfilePage = ({ session }: any) => {
                 {userData.name}
               </h1>
               <p className="font-semibold text-xs">
-                {userDoodlesData.length}&nbsp;
+                {userDoodlesWithAllCommentsData.length}&nbsp;
                 <span className="font-normal text-placeholder">DOODLES</span>
               </p>
             </div>
@@ -77,22 +95,41 @@ const ProfilePage = ({ session }: any) => {
         <div className="border-b border-grayBorder md:w-3/4 lg:w-[733px]"></div>
         {/* Doodles List */}
         <div className="w-[375px] md:w-3/4 lg:w-[733px] grid grid-cols-3 gap-2 md:gap-4 lg:gap-5 px-3 md:px-0">
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
-          <div className="bg-sunset w-full rounded-xl aspect-[3/4]"></div>
+          {isDoodleModal ? (
+            <ProfileDoodleCardModal
+              setIsDoodleModal={setIsDoodleModal}
+              userData={userData}
+              doodleId={tempDoodleId}
+            />
+          ) : null}
+          {userDoodlesWithAllCommentsData.map((doodle: any) => (
+            <Fragment key={doodle.doodle._id}>
+              <div
+                onClick={() => handleModalClick(doodle.doodle._id)}
+                className="overlay-container rounded-xl w-full h-full overflow-hidden relative group"
+              >
+                <Image
+                  src={doodle.doodle.image}
+                  alt="doodle card"
+                  width={244}
+                  height={325}
+                  className="rounded-xl border border-grayBorder"
+                />
+                <div className="overlay group-hover:bg-black opacity-50 absolute top-0 w-full h-full cursor-pointer">
+                  <div className="overlay-text text-white p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
+                    <div className="flex items-center gap-2">
+                      <AiFillHeart />
+                      {doodle.doodle.likes}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <FaComment className="transform -scale-x-100" />
+                      {doodle.comments.length}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Fragment>
+          ))}
         </div>
         {/*  */}
       </div>
