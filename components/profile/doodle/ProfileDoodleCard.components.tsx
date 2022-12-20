@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { HiDotsHorizontal } from 'react-icons/hi';
@@ -10,6 +10,91 @@ export const ProfileDoodleCard = ({
   userData,
 }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
+
+  const getDayDifference = (dateTime: string) => {
+    /* Get the current time in Pacific Standard Time */
+    const currentTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in Pacific Standard Time */
+    const specificDate = new Date(dateTime).toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the current time and specific date in milliseconds */
+    const currentTimeInMilliseconds = new Date(currentTime).getTime();
+    const specificDateInMilliseconds = new Date(specificDate).getTime();
+    /* Calculate the difference in milliseconds */
+    const timeDifference =
+      currentTimeInMilliseconds - specificDateInMilliseconds;
+    /* Convert the time difference to days */
+    const dayDifference = Math.floor(timeDifference / 1000 / 60 / 60 / 24);
+
+    return dayDifference;
+  };
+
+  const getHourDifference = (dateTime: string) => {
+    /* Get the current time in Pacific Standard Time */
+    const currentTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in Pacific Standard Time */
+    const specificDate = new Date(dateTime).toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in milliseconds */
+    const currentTimeInMilliseconds = new Date(currentTime).getTime();
+    const specificDateInMilliseconds = new Date(specificDate).getTime();
+    /* Convert the time difference to hours */
+    const timeDifference =
+      currentTimeInMilliseconds - specificDateInMilliseconds;
+    const timeDifferenceInHours = Math.floor(timeDifference / 1000 / 60 / 60);
+
+    return timeDifferenceInHours;
+  };
+
+  const getMinuteDifference = (dateTime: string) => {
+    /* Get the current time in Pacific Standard Time */
+    const currentTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in Pacific Standard Time */
+    const specificDate = new Date(dateTime).toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in milliseconds */
+    const currentTimeInMilliseconds = new Date(currentTime).getTime();
+    const specificDateInMilliseconds = new Date(specificDate).getTime();
+    /* Calculate the difference in milliseconds */
+    const timeDifference =
+      currentTimeInMilliseconds - specificDateInMilliseconds;
+    /* Convert the time difference to minutes */
+    const timeDifferenceInMinutes = Math.floor(timeDifference / 1000 / 60);
+
+    return timeDifferenceInMinutes;
+  };
+
+  const getSecondsDifference = (dateTime: string) => {
+    /* Get the current time in Pacific Standard Time */
+    const currentTime = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the specific date in Pacific Standard Time */
+    const specificDate = new Date(dateTime).toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    });
+    /* Get the current time and specific date in milliseconds */
+    const currentTimeInMilliseconds = new Date(currentTime).getTime();
+    const specificDateInMilliseconds = new Date(specificDate).getTime();
+    /* Calculate the difference in milliseconds */
+    const timeDifference =
+      currentTimeInMilliseconds - specificDateInMilliseconds;
+    /* Convert the time difference to seconds */
+    const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
+
+    return timeDifferenceInSeconds;
+  };
+
+  console.log(doodleWithCommentsData);
 
   return (
     <>
@@ -47,38 +132,47 @@ export const ProfileDoodleCard = ({
         />
 
         {/*  */}
-        <div className="h-[600px] overflow-y-scroll flex flex-col items-center">
+        <div className="h-[600px] w-full overflow-y-scroll flex flex-col items-center">
           {/* Likes and Comments */}
-          <div className="flex flex-col w-10/12 gap-1 mt-4">
-            <div className="flex flex-col w-full">
-              <div className="text-sm">
-                <span className="font-semibold">Apple</span>&nbsp;
-                <span className="">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat
-                </span>
+          {doodleWithCommentsData.usersAndComments.map((data: any) => (
+            <Fragment key={data.comments._id}>
+              <div
+                key={data.comments._id}
+                className="flex flex-col w-10/12 gap-1 mt-4"
+              >
+                <div className="flex flex-col w-full">
+                  <div className="text-sm">
+                    <span className="font-semibold">{data.user.name}</span>
+                    &nbsp;
+                    <span className="">{data.comments.comment}</span>
+                  </div>
+                </div>
+                <p className="text-[10px] text-placeholder">
+                  {getDayDifference(data.comments.created_at) > 0 ? (
+                    <>{getDayDifference(data.comments.created_at)}d</>
+                  ) : (
+                    <>
+                      {getHourDifference(data.comments.created_at) > 0 ? (
+                        <>{getHourDifference(data.comments.created_at)}h</>
+                      ) : (
+                        <>
+                          {getMinuteDifference(data.comments.created_at) > 0 ? (
+                            <>
+                              {getMinuteDifference(data.comments.created_at)}m
+                            </>
+                          ) : (
+                            <>
+                              {getSecondsDifference(data.comments.created_at)}s
+                            </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+                </p>
               </div>
-            </div>
-            <p className="text-[10px] text-placeholder">2 HOURS AGO</p>
-          </div>
-          {/*  */}
-          {/* Likes and Comments */}
-          <div className="flex flex-col w-10/12 gap-1 mt-4">
-            <div className="flex flex-col w-full">
-              <div className="text-sm">
-                <span className="font-semibold">Apple</span>&nbsp;
-                <span className="">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat
-                </span>
-              </div>
-            </div>
-            <p className="text-[10px] text-placeholder">2 HOURS AGO</p>
-          </div>
+            </Fragment>
+          ))}
           {/*  */}
         </div>
         <div className="w-full border-t border-grayBorder">
@@ -87,8 +181,49 @@ export const ProfileDoodleCard = ({
               <AiOutlineHeart className="text-2xl" />
               <FaRegComment className="text-[22px] mt-[1px]" />
             </div>
-            <p className="font-semibold text-xs">20 likes</p>
-            <p className="text-xs text-placeholder">22 HOURS AGO</p>
+            <p className="font-semibold text-xs">
+              {doodleWithCommentsData.doodle.likes} likes
+            </p>
+            <p className="text-xs text-placeholder">
+              {getDayDifference(doodleWithCommentsData.doodle.created_at) >
+              0 ? (
+                <>
+                  {getDayDifference(doodleWithCommentsData.doodle.created_at)}d
+                </>
+              ) : (
+                <>
+                  {getHourDifference(doodleWithCommentsData.doodle.created_at) >
+                  0 ? (
+                    <>
+                      {getHourDifference(
+                        doodleWithCommentsData.doodle.created_at
+                      )}
+                      h
+                    </>
+                  ) : (
+                    <>
+                      {getMinuteDifference(
+                        doodleWithCommentsData.doodle.created_at
+                      ) > 0 ? (
+                        <>
+                          {getMinuteDifference(
+                            doodleWithCommentsData.doodle.created_at
+                          )}
+                          m
+                        </>
+                      ) : (
+                        <>
+                          {getSecondsDifference(
+                            doodleWithCommentsData.doodle.created_at
+                          )}
+                          s
+                        </>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </p>
           </div>
         </div>
         <div className="w-full border-t border-grayBorder">
