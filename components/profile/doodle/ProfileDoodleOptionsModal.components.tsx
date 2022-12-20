@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 import { RiCloseFill } from 'react-icons/ri';
 
 export interface DoodleCardModalProps {
-  setIsModal: (isModal: boolean) => void;
+  setIsOptionsModal: (isModal: boolean) => void;
   doodleWithCommentsData: any;
 }
 
 export const ProfileDoodleOptionsModal = ({
   doodleWithCommentsData,
-  setIsModal,
+  setIsOptionsModal,
 }: DoodleCardModalProps) => {
   const router = useRouter();
 
@@ -34,7 +34,7 @@ export const ProfileDoodleOptionsModal = ({
     <>
       <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 flex justify-center items-center">
         <button
-          onClick={() => setIsModal(false)}
+          onClick={() => setIsOptionsModal(false)}
           className="fixed right-2 top-2 text-3xl text-white"
         >
           <RiCloseFill />
@@ -48,12 +48,8 @@ export const ProfileDoodleOptionsModal = ({
               Delete
             </button>
             <div className="border-b border-grayBorder w-11/12"></div>
-            <button className="font-semibold text-grayText hover:text-neutral-800">
-              Go to Doodle
-            </button>
-            <div className="border-b border-grayBorder w-11/12"></div>
             <button
-              onClick={() => setIsModal(false)}
+              onClick={() => setIsOptionsModal(false)}
               className="font-semibold text-grayText hover:text-neutral-800"
             >
               Cancel
