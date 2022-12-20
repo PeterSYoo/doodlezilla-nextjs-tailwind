@@ -1,7 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
-import { useEffect } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
 import useFetchDoodleWithAllComments from '../../../hooks/useFetchDoodleWIthAllComments';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
@@ -16,7 +12,6 @@ export const ProfileDoodleCardModal = ({
     doodleWithCommentsData,
     doodleWithCommentsIsLoading,
     doodleWithCommentsIsError,
-    doodleWithCommentsRefetch,
   } = useFetchDoodleWithAllComments(doodleId);
 
   if (doodleWithCommentsIsLoading) return <LoaderSpinner />;
