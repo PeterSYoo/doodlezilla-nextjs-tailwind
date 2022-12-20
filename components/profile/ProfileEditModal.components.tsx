@@ -36,7 +36,7 @@ export interface DoodleCardModalProps {
 }
 export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   const { data: session }: any = useSession();
-  const [imageSrc, setImageSrc] = useState<string>(session.user.image);
+  const [imageSrc, setImageSrc] = useState<string>('');
   const inputFileRef = useRef<any>(null);
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
@@ -123,26 +123,35 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
           <div className="relative py-12 bg-white rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
             {/* Edit Avatar Photo */}
             <div className="flex flex-col justify-end items-center gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
-              <div className="flex justify-center md:justify-between w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
+              <div className="flex justify-center md:justify-center w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
+                {/* Avatar */}
                 <Image
                   src={
                     userData.image
                       ? userData.image
                       : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
                   }
-                  width={110}
-                  height={110}
+                  width={200}
+                  height={200}
                   alt="profile avatar mobile"
-                  className="rounded-full aspect-square"
+                  className={
+                    imageSrc === ''
+                      ? 'rounded-full aspect-square z-10'
+                      : 'hidden'
+                  }
                 />
-                <BiChevronsRight className="text-xl text-placeholder" />
                 <Image
-                  src={imageSrc}
-                  width={110}
-                  height={110}
+                  src={imageSrc === '' ? userData.image : imageSrc}
+                  width={200}
+                  height={200}
                   alt="profile avatar mobile"
-                  className="rounded-full aspect-square"
+                  className={
+                    imageSrc === ''
+                      ? 'hidden'
+                      : 'rounded-full aspect-square absolute top-[81px] z-10'
+                  }
                 />
+                {/*  */}
               </div>
               <input
                 type="file"
