@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -94,26 +95,33 @@ export const ProfileDoodleCard = ({
     return timeDifferenceInSeconds;
   };
 
-  console.log(doodleWithCommentsData);
-
   return (
     <>
-      {isModal ? <ProfileDoodleOptionsModal setIsModal={setIsModal} /> : null}
+      {isModal ? (
+        <ProfileDoodleOptionsModal
+          setIsModal={setIsModal}
+          doodleWithCommentsData={doodleWithCommentsData}
+        />
+      ) : null}
       <div className="bg-white border border-grayBorder w-full h-full max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
           <div className="flex gap-3 items-center">
-            <Image
-              src={
-                userData.image
-                  ? userData.image
-                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-              }
-              width={43}
-              height={43}
-              alt="avatar feed"
-            />
-            <span className="font-semibold">{userData.name}</span>
+            <Link href={`/profile/${userData.name}`}>
+              <Image
+                src={
+                  userData.image
+                    ? userData.image
+                    : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                }
+                width={43}
+                height={43}
+                alt="avatar feed"
+              />
+            </Link>
+            <Link href={`/profile/${userData.name}`}>
+              <span className="font-semibold">{userData.name}</span>
+            </Link>
           </div>
           <HiDotsHorizontal
             onClick={() => setIsModal(true)}
@@ -122,7 +130,6 @@ export const ProfileDoodleCard = ({
         </div>
         {/*  */}
         {/* Doodle Image */}
-
         <Image
           src={doodleWithCommentsData.doodle.image}
           width={533}
