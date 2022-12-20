@@ -37,7 +37,6 @@ const ProfilePage = ({ session }: any) => {
     return <LoaderSpinner />;
   if (userIsError || userDoodlesWithAllCommentsIsError) return <>Error</>;
 
-  console.log(userDoodlesWithAllCommentsData);
   return (
     <>
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
