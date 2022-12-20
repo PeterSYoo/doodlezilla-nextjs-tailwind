@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Comments from '../models/Comments';
 import Doodles from '../models/Doodles';
+import Users from '../models/Users';
 
 /* GET all Doodles With all Comments Referencing Each Individual Doodle Document. */
 export const getAllDoodlesWithAllComments = async (
@@ -11,13 +12,13 @@ export const getAllDoodlesWithAllComments = async (
     const doodles = await Doodles.find({});
     if (!doodles) return res.status(404).json({ error: 'Data not Found' });
 
-    let doodleIds = [];
+    const doodleIds = [];
 
     for (let i = 0; i < doodles.length; i++) {
       doodleIds.push(doodles[i]._id);
     }
 
-    let combinedData = [];
+    const combinedData = [];
     for (let i = 0; i < doodleIds.length; i++) {
       let comments = await Comments.find({ doodle: doodleIds[i] });
       combinedData.push({
@@ -48,6 +49,7 @@ export const getUserDoodleWithAllComments = async (
       let combinedData = [];
       for (let i = 0; i < doodles.length; i++) {
         let comments = await Comments.find({ doodle: doodles[i]._id });
+
         combinedData.push({
           doodle: doodles[i],
           comments: comments,
@@ -80,10 +82,20 @@ export const getDoodleWithAllComments = async (
           return res.status(404).json({ error: 'Comments not found' });
         }
 
+        const usersAndComments: any = [];
+
         const combinedData = {
           doodle,
-          comments,
+          usersAndComments,
         };
+
+        for (let i = 0; i < comments.length; i++) {
+          let users = await Users.findById(comments[i].user);
+          usersAndComments.push({
+            user: users,
+            comments: comments[i],
+          });
+        }
 
         res.status(200).json(combinedData);
       }
