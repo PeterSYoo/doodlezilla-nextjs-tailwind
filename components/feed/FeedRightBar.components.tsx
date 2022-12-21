@@ -5,6 +5,7 @@ import useFetchAllUsers from '../../hooks/useFetchAllUsers';
 import { LoaderSpinner } from '../LoaderSpinner.components';
 import { FeedRightBarSponsoredCard } from './FeedRightBarSponsoredCard.components';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 export const FeedRightBar = () => {
   const { data: session }: any = useSession();
@@ -37,12 +38,9 @@ export const FeedRightBar = () => {
               .sort(() => Math.random() - 0.5)
               .slice(0, 7)
               .map((user: any) => (
-                <>
+                <Fragment key={user._id}>
                   {userData._id === user._id ? null : (
-                    <div
-                      key={user._id}
-                      className="grid grid-cols-12 items-center gap-2"
-                    >
+                    <div className="grid grid-cols-12 items-center gap-2">
                       <div className="col-start-1 col-span-3">
                         <Link href={`/profile/${user.name}`}>
                           <Image
@@ -67,7 +65,7 @@ export const FeedRightBar = () => {
                       </div>
                     </div>
                   )}
-                </>
+                </Fragment>
               ))}
             {/*  */}
           </div>
