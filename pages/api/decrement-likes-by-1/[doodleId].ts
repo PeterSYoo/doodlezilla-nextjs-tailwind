@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { putDoodleLikesFalse } from '../../../controllers/doodlesController';
+import { putIsLikesDoodleFalse } from '../../../controllers/isLikesController';
+
 import usersConnect from '../../../database/usersConnect';
 
 export default async function doodleIdApi(
@@ -14,7 +15,7 @@ export default async function doodleIdApi(
 
   switch (method) {
     case 'PUT':
-      putDoodleLikesFalse(req, res);
+      putIsLikesDoodleFalse(req, res);
       break;
     default:
       res.setHeader('Allow', ['PUT']);
