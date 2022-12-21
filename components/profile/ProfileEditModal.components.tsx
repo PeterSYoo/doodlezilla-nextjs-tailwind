@@ -122,7 +122,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         <div className="container mx-auto w-11/12 md:max-w-[768px]">
           <div className="relative py-12 bg-white rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
             {/* Edit Avatar Photo */}
-            <div className="flex flex-col justify-end items-center gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
+            <div className="flex flex-col justify-end items-center gap-5 md:gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
               <div className="flex justify-center md:justify-center w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
                 {/* Avatar */}
                 <Image
