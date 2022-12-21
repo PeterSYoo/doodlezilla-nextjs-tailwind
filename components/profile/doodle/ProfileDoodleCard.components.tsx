@@ -2,14 +2,18 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
 import { ProfileDoodlePostSuccessModal } from './ProfileDoodlePostSuccessModal.components';
 import * as Yup from 'yup';
+import useFetchUserIsLikesDoodle from '../../../hooks/useFetchUserIsLikesDoodle';
+import useIncrementLikeIfTrue from '../../../hooks/useIncrementLikeIfTrue';
+import useDecrementLikeIfTrue from '../../../hooks/useDecrementLikeIfFalse';
+import { LoaderSpinner } from '../../LoaderSpinner.components';
 
 type Inputs = {
   comment: String;
@@ -28,9 +32,27 @@ export const ProfileDoodleCard = ({
   doodleWithCommentsRefetch,
   userData,
 }: any) => {
-  console.log(doodleWithCommentsData);
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
+
+  const {
+    userIsLikesDoodleData,
+    userIsLikesDoodleIsLoading,
+    userIsLikesDoodleIsError,
+    userIsLikesDoodleRefetch,
+  } = useFetchUserIsLikesDoodle(userData._id);
+
+  const { mutateIncrementLikeIfTrue, isLoadingIncrementLikeIfTrue } =
+    useIncrementLikeIfTrue({
+      doodle: doodleWithCommentsData.doodle._id,
+    });
+
+  const { mutateDecrementLikeIfTrue, isLoadingDecrementLikeIfTrue } =
+    useDecrementLikeIfTrue({
+      doodle: doodleWithCommentsData.doodle._id,
+    });
+
+  console.log(userIsLikesDoodleData);
 
   const {
     handleSubmit,
@@ -154,6 +176,23 @@ export const ProfileDoodleCard = ({
     return timeDifferenceInSeconds;
   };
 
+  const handleLikeTrueOnClick = async () => {
+    await mutateIncrementLikeIfTrue();
+    userDoodlesWithAllCommentsRefetch();
+    doodleWithCommentsRefetch();
+    userIsLikesDoodleRefetch();
+  };
+
+  const handleLikeFalseOnClick = async () => {
+    await mutateDecrementLikeIfTrue();
+    userDoodlesWithAllCommentsRefetch();
+    doodleWithCommentsRefetch();
+    userIsLikesDoodleRefetch();
+  };
+
+  if (userIsLikesDoodleIsLoading) return <LoaderSpinner />;
+  if (userIsLikesDoodleIsError) return <>Error</>;
+
   return (
     <>
       {isOptionsModal ? (
@@ -204,57 +243,84 @@ export const ProfileDoodleCard = ({
         />
 
         {/*  */}
-        <div className="h-[600px] w-full overflow-y-scroll flex flex-col items-center pb-10">
+        <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
           {/* Likes and Comments */}
-          {doodleWithCommentsData.usersAndComments.map((data: any) => (
-            <Fragment key={data.comments._id}>
-              <div
-                key={data.comments._id}
-                className="flex flex-col w-10/12 gap-1 mt-4"
-              >
-                <div className="flex flex-col w-full">
-                  <div className="text-sm">
-                    <span className="font-semibold hover:text-sunset">
-                      <Link href={`/profile/${data.user.name}`}>
-                        {data.user.name}
-                      </Link>
-                    </span>
-                    &nbsp;
-                    <span className="">{data.comments.comment}</span>
-                  </div>
-                </div>
-                <p className="text-[10px] text-placeholder">
-                  {getDayDifference(data.comments.created_at) > 0 ? (
-                    <>{getDayDifference(data.comments.created_at)}d</>
-                  ) : (
-                    <>
-                      {getHourDifference(data.comments.created_at) > 0 ? (
-                        <>{getHourDifference(data.comments.created_at)}h</>
+          {doodleWithCommentsData.usersAndComments.length === 0 ? (
+            <div className="text-grayText text-lg flex h-full justify-center items-center">
+              No Comments
+            </div>
+          ) : (
+            <>
+              {doodleWithCommentsData.usersAndComments.map((data: any) => (
+                <Fragment key={data.comments._id}>
+                  <div
+                    key={data.comments._id}
+                    className="flex flex-col w-10/12 gap-1 mt-4"
+                  >
+                    <div className="flex flex-col w-full">
+                      <div className="text-sm">
+                        <span className="font-semibold hover:text-sunset">
+                          <Link href={`/profile/${data.user.name}`}>
+                            {data.user.name}
+                          </Link>
+                        </span>
+                        &nbsp;
+                        <span className="">{data.comments.comment}</span>
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-placeholder">
+                      {getDayDifference(data.comments.created_at) > 0 ? (
+                        <>{getDayDifference(data.comments.created_at)}d</>
                       ) : (
                         <>
-                          {getMinuteDifference(data.comments.created_at) > 0 ? (
-                            <>
-                              {getMinuteDifference(data.comments.created_at)}m
-                            </>
+                          {getHourDifference(data.comments.created_at) > 0 ? (
+                            <>{getHourDifference(data.comments.created_at)}h</>
                           ) : (
                             <>
-                              {getSecondsDifference(data.comments.created_at)}s
+                              {getMinuteDifference(data.comments.created_at) >
+                              0 ? (
+                                <>
+                                  {getMinuteDifference(
+                                    data.comments.created_at
+                                  )}
+                                  m
+                                </>
+                              ) : (
+                                <>
+                                  {getSecondsDifference(
+                                    data.comments.created_at
+                                  )}
+                                  s
+                                </>
+                              )}
                             </>
                           )}
                         </>
                       )}
-                    </>
-                  )}
-                </p>
-              </div>
-            </Fragment>
-          ))}
+                    </p>
+                  </div>
+                </Fragment>
+              ))}
+            </>
+          )}
+
           {/*  */}
         </div>
         <div className="w-full border-t border-grayBorder">
           <div className="w-11/12 mx-auto gap-3 my-3 px-4 grid grid-cols-12">
             <div className="col-start-1 col-span-3 flex gap-1 items-center">
-              <AiOutlineHeart className="text-2xl" />
+              {userIsLikesDoodleData.isLikes ? (
+                <AiFillHeart
+                  onClick={() => handleLikeFalseOnClick()}
+                  className="text-2xl text-sunset cursor-pointer"
+                />
+              ) : (
+                <AiOutlineHeart
+                  onClick={() => handleLikeTrueOnClick()}
+                  className="text-2xl cursor-pointer"
+                />
+              )}
+
               <p className="font-semibold text-xs">
                 {doodleWithCommentsData.doodle.likes} likes
               </p>
