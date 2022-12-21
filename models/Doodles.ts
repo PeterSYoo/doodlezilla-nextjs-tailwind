@@ -12,10 +12,6 @@ const doodleSchema = new Schema(
       type: Number,
       default: 0,
     },
-    likesTrueFalse: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: {
