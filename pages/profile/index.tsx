@@ -1,24 +1,25 @@
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 import useFetchUser from '../../hooks/useFetchUser';
-import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaComment } from 'react-icons/fa';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
 import useFetchAllDoodlesWithAllComments from '../../hooks/useFetchAllDooodlesWithAllComments';
 import useFetchUserDoodlesWithAllComments from '../../hooks/useFetchUserDoodlesWithAllComments';
+import usePostUserIsLikesDoodle from '../../hooks/usePostUserIsLikesDoodle';
 
 const ProfilePage = ({ session }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
+  const [tempUserId, setTempUserId] = useState<string>('');
 
-  const { userData, userIsLoading, userIsError } = useFetchUser(
+  const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
     session.user.id
   );
 
@@ -30,12 +31,20 @@ const ProfilePage = ({ session }: any) => {
   } = useFetchUserDoodlesWithAllComments(session.user.id);
 
   const handleModalClick = (doodleId: string) => {
+    setTempUserId(userData._id);
     setTempDoodleId(doodleId);
     setIsDoodleModal(true);
   };
 
-  if (userIsLoading || userDoodlesWithAllCommentsIsLoading)
+  const { mutatePostUserIsLikesDoodle, isLoadingPostUserIsLikesDoodle } =
+    usePostUserIsLikesDoodle({
+      user: tempUserId,
+      doodle: tempDoodleId,
+    });
+
+  if (userIsLoading || userDoodlesWithAllCommentsIsLoading) {
     return <LoaderSpinner />;
+  }
   if (userIsError || userDoodlesWithAllCommentsIsError) return <>Error</>;
 
   return (
@@ -103,6 +112,7 @@ const ProfilePage = ({ session }: any) => {
               userDoodlesWithAllCommentsRefetch={
                 userDoodlesWithAllCommentsRefetch
               }
+              mutatePostUserIsLikesDoodle={mutatePostUserIsLikesDoodle}
             />
           ) : null}
           {userDoodlesWithAllCommentsData.map((doodle: any) => (
