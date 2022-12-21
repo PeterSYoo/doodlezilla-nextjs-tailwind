@@ -33,12 +33,20 @@ export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
                 Cancel
               </span>
               {/*  */}
+              {/* Create new Doodle Button */}
+              <span
+                onClick={() => router.push('/create')}
+                className="border py-1 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
+              >
+                Create new Doodle
+              </span>
+              {/*  */}
               {/* Submit Button */}
               <button
-                onClick={() => router.push('/create')}
+                onClick={() => router.push('/profile')}
                 className="py-2 px-5 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]"
               >
-                Create a new Doodle
+                Go to Profile
               </button>
               {/*  */}
             </div>
