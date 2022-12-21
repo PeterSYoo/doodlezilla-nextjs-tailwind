@@ -6,6 +6,7 @@ const useFetchUserDoodlesWithAllComments = (userId: string) => {
     isLoading: userDoodlesWithAllCommentsIsLoading,
     isError: userDoodlesWithAllCommentsIsError,
     refetch: userDoodlesWithAllCommentsRefetch,
+    isFetching: userDoodlesWithAllCommentsIsFetching,
   } = useQuery(
     ['userDoodlesWithAllComments', userId],
     async () => {
@@ -26,6 +27,7 @@ const useFetchUserDoodlesWithAllComments = (userId: string) => {
     userDoodlesWithAllCommentsIsLoading,
     userDoodlesWithAllCommentsIsError,
     userDoodlesWithAllCommentsRefetch,
+    userDoodlesWithAllCommentsIsFetching,
   };
 };
 
