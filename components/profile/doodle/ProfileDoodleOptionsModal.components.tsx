@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
 
 export interface DoodleCardModalProps {
@@ -11,6 +12,8 @@ export const ProfileDoodleOptionsModal = ({
   doodleWithCommentsData,
   setIsOptionsModal,
 }: DoodleCardModalProps) => {
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+
   const router = useRouter();
 
   const { mutate, isLoading } = useMutation(async (doodleId) => {
@@ -41,12 +44,31 @@ export const ProfileDoodleOptionsModal = ({
         </button>
         <div className="container mx-auto w-11/12 md:w-96">
           <div className="relative py-6 bg-white rounded-3xl flex flex-col gap-6 items-center">
-            <button
-              onClick={() => mutate(doodleWithCommentsData.doodle._id)}
-              className="font-semibold text-sunset hover:text-neutral-800"
-            >
-              Delete
-            </button>
+            {isDelete ? null : (
+              <button
+                onClick={() => setIsDelete(true)}
+                className="font-semibold text-sunset hover:text-neutral-800"
+              >
+                Delete
+              </button>
+            )}
+            {isDelete ? (
+              <div className="font-semibold flex gap-3 text-placeholder">
+                <span
+                  onClick={() => mutate(doodleWithCommentsData.doodle._id)}
+                  className="cursor-pointer hover:text-sunset"
+                >
+                  Yes
+                </span>{' '}
+                /{' '}
+                <span
+                  onClick={() => setIsDelete(false)}
+                  className="cursor-pointer hover:text-black"
+                >
+                  No
+                </span>
+              </div>
+            ) : null}
             <div className="border-b border-grayBorder w-11/12"></div>
             <button
               onClick={() => setIsOptionsModal(false)}
