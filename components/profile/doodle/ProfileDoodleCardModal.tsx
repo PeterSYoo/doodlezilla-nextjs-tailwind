@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
 import useFetchDoodleWithAllComments from '../../../hooks/useFetchDoodleWIthAllComments';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
@@ -8,6 +9,7 @@ export const ProfileDoodleCardModal = ({
   userData,
   doodleId,
   userDoodlesWithAllCommentsRefetch,
+  mutatePostUserIsLikesDoodle,
 }: any) => {
   const {
     doodleWithCommentsData,
@@ -15,6 +17,10 @@ export const ProfileDoodleCardModal = ({
     doodleWithCommentsIsError,
     doodleWithCommentsRefetch,
   } = useFetchDoodleWithAllComments(doodleId);
+
+  useEffect(() => {
+    mutatePostUserIsLikesDoodle();
+  }, []);
 
   if (doodleWithCommentsIsLoading) return <LoaderSpinner />;
   if (doodleWithCommentsIsError) return <>Error!</>;
