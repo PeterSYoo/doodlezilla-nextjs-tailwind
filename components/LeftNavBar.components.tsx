@@ -8,7 +8,7 @@ import useFetchUser from '../hooks/useFetchUser';
 import useFetchUserDoodles from '../hooks/useFetchUsersDoodles';
 import { LoaderSpinner } from './LoaderSpinner.components';
 
-export const NavBar = () => {
+export const LeftNavBar = () => {
   const { data: session }: any = useSession();
 
   const { userData, userIsLoading, userIsError } = useFetchUser(

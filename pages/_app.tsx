@@ -21,7 +21,7 @@ import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
 import { CanvasProvider } from '../contexts/CanvasContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { NavBar } from '../components/NavBar.components';
+import { LeftNavBar } from '../components/LeftNavBar.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -96,7 +96,7 @@ export default function App({ Component, pageProps }: AppProps) {
                           ) : (
                             <Header />
                           )}
-                          <NavBar />
+                          <LeftNavBar />
                           {isFeedPage ? <FeedRightBar /> : null}
                           {isProfilePage ? <ProfileRightBar /> : null}
                           <Component {...pageProps} />
