@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { FaRegEye } from 'react-icons/fa';
@@ -9,6 +8,7 @@ import { useState } from 'react';
 import { SignupUsernameErrorModal } from './SignupUsernameErrorModal.components';
 import { SignupEmailErrorModal } from './SignupEmailErrorModal.components';
 import { SignupSuccessModal } from './SignupSuccessModal.components';
+import useCreateNewUser from '../../hooks/useCreateNewUser';
 
 type Inputs = {
   username: string;
@@ -54,39 +54,18 @@ export const SignupFormSubmit = () => {
     resolver: yupResolver(SignupSchema),
   });
 
-  const handlePostRequest = async (data: any) => {
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: data.username.toLowerCase(),
-        email: data.email,
-        password: data.password,
-      }),
-    };
-
-    await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/signup`,
-      options
-    ).then((response) =>
-      response.json().then((data) => {
-        if (response.status === 422) {
-          if (data.message === 'Username already exists!') {
-            setIsUsernameErrorModalOpen(true);
-          } else if (data.message === 'Email already exists!') {
-            setIsEmailErrorModalOpen(true);
-          }
-        } else {
-          setIsSuccessModalOpen(true);
-        }
-      })
-    );
-  };
-
-  const { mutateAsync, isLoading } = useMutation(handlePostRequest);
+  const { mutateCreateNewUser, isLoadingCreateNewUser } = useCreateNewUser(
+    setIsUsernameErrorModalOpen,
+    setIsEmailErrorModalOpen,
+    setIsSuccessModalOpen
+  );
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await mutateAsync(data);
+    await mutateCreateNewUser({
+      name: data.username.toLowerCase(),
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (
@@ -253,14 +232,14 @@ export const SignupFormSubmit = () => {
           ) : (
             <button
               type="submit"
-              disabled={isLoading ? true : false}
+              disabled={isLoadingCreateNewUser ? true : false}
               className={
-                isLoading
+                isLoadingCreateNewUser
                   ? 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold'
                   : 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
               }
             >
-              {isLoading ? <LoaderSpinnerInline /> : <>Sign up</>}
+              {isLoadingCreateNewUser ? <LoaderSpinnerInline /> : <>Sign up</>}
             </button>
           )}
           {/*  */}
