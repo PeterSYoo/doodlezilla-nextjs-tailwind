@@ -1,6 +1,9 @@
-import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
+import useCreateNewLikesDocument from '../../../hooks/useCreateNewLikesDocument';
 import useFetchDoodleWithAllComments from '../../../hooks/useFetchDoodleWIthAllComments';
+import useFetchUser from '../../../hooks/useFetchUser';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
 import { ProfileDoodleCard } from './ProfileDoodleCard.components';
 
@@ -9,8 +12,17 @@ export const ProfileDoodleCardModal = ({
   userData,
   doodleId,
   userDoodlesWithAllCommentsRefetch,
-  mutatePostUserIsLikesDoodle,
+  mutateCreateNewLikesDocument,
 }: any) => {
+  const { data: session }: any = useSession();
+
+  const {
+    userData: dataSessionUser,
+    userIsLoading: isLoadingSessionUser,
+    userIsError: isErrorSessionUser,
+    userRefetch: refetchSessionUser,
+  } = useFetchUser(session.user.id);
+
   const {
     doodleWithCommentsData,
     doodleWithCommentsIsLoading,
@@ -19,11 +31,12 @@ export const ProfileDoodleCardModal = ({
   } = useFetchDoodleWithAllComments(doodleId);
 
   useEffect(() => {
-    mutatePostUserIsLikesDoodle();
+    mutateCreateNewLikesDocument();
   }, []);
 
-  if (doodleWithCommentsIsLoading) return <LoaderSpinner />;
-  if (doodleWithCommentsIsError) return <>Error!</>;
+  if (doodleWithCommentsIsLoading || isLoadingSessionUser)
+    return <LoaderSpinner />;
+  if (doodleWithCommentsIsError || isErrorSessionUser) return <>Error!</>;
 
   return (
     <>
@@ -39,6 +52,7 @@ export const ProfileDoodleCardModal = ({
         <ProfileDoodleCard
           doodleWithCommentsData={doodleWithCommentsData}
           userData={userData}
+          dataSessionUser={dataSessionUser}
           doodleWithCommentsRefetch={doodleWithCommentsRefetch}
           userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
         />
