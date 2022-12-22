@@ -12,10 +12,10 @@ export const LeftNavBar = () => {
   const { data: session }: any = useSession();
 
   const { userData, userIsLoading, userIsError } = useFetchUser(
-    session.user.id
+    session?.user?.id
   );
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
-    useFetchUserDoodles(session.user.id);
+    useFetchUserDoodles(session?.user?.id);
 
   const router = useRouter();
 
