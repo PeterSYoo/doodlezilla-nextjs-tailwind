@@ -14,7 +14,6 @@ import { Open_Sans } from '@next/font/google';
 import { Footer } from '../components/Footer.components';
 import { LoaderSpinner } from '../components/LoaderSpinner.components';
 import { LoaderSpinnerLogin } from '../components/LoaderSpinnerLogin.components';
-import { NavBar } from '../components/NavBar.components';
 import { FeedRightBar } from '../components/feed/FeedRightBar.components';
 import { HeaderCompressed } from '../components/HeaderCompressed.components';
 import { Header } from '../components/Header.components';
@@ -22,6 +21,7 @@ import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
 import { CanvasProvider } from '../contexts/CanvasContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { NavBar } from '../components/NavBar.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
