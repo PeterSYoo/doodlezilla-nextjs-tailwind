@@ -20,7 +20,6 @@ import { Header } from '../components/Header.components';
 import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
 import { CanvasProvider } from '../contexts/CanvasContext';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LeftNavBar } from '../components/LeftNavBar.components';
 
 const openSans = Open_Sans({
@@ -109,7 +108,6 @@ export default function App({ Component, pageProps }: AppProps) {
                         </div>
                       )}
                     </div>
-                    <ReactQueryDevtools />
                   </CanvasProvider>
                 </ThemeProvider>
               </Hydrate>
