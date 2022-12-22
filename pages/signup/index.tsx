@@ -3,11 +3,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaUserPlus } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import Link from 'next/link';
-import { SignupForm } from '../../components/signup/SignupForm.components';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { signIn } from 'next-auth/react';
+import { SignupFormSubmit } from '../../components/signup/SignupFormSubmit.components';
 
 const SignUp = () => {
   /* Google Handler Function */
@@ -62,7 +62,7 @@ const SignUp = () => {
                   <span className="border-b border-neutral-300 w-5/12 py-2 -mt-4"></span>
                 </div>
                 {/* Login Form Component */}
-                <SignupForm />
+                <SignupFormSubmit />
                 {/*  */}
                 <p className="text-xs text-placeholder flex justify-center">
                   Already have an account?&nbsp;

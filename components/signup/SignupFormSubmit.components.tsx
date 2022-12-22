@@ -38,7 +38,7 @@ const SignupSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], "Passwords don't match."),
 });
 
-export const SignupForm = () => {
+export const SignupFormSubmit = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
   const [isUsernameErrorModalOpen, setIsUsernameErrorModalOpen] =
