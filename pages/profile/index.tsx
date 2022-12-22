@@ -9,19 +9,30 @@ import { authOptions } from '../api/auth/[...nextauth]';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaComment } from 'react-icons/fa';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
-import useFetchAllDoodlesWithAllComments from '../../hooks/useFetchAllDooodlesWithAllComments';
 import useFetchUserDoodlesWithAllComments from '../../hooks/useFetchUserDoodlesWithAllComments';
-import usePostUserIsLikesDoodle from '../../hooks/usePostUserIsLikesDoodle';
+import { useSession } from 'next-auth/react';
+import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 
 const ProfilePage = ({ session }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
-  const [tempUserId, setTempUserId] = useState<string>('');
+
+  const { data: loggedInSession }: any = useSession();
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
     session.user.id
   );
+
+  const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
+    useCreateNewLikesDocument(
+      {
+        doodle: tempDoodleId,
+        user: loggedInSession.user.id,
+      },
+      tempDoodleId,
+      loggedInSession.user.id
+    );
 
   const {
     userDoodlesWithAllCommentsData,
@@ -31,16 +42,10 @@ const ProfilePage = ({ session }: any) => {
   } = useFetchUserDoodlesWithAllComments(session.user.id);
 
   const handleModalClick = (doodleId: string) => {
-    setTempUserId(userData._id);
     setTempDoodleId(doodleId);
+    mutateCreateNewLikesDocument();
     setIsDoodleModal(true);
   };
-
-  const { mutatePostUserIsLikesDoodle, isLoadingPostUserIsLikesDoodle } =
-    usePostUserIsLikesDoodle({
-      user: tempUserId,
-      doodle: tempDoodleId,
-    });
 
   if (userIsLoading || userDoodlesWithAllCommentsIsLoading) {
     return <LoaderSpinner />;
@@ -112,7 +117,7 @@ const ProfilePage = ({ session }: any) => {
               userDoodlesWithAllCommentsRefetch={
                 userDoodlesWithAllCommentsRefetch
               }
-              mutatePostUserIsLikesDoodle={mutatePostUserIsLikesDoodle}
+              mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
             />
           ) : null}
           {userDoodlesWithAllCommentsData.map((doodle: any) => (
