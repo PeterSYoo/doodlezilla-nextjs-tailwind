@@ -1,7 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { RiCloseFill } from 'react-icons/ri';
+import useDeleteDoodle from '../../../hooks/useDeleteDoodle';
 
 export interface DoodleCardModalProps {
   setIsOptionsModal: (isModal: boolean) => void;
@@ -16,22 +16,7 @@ export const ProfileDoodleOptionsModal = ({
 
   const router = useRouter();
 
-  const { mutate, isLoading } = useMutation(async (doodleId) => {
-    try {
-      const Options = {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-      };
-      const response = await fetch(`/api/doodles/${doodleId}`, Options);
-      const json = await response.json();
-
-      if (json) {
-        router.push('/profile');
-      }
-    } catch (error) {
-      return error;
-    }
-  });
+  const { mutateDeleteDoodle, isLoadingDeleteDoodle } = useDeleteDoodle(router);
 
   return (
     <>
@@ -55,7 +40,9 @@ export const ProfileDoodleOptionsModal = ({
             {isDelete ? (
               <div className="font-semibold flex gap-3 text-placeholder">
                 <span
-                  onClick={() => mutate(doodleWithCommentsData.doodle._id)}
+                  onClick={() =>
+                    mutateDeleteDoodle(doodleWithCommentsData.doodle._id)
+                  }
                   className="cursor-pointer hover:text-sunset"
                 >
                   Yes
