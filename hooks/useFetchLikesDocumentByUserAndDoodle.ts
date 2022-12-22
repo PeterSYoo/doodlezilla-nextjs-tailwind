@@ -9,14 +9,20 @@ const useFetchLikesDocumentByUserAndDoodle = (
     isLoading: isLoadingLikesDocumentByUserAndDoodle,
     isError: isErrorLikesDocumentByUserAndDoodle,
     refetch: refetchLikesDocumentByUserAndDoodle,
-  } = useQuery(['likesDocumentByUserAndDoodle'], async () => {
-    try {
-      const response = await fetch(`/api/doodles/${doodleId}/likes/${userId}`);
-      return response.json();
-    } catch (error) {
-      throw error;
-    }
-  });
+  } = useQuery(
+    ['likesDocumentByUserAndDoodle', userId],
+    async () => {
+      try {
+        const response = await fetch(
+          `/api/doodles/${doodleId}/likes/${userId}`
+        );
+        return response.json();
+      } catch (error) {
+        throw error;
+      }
+    },
+    { refetchOnMount: 'always' }
+  );
 
   return {
     dataLikesDocumentByUserAndDoodle,

@@ -5,14 +5,18 @@ const useFetchAllDoodles = () => {
     data: doodlesData,
     isLoading: doodlesIsLoading,
     isError: doodlesIsError,
-  } = useQuery(['allDoodles'], async () => {
-    try {
-      const response = await fetch(`/api/doodles`);
-      return response.json();
-    } catch (error) {
-      throw error;
-    }
-  });
+  } = useQuery(
+    ['allDoodles'],
+    async () => {
+      try {
+        const response = await fetch(`/api/doodles`);
+        return response.json();
+      } catch (error) {
+        throw error;
+      }
+    },
+    { refetchOnMount: 'always' }
+  );
 
   return { doodlesData, doodlesIsLoading, doodlesIsError };
 };

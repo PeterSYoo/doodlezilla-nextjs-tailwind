@@ -5,14 +5,18 @@ const useFetchAllUsers = () => {
     data: allUsersData,
     isLoading: allUsersIsLoading,
     isError: allUsersIsError,
-  } = useQuery(['allUsers'], async () => {
-    try {
-      const response = await fetch(`/api/users`);
-      return response.json();
-    } catch (error) {
-      throw error;
-    }
-  });
+  } = useQuery(
+    ['allUsers'],
+    async () => {
+      try {
+        const response = await fetch(`/api/users`);
+        return response.json();
+      } catch (error) {
+        throw error;
+      }
+    },
+    { refetchOnMount: 'always' }
+  );
 
   return { allUsersData, allUsersIsLoading, allUsersIsError };
 };
