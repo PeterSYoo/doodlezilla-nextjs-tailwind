@@ -2,11 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import {
   deleteDoodle,
   getDoodle,
-  putDoodle,
 } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
 
-export default async function doodleIdApi(
+export default async function doodlesApi(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -20,14 +19,11 @@ export default async function doodleIdApi(
     case 'GET':
       getDoodle(req, res);
       break;
-    case 'PUT':
-      putDoodle(req, res);
-      break;
     case 'DELETE':
       deleteDoodle(req, res);
       break;
     default:
-      res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
+      res.setHeader('Allow', ['GET', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
       break;
   }
