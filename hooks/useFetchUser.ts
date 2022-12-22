@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-const useFetchUser = (objectId: string) => {
+const useFetchUser = (userId: string) => {
   const {
     data: userData,
     isLoading: userIsLoading,
@@ -8,7 +8,7 @@ const useFetchUser = (objectId: string) => {
     refetch: userRefetch,
   } = useQuery(['user'], async () => {
     try {
-      const response = await fetch(`/api/users/${objectId}`);
+      const response = await fetch(`/api/users/${userId}`);
       return response.json();
     } catch (error) {
       throw error;
