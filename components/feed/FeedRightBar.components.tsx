@@ -11,7 +11,7 @@ export const FeedRightBar = () => {
   const { data: session }: any = useSession();
 
   const { userData, userIsLoading, userIsError } = useFetchUser(
-    session.user.id
+    session?.user?.id
   );
   const { allUsersData, allUsersIsLoading, allUsersIsError } =
     useFetchAllUsers();

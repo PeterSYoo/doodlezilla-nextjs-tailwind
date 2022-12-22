@@ -40,7 +40,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   const inputFileRef = useRef<any>(null);
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
-    session.user.id
+    session?.user?.id
   );
 
   const { mutateAsync: mutateProfileAsync, isLoading: mutateProfileIsLoading } =
@@ -52,7 +52,10 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
           body: JSON.stringify(dataObject),
         };
 
-        const response = await fetch(`/api/users/${session.user.id}`, Options);
+        const response = await fetch(
+          `/api/users/${session?.user?.id}`,
+          Options
+        );
         const json = await response.json();
         return json;
       } catch (error) {

@@ -21,17 +21,17 @@ const ProfilePage = ({ session }: any) => {
   const { data: loggedInSession }: any = useSession();
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
-    session.user.id
+    session?.user?.id
   );
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
     useCreateNewLikesDocument(
       {
         doodle: tempDoodleId,
-        user: loggedInSession.user.id,
+        user: loggedInSession?.user?.id,
       },
       tempDoodleId,
-      loggedInSession.user.id
+      loggedInSession?.user?.id
     );
 
   const {
@@ -39,7 +39,7 @@ const ProfilePage = ({ session }: any) => {
     userDoodlesWithAllCommentsIsLoading,
     userDoodlesWithAllCommentsIsError,
     userDoodlesWithAllCommentsRefetch,
-  } = useFetchUserDoodlesWithAllComments(session.user.id);
+  } = useFetchUserDoodlesWithAllComments(session?.user?.id);
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
