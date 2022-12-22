@@ -23,7 +23,6 @@ import { CanvasProvider } from '../contexts/CanvasContext';
 import { LeftNavBar } from '../components/LeftNavBar.components';
 
 const openSans = Open_Sans({
-  subsets: ['latin'],
   variable: '--font-openSans',
 });
 
