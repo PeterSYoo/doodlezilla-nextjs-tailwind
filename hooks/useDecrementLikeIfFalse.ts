@@ -1,18 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 
-const useDecrementLikeIfTrue = (dataObject: any) => {
+const useDecrementLikeIfFalse = (doodleId: string, userId: string) => {
   const {
-    mutateAsync: mutateDecrementLikeIfTrue,
-    isLoading: isLoadingDecrementLikeIfTrue,
+    mutateAsync: mutateDecrementLikeIfFalse,
+    isLoading: isLoadingDecrementLikeIfFalse,
   } = useMutation(async () => {
     try {
       const Options = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataObject),
       };
       const response = await fetch(
-        `/api/decrement-likes-by-1/${dataObject.doodle}`,
+        `/api/doodles/${doodleId}/decrement-likes/${userId}`,
         Options
       );
       const json = await response.json();
@@ -26,9 +24,9 @@ const useDecrementLikeIfTrue = (dataObject: any) => {
   });
 
   return {
-    mutateDecrementLikeIfTrue,
-    isLoadingDecrementLikeIfTrue,
+    mutateDecrementLikeIfFalse,
+    isLoadingDecrementLikeIfFalse,
   };
 };
 
-export default useDecrementLikeIfTrue;
+export default useDecrementLikeIfFalse;

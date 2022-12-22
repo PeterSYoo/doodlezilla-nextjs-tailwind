@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-const useIncrementLikeIfTrue = (dataObject: any) => {
+const useIncrementLikeIfTrue = (doodleId: string, userId: string) => {
   const {
     mutateAsync: mutateIncrementLikeIfTrue,
     isLoading: isLoadingIncrementLikeIfTrue,
@@ -8,11 +8,9 @@ const useIncrementLikeIfTrue = (dataObject: any) => {
     try {
       const Options = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataObject),
       };
       const response = await fetch(
-        `/api/increment-likes-by-1/${dataObject.doodle}`,
+        `/api/doodles/${doodleId}/increment-likes/${userId}`,
         Options
       );
       const json = await response.json();
