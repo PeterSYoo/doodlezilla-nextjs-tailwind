@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Comments from '../models/Comments';
 import Doodles from '../models/Doodles';
-import UserIsLikesDoodle from '../models/UserIsLikesDoodle';
+import Likes from '../models/Likes';
 import Users from '../models/Users';
 
 /* GET all Doodles */
@@ -76,7 +76,7 @@ export const deleteDoodle = async (
     if (doodleId) {
       await Doodles.findByIdAndDelete(doodleId);
       await Comments.deleteMany({ doodle: doodleId });
-      await UserIsLikesDoodle.deleteOne({ doodle: doodleId });
+      await Likes.deleteMany({ doodle: doodleId });
       res.status(200).json('Deleted Doodles with Comments.');
     }
   } catch (error) {
