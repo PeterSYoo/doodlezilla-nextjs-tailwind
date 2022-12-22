@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,6 +9,7 @@ import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { useState } from 'react';
 import { LoginUsernameErrorModal } from './LoginUsernameErrorModal.components';
 import { LoginPasswordErrorModal } from './LoginPasswordErrorModal';
+import useHandleSignin from '../../hooks/useHandleSignin';
 
 type Inputs = {
   username: string;
@@ -46,27 +46,15 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver: yupResolver(LoginSchema) });
 
-  const handleSignin = async (data: any) => {
-    const status: any = await signIn('credentials', {
-      redirect: false,
-      name: data.username.toLowerCase(),
-      password: data.password,
-      callbackUrl: '/feed',
-    });
-
-    if (status.error === 'No user found with that Username!') {
-      setIsUsernameErrorModalOpen(true);
-    } else if (status.error === 'Wrong password!') {
-      setIsPasswordErrorModalOpen(true);
-    } else if (status.ok) {
-      router.push(status.url);
-    }
-  };
-
-  const { mutateAsync, isLoading } = useMutation(handleSignin);
+  const { mutateHandleSignin, isLoadingHandleSignin } = useHandleSignin(
+    signIn,
+    setIsUsernameErrorModalOpen,
+    setIsPasswordErrorModalOpen,
+    router
+  );
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await mutateAsync(data);
+    await mutateHandleSignin(data);
   };
 
   return (
@@ -161,14 +149,14 @@ export const LoginForm = () => {
           ) : (
             <button
               type="submit"
-              disabled={isLoading ? true : false}
+              disabled={isLoadingHandleSignin ? true : false}
               className={
-                isLoading
+                isLoadingHandleSignin
                   ? 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold cursor-pointer'
                   : 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] cursor-pointer'
               }
             >
-              {isLoading ? <LoaderSpinnerInline /> : <>Login</>}
+              {isLoadingHandleSignin ? <LoaderSpinnerInline /> : <>Login</>}
             </button>
           )}
           {/*  */}
