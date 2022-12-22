@@ -82,7 +82,6 @@ export const ProfileDoodleCard = ({
       user: dataSessionUser._id,
       comment: data.comment,
     });
-    await userDoodlesWithAllCommentsRefetch();
     await doodleWithCommentsRefetch();
   };
 
@@ -152,16 +151,14 @@ export const ProfileDoodleCard = ({
 
   const handleLikeTrueOnClick = async () => {
     await mutateIncrementLikeIfTrue();
-    await refetchLikesDocumentByUserAndDoodle();
-    await userDoodlesWithAllCommentsRefetch();
-    await doodleWithCommentsRefetch();
+    refetchLikesDocumentByUserAndDoodle();
+    doodleWithCommentsRefetch();
   };
 
   const handleLikeFalseOnClick = async () => {
     await mutateDecrementLikeIfFalse();
-    await refetchLikesDocumentByUserAndDoodle();
-    await userDoodlesWithAllCommentsRefetch();
-    await doodleWithCommentsRefetch();
+    refetchLikesDocumentByUserAndDoodle();
+    doodleWithCommentsRefetch();
   };
 
   if (isLoadingLikesDocumentByUserAndDoodle) return <LoaderSpinner />;
