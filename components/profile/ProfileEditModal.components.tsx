@@ -8,9 +8,8 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
-import { useMutation } from '@tanstack/react-query';
 import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
-import { BiChevronsRight } from 'react-icons/bi';
+import useUpdateSessionUser from '../../hooks/useUpdateSessionUser';
 
 type Inputs = {
   username: string;
@@ -43,25 +42,8 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
     session?.user?.id
   );
 
-  const { mutateAsync: mutateProfileAsync, isLoading: mutateProfileIsLoading } =
-    useMutation(async (dataObject: any) => {
-      try {
-        const Options = {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dataObject),
-        };
-
-        const response = await fetch(
-          `/api/users/${session?.user?.id}`,
-          Options
-        );
-        const json = await response.json();
-        return json;
-      } catch (error) {
-        return error;
-      }
-    });
+  const { mutateUpdateSessionUser, isLoadingUpdateSessionUser } =
+    useUpdateSessionUser(session?.user?.id);
 
   const {
     handleSubmit,
@@ -98,7 +80,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await mutateProfileAsync({
+    await mutateUpdateSessionUser({
       name: data.username.toLowerCase(),
       image: imageSrc,
       biography: data.biography,
@@ -608,7 +590,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 </span>
                 {/*  */}
                 {/* Submit Button */}
-                {mutateProfileIsLoading ? (
+                {isLoadingUpdateSessionUser ? (
                   <span className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-white font-semibold cursor-default">
                     <LoaderSpinnerInline />
                   </span>
