@@ -14,7 +14,7 @@ const CreatePage: React.FC = () => {
 
   return (
     <>
-      <div className="md:ml-[94px] lg:ml-[213px] bg-zinc-50 flex justify-center">
+      <div className="md:ml-[94px] lg:ml-[213px] bg-zinc-50 flex justify-center h-screen w-screen">
         <canvas
           id="drawing-canvas"
           onMouseDown={(event) => startDrawing(event)}
