@@ -1,11 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  removeHeadTags: [
+  headers: [
     {
-      tagName: 'link',
-      attributes: {
-        rel: 'translate',
-      },
+      source: '/:path*',
+      headers: [
+        {
+          key: 'Link',
+          value: '</static/translate.png>; rel=translate',
+          action: 'remove',
+        },
+      ],
     },
   ],
   reactStrictMode: true,
