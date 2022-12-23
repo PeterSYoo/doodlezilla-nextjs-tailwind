@@ -2,18 +2,17 @@ import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { Fragment, useState } from 'react';
-import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileSlugUsersRightBar } from '../../components/profile/slug/ProfileSlugUsersRightBar.components';
 import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
 import { authOptions } from '../api/auth/[...nextauth]';
-import useFetchUserDoodlesWithAllComments from '../../hooks/useFetchUserDoodlesWithAllComments';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaComment } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
+import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
 
 const UserIdPage = ({ session, username }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
@@ -35,12 +34,20 @@ const UserIdPage = ({ session, username }: any) => {
       loggedInSession.user.id
     );
 
-  const {
+  /*   const {
     userDoodlesWithAllCommentsData,
     userDoodlesWithAllCommentsIsLoading,
     userDoodlesWithAllCommentsIsError,
     userDoodlesWithAllCommentsRefetch,
-  } = useFetchUserDoodlesWithAllComments(userData?._id);
+  } = useFetchUserDoodlesWithAllComments(userData?._id); */
+
+  const {
+    userDoodlesWithAllCommentsAndLikesNumData,
+    userDoodlesWithAllCommentsAndLikesNumIsLoading,
+    userDoodlesWithAllCommentsAndLikesNumIsError,
+    userDoodlesWithAllCommentsAndLikesNumRefetch,
+    userDoodlesWithAllCommentsAndLikesNumIsFetching,
+  } = useFetchUserDoodlesWithAllCommentsAndLikesNum(userData?._id);
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
@@ -48,10 +55,11 @@ const UserIdPage = ({ session, username }: any) => {
     setIsDoodleModal(true);
   };
 
-  if (userIsLoading || userDoodlesWithAllCommentsIsLoading) {
+  if (userIsLoading || userDoodlesWithAllCommentsAndLikesNumIsLoading) {
     return <LoaderSpinner />;
   }
-  if (userIsError || userDoodlesWithAllCommentsIsError) return <>Error</>;
+  if (userIsError || userDoodlesWithAllCommentsAndLikesNumIsError)
+    return <>Error</>;
 
   return (
     <>
@@ -78,7 +86,7 @@ const UserIdPage = ({ session, username }: any) => {
                   {userData.name}
                 </h1>
                 <p className="font-semibold text-xs">
-                  {userDoodlesWithAllCommentsData.length}&nbsp;
+                  {userDoodlesWithAllCommentsAndLikesNumData.length}&nbsp;
                   <span className="font-normal text-placeholder">DOODLES</span>
                 </p>
               </div>
@@ -118,12 +126,12 @@ const UserIdPage = ({ session, username }: any) => {
                 userData={userData}
                 doodleId={tempDoodleId}
                 userDoodlesWithAllCommentsRefetch={
-                  userDoodlesWithAllCommentsRefetch
+                  userDoodlesWithAllCommentsAndLikesNumRefetch
                 }
                 mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
               />
             ) : null}
-            {userDoodlesWithAllCommentsData.map((doodle: any) => (
+            {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (
               <Fragment key={doodle.doodle._id}>
                 <div
                   onClick={() => handleModalClick(doodle.doodle._id)}
@@ -140,7 +148,7 @@ const UserIdPage = ({ session, username }: any) => {
                     <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
                       <div className="flex items-center gap-2">
                         <AiFillHeart />
-                        {doodle.doodle.likes}
+                        {doodle.likesNum.length}
                       </div>
                       <div className="flex items-center gap-2">
                         <FaComment className="transform -scale-x-100" />

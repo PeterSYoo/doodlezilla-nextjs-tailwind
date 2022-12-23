@@ -9,9 +9,9 @@ import { authOptions } from '../api/auth/[...nextauth]';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaComment } from 'react-icons/fa';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
-import useFetchUserDoodlesWithAllComments from '../../hooks/useFetchUserDoodlesWithAllComments';
 import { useSession } from 'next-auth/react';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
+import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
 
 const ProfilePage = ({ session }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
@@ -34,12 +34,20 @@ const ProfilePage = ({ session }: any) => {
       loggedInSession?.user?.id
     );
 
-  const {
+  /*   const {
     userDoodlesWithAllCommentsData,
     userDoodlesWithAllCommentsIsLoading,
     userDoodlesWithAllCommentsIsError,
     userDoodlesWithAllCommentsRefetch,
-  } = useFetchUserDoodlesWithAllComments(session?.user?.id);
+  } = useFetchUserDoodlesWithAllComments(session?.user?.id); */
+
+  const {
+    userDoodlesWithAllCommentsAndLikesNumData,
+    userDoodlesWithAllCommentsAndLikesNumIsLoading,
+    userDoodlesWithAllCommentsAndLikesNumIsError,
+    userDoodlesWithAllCommentsAndLikesNumRefetch,
+    userDoodlesWithAllCommentsAndLikesNumIsFetching,
+  } = useFetchUserDoodlesWithAllCommentsAndLikesNum(session?.user?.id);
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
@@ -47,10 +55,13 @@ const ProfilePage = ({ session }: any) => {
     setIsDoodleModal(true);
   };
 
-  if (userIsLoading || userDoodlesWithAllCommentsIsLoading) {
+  if (userIsLoading || userDoodlesWithAllCommentsAndLikesNumIsLoading) {
     return <LoaderSpinner />;
   }
-  if (userIsError || userDoodlesWithAllCommentsIsError) return <>Error</>;
+  if (userIsError || userDoodlesWithAllCommentsAndLikesNumIsError)
+    return <>Error</>;
+
+  console.log(userDoodlesWithAllCommentsAndLikesNumData);
 
   return (
     <>
@@ -75,7 +86,7 @@ const ProfilePage = ({ session }: any) => {
                 {userData.name}
               </h1>
               <p className="font-semibold text-xs">
-                {userDoodlesWithAllCommentsData.length}&nbsp;
+                {userDoodlesWithAllCommentsAndLikesNumData.length}&nbsp;
                 <span className="font-normal text-placeholder">DOODLES</span>
               </p>
             </div>
@@ -115,12 +126,12 @@ const ProfilePage = ({ session }: any) => {
               userData={userData}
               doodleId={tempDoodleId}
               userDoodlesWithAllCommentsRefetch={
-                userDoodlesWithAllCommentsRefetch
+                userDoodlesWithAllCommentsAndLikesNumRefetch
               }
               mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
             />
           ) : null}
-          {userDoodlesWithAllCommentsData.map((doodle: any) => (
+          {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (
             <Fragment key={doodle.doodle._id}>
               <div
                 onClick={() => handleModalClick(doodle.doodle._id)}
@@ -137,7 +148,7 @@ const ProfilePage = ({ session }: any) => {
                   <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
                     <div className="flex items-center gap-2">
                       <AiFillHeart />
-                      {doodle.doodle.likes}
+                      {doodle.likesNum.length}
                     </div>
                     <div className="flex items-center gap-2">
                       <FaComment className="transform -scale-x-100" />

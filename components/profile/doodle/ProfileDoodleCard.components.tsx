@@ -104,6 +104,7 @@ export const ProfileDoodleCard = ({
       comment: data.comment,
     });
     await doodleWithCommentsRefetch();
+    await userDoodlesWithAllCommentsRefetch();
   };
 
   const getDayDifference = (dateTime: string) => {
@@ -174,12 +175,14 @@ export const ProfileDoodleCard = ({
     /*     await mutateIncrementLikeIfTrue(); */
     await mutateCreateNewLikesNum();
     await refetchGetAllLikesNum();
+    await userDoodlesWithAllCommentsRefetch();
   };
 
   const handleLikeFalseOnClick = async () => {
     /*     await mutateDecrementLikeIfFalse(); */
     await mutateDeleteLikesNum();
     await refetchGetAllLikesNum();
+    await userDoodlesWithAllCommentsRefetch();
   };
 
   useEffect(() => {
