@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  removeHeadTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'translate',
+      },
+    },
+  ],
   reactStrictMode: true,
   swcMinify: true,
   images: {
