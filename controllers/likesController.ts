@@ -31,20 +31,34 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId, doodleId } = req.query;
     /* First look for a likes document that have the specific userId and doodleId prop then create a new like document if none was found */
-    const likes = await Likes.findOne({
-      doodle: doodleId,
-      user: userId,
-    });
-    console.log(likes);
-    if (likes === null) {
-      /* create a new like document if none was found */
-      await Likes.create({
+
+    if (userId && doodleId) {
+      const likes = await Likes.findOne({
         doodle: doodleId,
         user: userId,
       });
-    }
 
-    res.status(200).json({ error: 'Likes document already exists.' });
+      console.log(likes);
+
+      if (!likes)
+        res.status(404).json({ error: 'Could not find Likes document' });
+
+      if (likes === null) {
+        /* create a new like document if none was found */
+        const newLikes = await Likes.create({
+          doodle: doodleId,
+          user: userId,
+        });
+        console.log(newLikes);
+        res.status(200).json(newLikes);
+      } else {
+        res.status(200).json('Likes document already exists.');
+      }
+    } else {
+      res
+        .status(404)
+        .json({ error: 'UserId and DoodleId were not passed correctly' });
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error While Creating Likes Document' });
   }
@@ -59,32 +73,33 @@ export const putLikeUpdateTrue = async (
   try {
     const { userId, doodleId } = req.query;
 
-    const likes = await Likes.findOneAndUpdate(
-      { user: userId, doodle: doodleId },
-      {
-        $set: { likes: true },
-      }
-    );
-    if (!likes) {
-      res.status(404).json({ error: 'Likes document does not exist.' });
-    }
+    if (userId && doodleId) {
+      const likes = await Likes.findOneAndUpdate(
+        { user: userId, doodle: doodleId },
+        {
+          $set: { likes: true },
+        }
+      );
 
-    if (likes) {
-      const ifLikesIsTrue = await Likes.findOne({
-        user: userId,
-        doodle: doodleId,
-        likes: true,
-      });
-      if (ifLikesIsTrue.likes === true) {
-        const updateDoodleLikes = await Doodles.findByIdAndUpdate(doodleId, {
-          $inc: { likes: 1 },
+      if (!likes) {
+        res.status(404).json({ error: 'Could not find Likes document.' });
+      }
+
+      if (likes) {
+        const ifLikesIsTrue = await Likes.findOne({
+          user: userId,
+          doodle: doodleId,
+          likes: true,
         });
+        if (ifLikesIsTrue.likes === true) {
+          const updateDoodleLikes = await Doodles.findByIdAndUpdate(doodleId, {
+            $inc: { likes: 1 },
+          });
 
-        res.status(200).json(updateDoodleLikes);
+          res.status(200).json(updateDoodleLikes);
+        }
       }
     }
-
-    res.status(200).json(likes);
   } catch (error) {
     res.status(404).json({ error: 'Error While Creating Likes Document' });
   }
@@ -99,32 +114,32 @@ export const putLikeUpdateFalse = async (
   try {
     const { userId, doodleId } = req.query;
 
-    const likes = await Likes.findOneAndUpdate(
-      { user: userId, doodle: doodleId },
-      {
-        $set: { likes: false },
+    if (userId && doodleId) {
+      const likes = await Likes.findOneAndUpdate(
+        { user: userId, doodle: doodleId },
+        {
+          $set: { likes: false },
+        }
+      );
+      if (!likes) {
+        res.status(404).json({ error: 'Likes document does not exist.' });
       }
-    );
-    if (!likes) {
-      res.status(404).json({ error: 'Likes document does not exist.' });
-    }
 
-    if (likes) {
-      const ifLikesIsFalse = await Likes.findOne({
-        user: userId,
-        doodle: doodleId,
-        likes: false,
-      });
-      if (ifLikesIsFalse.likes === false) {
-        const updateDoodleLikes = await Doodles.findByIdAndUpdate(doodleId, {
-          $inc: { likes: -1 },
+      if (likes) {
+        const ifLikesIsFalse = await Likes.findOne({
+          user: userId,
+          doodle: doodleId,
+          likes: false,
         });
+        if (ifLikesIsFalse.likes === false) {
+          const updateDoodleLikes = await Doodles.findByIdAndUpdate(doodleId, {
+            $inc: { likes: -1 },
+          });
 
-        res.status(200).json(updateDoodleLikes);
+          res.status(200).json(updateDoodleLikes);
+        }
       }
     }
-
-    res.status(200).json(likes);
   } catch (error) {
     res.status(404).json({ error: 'Error While Creating Likes Document' });
   }
