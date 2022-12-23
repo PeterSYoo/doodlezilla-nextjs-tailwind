@@ -1,17 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  headers: [
-    {
-      source: '/:path*',
-      headers: [
-        {
-          key: 'Link',
-          value: '</static/translate.png>; rel=translate',
-          action: 'remove',
-        },
-      ],
-    },
-  ],
+  removeHeaderHTML: true,
   reactStrictMode: true,
   swcMinify: true,
   images: {
