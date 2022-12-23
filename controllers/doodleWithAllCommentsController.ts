@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Comments from '../models/Comments';
 import Doodles from '../models/Doodles';
+import LikesNum from '../models/LikesNum';
 import Users from '../models/Users';
 
 /* GET all Doodles With all Comments Referencing Each Individual Doodle Document. */
@@ -99,6 +100,38 @@ export const getDoodleWithAllComments = async (
 
         res.status(200).json(combinedData);
       }
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Error while fetching users doodles' });
+  }
+};
+/*  */
+
+/* GET all User Doodles With all Comments and Likes Num */
+export const getUserDoodleWithAllCommentsAndLikesNum = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { userId } = req.query;
+
+    if (userId) {
+      const doodles = await Doodles.find({ user: userId });
+      if (!doodles) return res.status(404).json({ error: 'Data not Found' });
+
+      let combinedData = [];
+      for (let i = 0; i < doodles.length; i++) {
+        let comments = await Comments.find({ doodle: doodles[i]._id });
+        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+
+        combinedData.push({
+          doodle: doodles[i],
+          likesNum: likesNum,
+          comments: comments,
+        });
+      }
+
+      res.status(200).json(combinedData);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
