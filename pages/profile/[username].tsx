@@ -13,6 +13,7 @@ import { FaComment } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
+import { useRouter } from 'next/router';
 
 const UserIdPage = ({ session, username }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
@@ -20,6 +21,8 @@ const UserIdPage = ({ session, username }: any) => {
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
 
   const { data: loggedInSession }: any = useSession();
+  const router = useRouter();
+  const isUsernamePage = router.pathname === '/profile/[username]';
 
   const { userData, userIsLoading, userIsError } =
     useFetchUserByUsername(username);
@@ -129,6 +132,7 @@ const UserIdPage = ({ session, username }: any) => {
                   userDoodlesWithAllCommentsAndLikesNumRefetch
                 }
                 mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
+                isUsernamePage={isUsernamePage}
               />
             ) : null}
             {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (

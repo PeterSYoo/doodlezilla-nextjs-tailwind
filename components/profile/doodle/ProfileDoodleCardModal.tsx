@@ -13,6 +13,7 @@ export const ProfileDoodleCardModal = ({
   doodleId,
   userDoodlesWithAllCommentsRefetch,
   mutateCreateNewLikesDocument,
+  isUsernamePage,
 }: any) => {
   const { data: session }: any = useSession();
 
@@ -55,6 +56,7 @@ export const ProfileDoodleCardModal = ({
           dataSessionUser={dataSessionUser}
           doodleWithCommentsRefetch={doodleWithCommentsRefetch}
           userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
+          isUsernamePage={isUsernamePage}
         />
       </div>
     </>
