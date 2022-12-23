@@ -67,7 +67,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Nudoodle - Share doodles with your friends!</title>
-        <meta name="google" content="notranslate" />
       </Head>
       {loading ? (
         <>
