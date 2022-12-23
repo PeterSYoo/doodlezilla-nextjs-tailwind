@@ -338,13 +338,13 @@ export const ProfileDoodleCard = ({
               </p>
             </div>
             <div className="col-start-9 col-span-4 md:col-start-8 md:col-span-6 flex gap-2 items-center justify-end">
-              <p className="text-xs">
-                <span className="text-placeholder">Created</span>&nbsp;
+              <p className="text-xs text-placeholder">
+                Created&nbsp;
                 {getDayDifference(doodleWithCommentsData.doodle.created_at) >
                 0 ? (
                   <>
                     {getDayDifference(doodleWithCommentsData.doodle.created_at)}
-                    d <span className="text-placeholder">ago</span>
+                    d ago
                   </>
                 ) : (
                   <>
@@ -355,7 +355,7 @@ export const ProfileDoodleCard = ({
                         {getHourDifference(
                           doodleWithCommentsData.doodle.created_at
                         )}
-                        h <span className="text-placeholder">ago</span>
+                        h ago
                       </>
                     ) : (
                       <>
@@ -366,14 +366,14 @@ export const ProfileDoodleCard = ({
                             {getMinuteDifference(
                               doodleWithCommentsData.doodle.created_at
                             )}
-                            m <span className="text-placeholder">ago</span>
+                            m ago
                           </>
                         ) : (
                           <>
                             {getSecondsDifference(
                               doodleWithCommentsData.doodle.created_at
                             )}
-                            s <span className="text-placeholder">ago</span>
+                            s ago
                           </>
                         )}
                       </>
