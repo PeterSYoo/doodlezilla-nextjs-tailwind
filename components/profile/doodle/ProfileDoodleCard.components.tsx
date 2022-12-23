@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
@@ -15,6 +15,9 @@ import useFetchLikesDocumentByUserAndDoodle from '../../../hooks/useFetchLikesDo
 import useIncrementLikeIfTrue from '../../../hooks/useIncrementLikeIfTrue';
 import useDecrementLikeIfFalse from '../../../hooks/useDecrementLikeIfFalse';
 import useCreateNewComment from '../../../hooks/useCreateNewComment';
+import useGetAllLikesNum from '../../../hooks/useGetAllLikesNum';
+import useCreateNewLikesNum from '../../../hooks/useCreateNewLikesNum';
+import useDeleteLikesNum from '../../../hooks/useDeleteLikesNum';
 
 type Inputs = {
   comment: String;
@@ -52,7 +55,7 @@ export const ProfileDoodleCard = ({
     loggedInSession.user.id
   );
 
-  const { mutateIncrementLikeIfTrue, isLoadingIncrementLikeIfTrue } =
+  /*   const { mutateIncrementLikeIfTrue, isLoadingIncrementLikeIfTrue } =
     useIncrementLikeIfTrue(
       doodleWithCommentsData.doodle._id,
       loggedInSession.user.id
@@ -62,7 +65,25 @@ export const ProfileDoodleCard = ({
     useDecrementLikeIfFalse(
       doodleWithCommentsData.doodle._id,
       loggedInSession.user.id
+    ); */
+
+  const {
+    dataGetAllLikesNum,
+    isLoadingGetAllLikesNum,
+    isErrorGetAllLikesNum,
+    refetchGetAllLikesNum,
+  } = useGetAllLikesNum(doodleWithCommentsData.doodle._id);
+
+  const { mutateCreateNewLikesNum, isLoadingCreateNewLikesNum } =
+    useCreateNewLikesNum(
+      doodleWithCommentsData.doodle._id,
+      loggedInSession.user.id
     );
+
+  const { mutateDeleteLikesNum, isLoadingDeleteLikesNum } = useDeleteLikesNum(
+    doodleWithCommentsData.doodle._id,
+    loggedInSession.user.id
+  );
 
   const {
     handleSubmit,
@@ -150,19 +171,25 @@ export const ProfileDoodleCard = ({
   };
 
   const handleLikeTrueOnClick = async () => {
-    await mutateIncrementLikeIfTrue();
-    refetchLikesDocumentByUserAndDoodle();
-    doodleWithCommentsRefetch();
+    /*     await mutateIncrementLikeIfTrue(); */
+    await mutateCreateNewLikesNum();
+    await refetchGetAllLikesNum();
   };
 
   const handleLikeFalseOnClick = async () => {
-    await mutateDecrementLikeIfFalse();
-    refetchLikesDocumentByUserAndDoodle();
-    doodleWithCommentsRefetch();
+    /*     await mutateDecrementLikeIfFalse(); */
+    await mutateDeleteLikesNum();
+    await refetchGetAllLikesNum();
   };
 
-  if (isLoadingLikesDocumentByUserAndDoodle) return <LoaderSpinner />;
-  if (isErrorLikesDocumentByUserAndDoodle) return <>Error</>;
+  useEffect(() => {
+    refetchLikesDocumentByUserAndDoodle();
+  }, [dataGetAllLikesNum]);
+
+  if (isLoadingLikesDocumentByUserAndDoodle || isLoadingGetAllLikesNum)
+    return <LoaderSpinner />;
+  if (isErrorLikesDocumentByUserAndDoodle || isErrorGetAllLikesNum)
+    return <>Error</>;
 
   return (
     <>
@@ -293,7 +320,7 @@ export const ProfileDoodleCard = ({
               )}
 
               <p className="font-semibold text-xs">
-                {doodleWithCommentsData.doodle.likes}{' '}
+                {dataGetAllLikesNum.length}{' '}
                 <span className="text-placeholder">likes</span>
               </p>
             </div>
