@@ -25,14 +25,7 @@ const ProfilePage = ({ session }: any) => {
   );
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
-    useCreateNewLikesDocument(
-      {
-        doodle: tempDoodleId,
-        user: loggedInSession?.user?.id,
-      },
-      tempDoodleId,
-      loggedInSession?.user?.id
-    );
+    useCreateNewLikesDocument(tempDoodleId, loggedInSession?.user?.id);
 
   /*   const {
     userDoodlesWithAllCommentsData,
@@ -51,7 +44,10 @@ const ProfilePage = ({ session }: any) => {
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
-    mutateCreateNewLikesDocument();
+    mutateCreateNewLikesDocument({
+      doodle: tempDoodleId,
+      user: loggedInSession?.user?.id,
+    });
     setIsDoodleModal(true);
   };
 
@@ -60,8 +56,6 @@ const ProfilePage = ({ session }: any) => {
   }
   if (userIsError || userDoodlesWithAllCommentsAndLikesNumIsError)
     return <>Error</>;
-
-  console.log(userDoodlesWithAllCommentsAndLikesNumData);
 
   return (
     <>
@@ -129,6 +123,7 @@ const ProfilePage = ({ session }: any) => {
                 userDoodlesWithAllCommentsAndLikesNumRefetch
               }
               mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
+              tempDoodleId={tempDoodleId}
             />
           ) : null}
           {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (

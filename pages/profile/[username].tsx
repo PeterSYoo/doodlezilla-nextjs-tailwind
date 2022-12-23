@@ -28,14 +28,7 @@ const UserIdPage = ({ session, username }: any) => {
     useFetchUserByUsername(username);
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
-    useCreateNewLikesDocument(
-      {
-        doodle: tempDoodleId,
-        user: loggedInSession.user.id,
-      },
-      tempDoodleId,
-      loggedInSession.user.id
-    );
+    useCreateNewLikesDocument(tempDoodleId, loggedInSession.user.id);
 
   /*   const {
     userDoodlesWithAllCommentsData,
@@ -54,7 +47,6 @@ const UserIdPage = ({ session, username }: any) => {
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
-    mutateCreateNewLikesDocument();
     setIsDoodleModal(true);
   };
 
@@ -133,6 +125,7 @@ const UserIdPage = ({ session, username }: any) => {
                 }
                 mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
                 isUsernamePage={isUsernamePage}
+                tempDoodleId={tempDoodleId}
               />
             ) : null}
             {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (

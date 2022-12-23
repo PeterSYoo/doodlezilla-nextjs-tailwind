@@ -14,6 +14,7 @@ export const ProfileDoodleCardModal = ({
   userDoodlesWithAllCommentsRefetch,
   mutateCreateNewLikesDocument,
   isUsernamePage,
+  tempDoodleId,
 }: any) => {
   const { data: session }: any = useSession();
 
@@ -22,7 +23,7 @@ export const ProfileDoodleCardModal = ({
     userIsLoading: isLoadingSessionUser,
     userIsError: isErrorSessionUser,
     userRefetch: refetchSessionUser,
-  } = useFetchUser(session.user.id);
+  } = useFetchUser(session?.user?.id);
 
   const {
     doodleWithCommentsData,
@@ -32,7 +33,10 @@ export const ProfileDoodleCardModal = ({
   } = useFetchDoodleWithAllComments(doodleId);
 
   useEffect(() => {
-    mutateCreateNewLikesDocument();
+    mutateCreateNewLikesDocument({
+      doodle: tempDoodleId,
+      user: session?.user?.id,
+    });
   }, []);
 
   if (doodleWithCommentsIsLoading || isLoadingSessionUser)
