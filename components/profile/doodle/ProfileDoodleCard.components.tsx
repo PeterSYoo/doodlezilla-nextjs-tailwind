@@ -208,7 +208,7 @@ export const ProfileDoodleCard = ({
           setIsPostSuccessModal={setIsPostSuccessModal}
         />
       ) : null}
-      <div className="bg-white border border-grayBorder w-full h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
+      <div className="bg-white border border-grayBorder w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
           <div className="flex gap-3 items-center">
