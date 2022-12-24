@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 import useFetchUser from '../../hooks/useFetchUser';
@@ -17,6 +17,8 @@ const ProfilePage = ({ session }: any) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
+  const [tempUserId, setTempUserId] = useState<string>('');
+  const [isHandleClick, setIsHandleClick] = useState<boolean>(false);
 
   const { data: loggedInSession }: any = useSession();
 
@@ -43,13 +45,26 @@ const ProfilePage = ({ session }: any) => {
   } = useFetchUserDoodlesWithAllCommentsAndLikesNum(session?.user?.id);
 
   const handleModalClick = (doodleId: string) => {
+    setIsHandleClick(true);
     setTempDoodleId(doodleId);
-    mutateCreateNewLikesDocument({
-      doodle: tempDoodleId,
-      user: loggedInSession?.user?.id,
-    });
-    setIsDoodleModal(true);
+
+    if (tempDoodleId && tempUserId) {
+      mutateCreateNewLikesDocument({
+        doodle: tempDoodleId,
+        user: tempUserId,
+      });
+    }
   };
+
+  useEffect(() => {
+    setTempUserId(loggedInSession?.user?.id);
+  }, []);
+
+  useEffect(() => {
+    if (tempDoodleId && tempUserId) {
+      setIsDoodleModal(true);
+    }
+  }, [tempDoodleId, tempUserId, isHandleClick]);
 
   if (userIsLoading || userDoodlesWithAllCommentsAndLikesNumIsLoading) {
     return <LoaderSpinner />;
@@ -123,13 +138,15 @@ const ProfilePage = ({ session }: any) => {
                 userDoodlesWithAllCommentsAndLikesNumRefetch
               }
               mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
-              tempDoodleId={tempDoodleId}
+              userId={tempUserId}
             />
           ) : null}
           {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (
             <Fragment key={doodle.doodle._id}>
               <div
-                onClick={() => handleModalClick(doodle.doodle._id)}
+                onClick={() => {
+                  handleModalClick(doodle.doodle._id);
+                }}
                 className="overlay-container rounded-xl overflow-hidden relative group h-[200px]"
               >
                 <Image

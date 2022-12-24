@@ -11,10 +11,10 @@ export const ProfileDoodleCardModal = ({
   setIsDoodleModal,
   userData,
   doodleId,
+  userId,
   userDoodlesWithAllCommentsRefetch,
   mutateCreateNewLikesDocument,
   isUsernamePage,
-  tempDoodleId,
 }: any) => {
   const { data: session }: any = useSession();
 
@@ -34,8 +34,8 @@ export const ProfileDoodleCardModal = ({
 
   useEffect(() => {
     mutateCreateNewLikesDocument({
-      doodle: tempDoodleId,
-      user: session?.user?.id,
+      doodle: doodleId,
+      user: userId,
     });
   }, []);
 
