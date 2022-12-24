@@ -45,7 +45,7 @@ const ProfilePage = ({ session }: any) => {
   } = useFetchUserDoodlesWithAllCommentsAndLikesNum(session?.user?.id);
 
   const handleModalClick = (doodleId: string) => {
-    setIsHandleClick(true);
+    setIsHandleClick(!isHandleClick);
     setTempDoodleId(doodleId);
 
     if (tempDoodleId && tempUserId) {

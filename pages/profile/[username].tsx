@@ -48,8 +48,6 @@ const UserIdPage = ({ session, username }: any) => {
 
   const handleModalClick = (doodleId: string) => {
     setTempDoodleId(doodleId);
-    console.log('doodle', doodleId);
-    console.log('user', tempUserId);
     if (tempUserId && tempDoodleId) {
       mutateCreateNewLikesDocument({
         doodle: tempDoodleId,

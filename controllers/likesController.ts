@@ -38,8 +38,6 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
         user: userId,
       });
 
-      console.log(likes);
-
       if (!likes)
         res.status(404).json({ error: 'Could not find Likes document' });
 
@@ -49,7 +47,6 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
           doodle: doodleId,
           user: userId,
         });
-        console.log(newLikes);
         res.status(200).json(newLikes);
       } else {
         res.status(200).json('Likes document already exists.');
