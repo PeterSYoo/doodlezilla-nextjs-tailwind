@@ -20,6 +20,7 @@ const UserIdPage = ({ session, username }: any) => {
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
   const [tempUserId, setTempUserId] = useState<string>('');
+  const [isHandleClick, setIsHandleClick] = useState<boolean>(false);
 
   const { data: loggedInSession }: any = useSession();
   const router = useRouter();
@@ -47,8 +48,10 @@ const UserIdPage = ({ session, username }: any) => {
   } = useFetchUserDoodlesWithAllCommentsAndLikesNum(userData?._id);
 
   const handleModalClick = (doodleId: string) => {
+    setIsHandleClick(!isHandleClick);
     setTempDoodleId(doodleId);
-    if (tempUserId && tempDoodleId) {
+
+    if (tempDoodleId && tempUserId) {
       mutateCreateNewLikesDocument({
         doodle: tempDoodleId,
         user: tempUserId,
@@ -64,7 +67,7 @@ const UserIdPage = ({ session, username }: any) => {
     if (tempDoodleId && tempUserId) {
       setIsDoodleModal(true);
     }
-  }, [tempDoodleId, tempUserId]);
+  }, [tempDoodleId, tempUserId, isHandleClick]);
 
   if (userIsLoading || userDoodlesWithAllCommentsAndLikesNumIsLoading) {
     return <LoaderSpinner />;
@@ -147,7 +150,6 @@ const UserIdPage = ({ session, username }: any) => {
               <Fragment key={doodle.doodle._id}>
                 <div
                   onClick={() => {
-                    setTempDoodleId(doodle.doodle._id);
                     handleModalClick(doodle.doodle._id);
                   }}
                   className="overlay-container rounded-xl overflow-hidden relative group h-[200px]"
