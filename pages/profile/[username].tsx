@@ -161,7 +161,7 @@ const UserIdPage = ({ session, username }: any) => {
                     height={325}
                     className="rounded-xl border border-grayBorder object-cover h-full"
                   />
-                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white">
+                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white group-hover:backdrop-blur-sm">
                     <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
                       <div className="flex items-center gap-2">
                         <AiFillHeart />
