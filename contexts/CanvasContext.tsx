@@ -120,7 +120,7 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
   const clearCanvas = () => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
-    ctx.fillStyle = '#fafafa';
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
 

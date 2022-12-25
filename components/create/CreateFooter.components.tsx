@@ -8,7 +8,7 @@ import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 export const CreateFooter = () => {
   const [penColorState, setPenColorState] = useState<string>('#000000');
   const [backgroundColorState, setBackgroundColorState] =
-    useState<string>('#fafafa');
+    useState<string>('#ffffff');
   const [isPenColorModal, setIsPenColorModal] = useState<boolean>(false);
   const [isBackgroundColorModal, setIsBackgroundColorModal] =
     useState<boolean>(false);
