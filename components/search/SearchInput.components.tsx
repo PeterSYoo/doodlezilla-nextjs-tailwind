@@ -9,9 +9,6 @@ type User = {
   _id: string;
   name: string;
   image: string;
-  bio: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export const SearchInput = () => {
