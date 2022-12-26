@@ -82,9 +82,9 @@ export default function App({ Component, pageProps }: AppProps) {
           <SessionProvider session={pageProps.session}>
             <QueryClientProvider client={queryClient}>
               <Hydrate state={pageProps.dehydratedState}>
-                <ThemeProvider enableSystem={true} attribute="class">
+                <ThemeProvider attribute="class" defaultTheme="dark">
                   <CanvasProvider>
-                    <div className="min-h-screen min-w-screen flex flex-col">
+                    <div className="min-h-screen min-w-screen flex flex-col dark:bg-shadeDark">
                       {isLoginPage || isSignupPage ? (
                         <div className="flex flex-col flex-grow">
                           <Component {...pageProps} />
