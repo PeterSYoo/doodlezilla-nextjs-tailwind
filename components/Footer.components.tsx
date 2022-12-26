@@ -6,6 +6,7 @@ import useFetchUser from '../hooks/useFetchUser';
 import { LoaderSpinner } from './LoaderSpinner.components';
 import { AiFillHome } from 'react-icons/ai';
 import { FiLogOut } from 'react-icons/fi';
+import { MdCreate } from 'react-icons/md';
 
 export const Footer = () => {
   const router = useRouter();
@@ -52,17 +53,13 @@ export const Footer = () => {
           {isCreatePage ? (
             <div className="flex flex-col justify-between">
               <Link href="/create">
-                <button className="border-[3px] aspect-square h-[35px] flex justify-center items-center text-3xl border-sunset text-sunset rounded-md">
-                  +
-                </button>
+                <MdCreate className="text-sunset" />
               </Link>
               <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl"></div>
             </div>
           ) : (
             <Link href="/create">
-              <button className="border-[3px] aspect-square h-[35px] flex justify-center items-center text-3xl border-placeholder rounded-md">
-                +
-              </button>
+              <MdCreate />
             </Link>
           )}
           {/*  */}
