@@ -1,14 +1,20 @@
 import { useMutation } from '@tanstack/react-query';
 
+type Data = {
+  email: string;
+  name: string;
+  password: string;
+};
+
 const useCreateNewUser = (
-  setIsUsernameErrorModalOpen: any,
-  setIsEmailErrorModalOpen: any,
-  setIsSuccessModalOpen: any
+  setIsUsernameErrorModalOpen: (arg0: boolean) => void,
+  setIsEmailErrorModalOpen: (arg0: boolean) => void,
+  setIsSuccessModalOpen: (arg0: boolean) => void
 ) => {
   const {
     mutateAsync: mutateCreateNewUser,
     isLoading: isLoadingCreateNewUser,
-  } = useMutation(async (data: any) => {
+  } = useMutation(async (data: Data) => {
     try {
       const options = {
         method: 'POST',
