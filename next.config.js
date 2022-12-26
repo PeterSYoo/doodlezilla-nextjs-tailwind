@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  removeHeaderHTML: true,
   reactStrictMode: true,
   swcMinify: true,
   images: {
