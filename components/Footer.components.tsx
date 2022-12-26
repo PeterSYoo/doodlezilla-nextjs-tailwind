@@ -26,7 +26,7 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="z-40 fixed bottom-0 flex w-full h-[75px] bg-white dark:bg-gray-700 border-t border-grayBorder text-4xl px-9 pt-3 text-placeholder backdrop-blur-sm bg-opacity-75">
+      <footer className="z-40 fixed bottom-0 flex w-full h-[75px] bg-white dark:bg-midnight border-t border-grayBorder dark:border-transparent text-4xl px-9 pt-3 text-placeholder backdrop-blur-sm bg-opacity-75 dark:backdrop-blur-sm dark:bg-opacity-75">
         <div className="flex justify-between w-full max-w-[375px] mx-auto">
           {/* Feed Button */}
           {isFeedPage ? (
@@ -39,7 +39,7 @@ export const Footer = () => {
               <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl"></div>
             </div>
           ) : (
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col justify-between dark:text-egg">
               <Link href="/feed">
                 <button>
                   <AiFillHome />
@@ -59,7 +59,7 @@ export const Footer = () => {
             </div>
           ) : (
             <Link href="/create">
-              <MdCreate />
+              <MdCreate className="dark:text-egg" />
             </Link>
           )}
           {/*  */}
@@ -110,7 +110,7 @@ export const Footer = () => {
           {/*  */}
           {/* Logout Button */}
           <button onClick={() => signOut()} className="text-[35px] flex">
-            <FiLogOut />
+            <FiLogOut className="dark:text-egg" />
           </button>
           {/*  */}
         </div>

@@ -113,7 +113,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 flex justify-center items-center">
+      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         {/* Close X Top Right Button */}
         <button
           onClick={() => setIsModal(false)}
@@ -123,7 +123,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         </button>
         {/*  */}
         <div className="container mx-auto w-11/12 md:max-w-[768px]">
-          <div className="relative py-12 bg-white rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
+          <div className="relative py-12 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
             {/* Edit Avatar Photo */}
             <div className="flex flex-col justify-end items-center gap-5 md:gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
               <div className="flex justify-center md:justify-center w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
@@ -165,7 +165,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
               />
               <button
                 onClick={handleInputFileClick}
-                className="border py-2 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
+                className="border py-2 px-5 rounded-full border-placeholder dark:border-shadeDark dark:text-egg dark:hover:border-transparent transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
               >
                 Edit Avatar Photo
               </button>
@@ -178,21 +178,21 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
             >
               <div className="flex flex-col items-center justify-center gap-3 mb-10">
                 {/* Username */}
-                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder">
+                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder dark:text-shadeText">
                   Username:
                 </p>
                 <label
                   className={
                     errors.username
-                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
-                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
+                      ? 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-grayBorder dark:border-transparent'
                   }
                 >
                   <input
                     placeholder="Username"
                     defaultValue={userData.name ? userData.name : null}
                     type="text"
-                    className="w-full bg-zinc-50 focus:outline-none"
+                    className="w-full bg-zinc-50 dark:bg-shadeMedium focus:outline-none dark:text-egg dark:placeholder:text-shadeText"
                     {...register('username')}
                   />
                 </label>
@@ -213,20 +213,20 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 )}
                 {/*  */}
                 {/* Biography */}
-                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder">
+                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder dark:text-shadeText">
                   Biography:
                 </p>
                 <label
                   className={
                     errors.biography
-                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
-                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
+                      ? 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-grayBorder dark:border-transparent'
                   }
                 >
                   <textarea
                     placeholder="Biography"
                     defaultValue={userData.biography ? userData.biography : ''}
-                    className="w-full bg-zinc-50 focus:outline-none overflow-auto rounded-xl"
+                    className="w-full bg-zinc-50 dark:bg-shadeMedium focus:outline-none dark:text-egg dark:placeholder:text-shadeText overflow-auto rounded-xl"
                     {...register('biography')}
                   />
                 </label>
@@ -249,19 +249,19 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 )}
                 {/*  */}
                 {/* Location */}
-                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder">
+                <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder dark:text-shadeText">
                   Location:
                 </p>
                 <label
                   className={
                     errors.location
-                      ? 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-red-600'
-                      : 'w-[310px] bg-zinc-50 py-2 px-4 rounded-xl border border-grayBorder'
+                      ? 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-red-600'
+                      : 'w-[310px] bg-zinc-50 dark:bg-shadeMedium py-2 px-4 rounded-xl border border-grayBorder dark:border-transparent'
                   }
                 >
                   <select
                     defaultValue={userData.location ? userData.location : ''}
-                    className="w-full bg-zinc-50 focus:outline-none"
+                    className="w-full bg-zinc-50 dark:bg-shadeMedium focus:outline-none dark:text-egg dark:placeholder:text-shadeText"
                     {...register('location')}
                   >
                     <option value="">Select a Country</option>
@@ -602,7 +602,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 {/* Cancel Button */}
                 <span
                   onClick={() => setIsModal(false)}
-                  className="border py-1 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
+                  className="border py-1 px-5 rounded-full border-placeholder dark:border-shadeDark dark:text-egg dark:hover:border-transparent transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
                 >
                   Cancel
                 </span>

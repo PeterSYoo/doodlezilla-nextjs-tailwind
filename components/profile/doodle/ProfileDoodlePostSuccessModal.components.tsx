@@ -13,19 +13,19 @@ export const ProfileDoodlePostSuccessModal: React.FC<Props> = ({
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 flex justify-center items-center">
+      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         {/* Close X Top Right Button */}
         <button
           onClick={() => setIsPostSuccessModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white"
+          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
         >
           <RiCloseFill />
         </button>
         {/*  */}
         <div className="container mx-auto w-11/12 md:w-8/12 lg:max-w-[600px]">
-          <div className="relative py-14 bg-white rounded-3xl flex flex-col gap-10 items-center">
+          <div className="relative py-14 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-10 items-center">
             <BsFillCheckCircleFill className="text-green-600 text-4xl" />
-            <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center">
+            <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center dark:text-egg">
               Comment Posted!
             </h1>
             <div className="flex justify-center w-full">

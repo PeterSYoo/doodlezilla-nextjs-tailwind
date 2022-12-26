@@ -6,7 +6,7 @@ import { ThemeButton } from './ThemeButton.components';
 export const HeaderCompressed = () => {
   return (
     <>
-      <header className="z-30 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:-ml-5 lg:-ml-5.5 lg:mr-[258px] md:rounded-none md:border-r-0 md:border-l-0">
+      <header className="z-30 fixed top-0 w-full flex flex-col justify-center bg-white bg-opacity-80 backdrop-blur-sm dark:md:bg-shadeDark dark:md:bg-opacity-80 dark:md:backdrop-blur-sm dark:bg-midnight dark:bg-opacity-80 dark:backdrop-blur-sm h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder dark:border-transparent md:max-w-none md:-ml-5 lg:-ml-5.5 lg:mr-[258px] md:rounded-none md:border-r-0 md:border-l-0">
         <div className="flex items-center max-w-[375px] md:max-w-[500px] lg:max-w-[700px] mx-auto justify-between w-full md:justify-start">
           <Link href="/feed">
             <button className="mt-1 md:hidden">

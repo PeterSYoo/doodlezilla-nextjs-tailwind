@@ -10,25 +10,25 @@ export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 flex justify-center items-center">
+      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         {/* Close X Top Right Button */}
         <button
           onClick={() => setIsSuccessModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white"
+          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
         >
           <RiCloseFill />
         </button>
         {/*  */}
         <div className="container mx-auto w-11/12 md:w-10/12 lg:max-w-[768px]">
-          <div className="relative py-6 bg-white rounded-3xl flex flex-col gap-6 items-center">
-            <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center">
+          <div className="relative py-6 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center">
+            <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center dark:text-egg">
               Your doodle has succesfully been uploaded!
             </h1>
             <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-5 w-full px-10">
               {/* Cancel Button */}
               <span
                 onClick={() => setIsSuccessModal(false)}
-                className="border py-1 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
+                className="border py-1 px-5 rounded-full border-placeholder dark:border-shadeText transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold dark:hover:border-transparent dark:text-egg"
               >
                 Cancel
               </span>
@@ -36,7 +36,7 @@ export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
               {/* Create new Doodle Button */}
               <span
                 onClick={() => router.push('/create')}
-                className="border py-1 px-5 rounded-full border-placeholder transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold"
+                className="border py-1 px-5 rounded-full border-placeholder dark:border-shadeText transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white flex justify-center items-center cursor-pointer font-bold dark:hover:border-transparent dark:text-egg"
               >
                 Create new Doodle
               </span>

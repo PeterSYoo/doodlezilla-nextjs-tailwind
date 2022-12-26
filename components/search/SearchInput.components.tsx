@@ -37,33 +37,33 @@ export const SearchInput = () => {
       <div
         className={
           searchTerm
-            ? 'md:w-full bg-zinc-50 w-[188px] flex items-center gap-4 rounded-full border border-blue-500 px-4 h-[39px]'
-            : 'md:w-full bg-zinc-50 w-[188px] flex items-center gap-4 rounded-full border border-grayBorder px-4 h-[39px]'
+            ? 'md:w-full bg-zinc-50 dark:bg-shadeMedium w-[188px] flex items-center gap-4 rounded-full border border-blue-500 px-4 h-[39px]'
+            : 'md:w-full bg-zinc-50 dark:bg-shadeMedium w-[188px] flex items-center gap-4 rounded-full border border-grayBorder dark:border-shadeMedium px-4 h-[39px]'
         }
       >
         {!searchTerm && (
-          <MdSearch className="text-placeholder text-3xl lg:text-xl" />
+          <MdSearch className="text-placeholder text-3xl lg:text-xl dark:text-egg" />
         )}
         {/* Username */}
-        <label className="w-full bg-zinc-50 rounded-full border border-transparent">
+        <label className="w-full bg-zinc-50 dark:bg-shadeMedium rounded-full border border-transparent">
           <input
             placeholder="Search Users"
             type="text"
             value={searchTerm}
             onChange={(e) => handleSearchOnChange(e)}
-            className="w-full bg-zinc-50 focus:outline-none"
+            className="w-full bg-zinc-50 dark:bg-shadeMedium focus:outline-none dark:placeholder:text-shadeText dark:text-egg"
           />
         </label>
         {/*  */}
         {searchTerm && (
           <MdClear
             onClick={() => setSearchTerm('')}
-            className="text-3xl lg:text-xl text-placeholder cursor-pointer"
+            className="text-3xl lg:text-xl text-placeholder cursor-pointer dark:text-egg"
           />
         )}
       </div>
       {searchTerm && (
-        <div className="w-[188px] md:w-[210px] lg:w-[400px] flex gap-4 rounded-md border border-grayBorder px-7 absolute bg-white mt-1 md:mt-[45px] py-5 backdrop-blur-sm bg-opacity-75 flex-col">
+        <div className="w-[188px] md:w-[210px] lg:w-[400px] flex gap-4 rounded-3xl border border-grayBorder px-7 absolute bg-white dark:bg-midnight dark:border-transparent dark:bg-opacity-90 mt-2.5 md:mt-[50px] py-5 bg-opacity-90 flex-col">
           {filteredUsers
             ?.slice()
             .sort((a, b) => {
@@ -75,8 +75,11 @@ export const SearchInput = () => {
             .slice(0, 20)
             .map((user) => (
               <Fragment key={user._id}>
-                <div className="flex gap-3">
-                  <Link href={`/profile/${user.name}`}>
+                <div className="flex">
+                  <Link
+                    href={`/profile/${user.name}`}
+                    className="flex gap-3 group"
+                  >
                     <Image
                       src={
                         user.image
@@ -88,9 +91,9 @@ export const SearchInput = () => {
                       alt="user avatar"
                       className="rounded-full"
                     />
-                  </Link>
-                  <Link href={`/profile/${user.name}`}>
-                    <span className="font-semibold">{user.name}</span>
+                    <span className="font-semibold dark:text-egg group-dark:hover:text-sunset group-hover:text-sunset">
+                      {user.name}
+                    </span>
                   </Link>
                 </div>
               </Fragment>

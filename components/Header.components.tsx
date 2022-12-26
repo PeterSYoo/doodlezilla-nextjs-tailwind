@@ -6,7 +6,7 @@ import { ThemeButton } from './ThemeButton.components';
 export const Header = () => {
   return (
     <>
-      <header className="z-30 fixed top-0 w-full flex bg-white h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75 md:ml-[80px] md:pr-[80px] lg:ml-[199px] lg:pr-[199px]">
+      <header className="z-30 fixed top-0 w-full flex bg-white dark:bg-midnight h-[75px] px-3.5 rounded-b-3xl border-b border-r border-l border-grayBorder md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 backdrop-blur-sm bg-opacity-75 md:ml-[80px] md:pr-[80px] lg:ml-[199px] lg:pr-[199px] dark:border-transparent">
         <div className="flex items-center max-w-[375px] mx-auto justify-between w-full  md:justify-center lg:justify-center md:max-w-none lg:max-w-[1000px] md:px-20 lg:px-20">
           {/* Logo Mobile */}
           <Link href="/feed">

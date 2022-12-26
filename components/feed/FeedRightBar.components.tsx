@@ -27,14 +27,16 @@ export const FeedRightBar = () => {
 
   return (
     <>
-      <div className="z-50 fixed bg-white right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder md:flex-col px-1">
+      <div className="z-50 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-midnight md:flex-col px-1">
         <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
-          <h1 className="font-semibold ml-4 mt-[18px] lg:ml-0">Sponsored</h1>
+          <h1 className="font-semibold ml-4 mt-[18px] lg:ml-0 dark:text-egg">
+            Sponsored
+          </h1>
           {/* Sponsored Card */}
           <FeedRightBarSponsoredCard />
           {/*  */}
           {/* Suggestions For You */}
-          <h1 className="font-semibold mt-[18px] text-[15px] text-center lg:flex">
+          <h1 className="font-semibold mt-[18px] text-[15px] text-center lg:flex dark:text-egg">
             Suggestions for you
           </h1>
           <div className="flex flex-col px-2 gap-4">
@@ -63,8 +65,11 @@ export const FeedRightBar = () => {
                         </Link>
                       </div>
                       <div className="col-start-4 col-span-9">
-                        <p className="font-semibold text-sm break-all">
-                          <Link href={`/profile/${user.name}`}>
+                        <p className="font-semibold text-sm break-all dark:text-egg">
+                          <Link
+                            href={`/profile/${user.name}`}
+                            className="dark:hover:text-sunset hover:text-sunset"
+                          >
                             {user.name}
                           </Link>
                         </p>

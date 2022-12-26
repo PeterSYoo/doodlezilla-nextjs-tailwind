@@ -29,10 +29,12 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
   return (
     <>
       {userData._id ? (
-        <div className="z-40 fixed bg-white right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder md:flex-col px-1">
+        <div className="z-40 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-transparent md:flex-col px-1">
           <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
             <div className="flex justify-between items-center mt-[18px]">
-              <h1 className="font-semibold ml-2 lg:ml-0">Profile</h1>
+              <h1 className="font-semibold ml-2 lg:ml-0 dark:text-egg">
+                Profile
+              </h1>
             </div>
             {/* Profile Avatar */}
             <div className="flex justify-center">
@@ -62,19 +64,21 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
             {/*  */}
             <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-center lg:items-start">
               {/* Username */}
-              <h1 className="font-bold w-full break-all text-lg">
+              <h1 className="font-bold w-full break-all text-lg dark:text-egg">
                 {userData.name.toUpperCase()}
               </h1>
               {/*  */}
               <div className="flex flex-col justify-between lg:items-start gap-6">
                 {/* Doodles Count */}
-                <p className="font-semibold text-xs">
+                <p className="font-semibold text-xs dark:text-egg">
                   {userDoodlesData.length}&nbsp;
-                  <span className="text-placeholder">Doodles</span>
+                  <span className="text-placeholder dark:text-shadeText">
+                    Doodles
+                  </span>
                 </p>
                 {/*  */}
                 {/* Bio */}
-                <p className="text-xs text-placeholder">
+                <p className="text-xs text-placeholder dark:text-shadeText">
                   {userData.biography ? (
                     userData.biography
                   ) : (
@@ -84,8 +88,10 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
                 {/*  */}
                 {/* Location */}
                 <div className="flex flex-col lg:px-0 gap-1 lg:items-start">
-                  <p className="font-semibold text-xs">Location</p>
-                  <p className="text-xs text-placeholder">
+                  <p className="font-semibold text-xs dark:text-egg">
+                    Location
+                  </p>
+                  <p className="text-xs text-placeholder dark:text-shadeText">
                     {userData.location ? (
                       userData.location
                     ) : (

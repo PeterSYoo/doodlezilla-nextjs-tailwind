@@ -30,46 +30,46 @@ export const ProfileDoodleOptionsModal = ({
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 flex justify-center items-center">
+      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         <button
           onClick={() => setIsOptionsModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white"
+          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
         >
           <RiCloseFill />
         </button>
         <div className="container mx-auto w-11/12 md:w-96">
-          <div className="relative py-6 bg-white rounded-3xl flex flex-col gap-6 items-center">
+          <div className="relative py-6 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center">
             {isDelete ? null : (
               <button
                 onClick={() => setIsDelete(true)}
-                className="font-semibold text-sunset hover:text-neutral-800"
+                className="font-semibold text-sunset hover:text-neutral-800 dark:hover:text-egg"
               >
                 Delete
               </button>
             )}
             {isDelete ? (
-              <div className="font-semibold flex gap-3 text-placeholder">
+              <div className="font-semibold flex gap-3 text-placeholder dark:text-shadeText">
                 <span
                   onClick={() =>
                     mutateDeleteDoodle(doodleWithCommentsData.doodle._id)
                   }
-                  className="cursor-pointer hover:text-sunset"
+                  className="cursor-pointer hover:text-sunset dark:text-egg dark:hover:text-sunset"
                 >
                   Yes
                 </span>{' '}
                 /{' '}
                 <span
                   onClick={() => setIsDelete(false)}
-                  className="cursor-pointer hover:text-black"
+                  className="cursor-pointer hover:text-black dark:text-egg dark:hover:text-sunset"
                 >
                   No
                 </span>
               </div>
             ) : null}
-            <div className="border-b border-grayBorder w-11/12"></div>
+            <div className="border-b border-grayBorder w-11/12 dark:border-shadeDark"></div>
             <button
               onClick={() => setIsOptionsModal(false)}
-              className="font-semibold text-grayText hover:text-neutral-800"
+              className="font-semibold text-grayText hover:text-neutral-800 dark:text-shadeText dark:hover:text-egg"
             >
               Cancel
             </button>
