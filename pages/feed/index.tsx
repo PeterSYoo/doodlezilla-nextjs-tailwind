@@ -224,7 +224,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
                     alt="tree"
                     className="rounded-[50px] group border border-grayBorder md:w-[472px] md:h-[500px] w-[375px] h-[397px] object-contain"
                   />
-                  <div className="flex flex-col gap-0.5 items-center absolute mb-[260px] ml-[220px] md:mb-[370px] md:ml-[320px] bg-opacity-70 backdrop-blur-sm group-hover:opacity-100 bg-white rounded-md p-1">
+                  <div className="flex flex-col gap-0.5 items-center absolute mb-[240px] ml-[220px] md:mb-[340px] md:ml-[320px] bg-opacity-50 backdrop-blur-sm bg-white rounded-3xl px-2 py-3">
                     <Image
                       src={
                         doodle.user.image
@@ -239,7 +239,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
                     <span className="font-semibold break-all w-7/8 text-center text-xs">
                       {doodle.user.name}
                     </span>
-                    <p className="text-xs mt-0.5 text-placeholder">
+                    <p className="text-xs mt-0.5">
                       {getDayDifference(doodle.doodle.created_at) > 0 ? (
                         <>{getDayDifference(doodle.doodle.created_at)}d ago</>
                       ) : (
@@ -272,7 +272,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
                       )}
                     </p>
                   </div>
-                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-20 absolute cursor-pointer text-white w-[375px] h-[397px] md:h-[500px] md:w-[472px] rounded-[50px] group-hover:backdrop-blur-sm">
+                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-5 absolute cursor-pointer text-white w-[375px] h-[397px] md:h-[500px] md:w-[472px] rounded-[50px] group-hover:backdrop-blur-sm">
                     <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
                       <div className="flex items-center gap-10">
                         <div className="flex items-center gap-2">

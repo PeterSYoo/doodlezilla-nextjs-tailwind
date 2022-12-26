@@ -186,7 +186,7 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
                     height={325}
                     className="rounded-xl border border-grayBorder object-contain h-full"
                   />
-                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white group-hover:backdrop-blur-sm">
+                  <div className="overlay group-hover:bg-black group-hover:bg-opacity-5 absolute top-0 w-full h-full cursor-pointer text-white group-hover:backdrop-blur-sm">
                     <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
                       <div className="flex items-center gap-2">
                         <AiFillHeart />
