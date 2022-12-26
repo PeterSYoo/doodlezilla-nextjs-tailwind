@@ -1,10 +1,23 @@
 import Image from 'next/image';
-import useFetchUserDoodles from '../../../hooks/useFetchUsersDoodles';
 import useFetchUserByUsername from '../../../hooks/useFetchUserByUsername';
-import { LoaderSpinner } from '../../LoaderSpinner.components';
 import useFetchUserDoodlesByUsername from '../../../hooks/useFetchUsersDoodlesByUsername';
+import { LoaderSpinner } from '../../LoaderSpinner.components';
 
-export const ProfileSlugUsersRightBar = ({ username }: any) => {
+type Session = {
+  expires: string;
+  user: {
+    email: string;
+    id: string;
+    name: string;
+  };
+};
+
+type Username = {
+  username: string;
+  session: Session;
+};
+
+export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
   const { userData, userIsLoading, userIsError } =
     useFetchUserByUsername(username);
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
