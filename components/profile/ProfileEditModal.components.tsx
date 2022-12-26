@@ -1,21 +1,23 @@
+import { ChangeEvent, use, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
-import { RiCloseFill } from 'react-icons/ri';
-import useFetchUser from '../../hooks/useFetchUser';
-import { LoaderSpinner } from '../LoaderSpinner.components';
-import * as Yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { BsFillExclamationCircleFill } from 'react-icons/bs';
-import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import useFetchUser from '../../hooks/useFetchUser';
 import useUpdateSessionUser from '../../hooks/useUpdateSessionUser';
+import { LoaderSpinner } from '../LoaderSpinner.components';
+import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
+import { BsFillExclamationCircleFill } from 'react-icons/bs';
+import { RiCloseFill } from 'react-icons/ri';
 
 type Inputs = {
   username: string;
   biography: string;
   location: string;
 };
+
+type HandleOnChangeEvent = ChangeEvent<HTMLInputElement>;
 
 const EditSchema = Yup.object().shape({
   username: Yup.string()
@@ -30,13 +32,14 @@ const EditSchema = Yup.object().shape({
     .matches(/^[0-9a-zA-Z]/, 'Only letters and numbers allowed.'),
 });
 
-export interface DoodleCardModalProps {
+type DoodleCardModalProps = {
   setIsModal: (isModal: boolean) => void;
-}
+};
 export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   const { data: session }: any = useSession();
   const [imageSrc, setImageSrc] = useState<string>('');
-  const inputFileRef = useRef<any>(null);
+  const [isOnClick, setIsOnClick] = useState<boolean>(false);
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
     session?.user?.id
@@ -54,40 +57,55 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   });
 
   const handleInputFileClick = () => {
-    inputFileRef.current.click();
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
   };
 
-  const handleOnChange = async (e: any) => {
+  const handleOnChange = async (e: HandleOnChangeEvent) => {
     e.preventDefault();
 
-    const file = e.target.files[0];
-    const formData = new FormData();
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const formData = new FormData();
 
-    formData.append('file', file);
-    formData.append('upload_preset', 'Nudoodle-avatars');
+      formData.append('file', file);
+      formData.append('upload_preset', 'Nudoodle-avatars');
 
-    const data = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
-      {
-        method: 'POST',
-        body: formData,
+      const data = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      ).then((res) => res.json());
+
+      if (!data.error) {
+        setImageSrc(data.secure_url);
       }
-    ).then((res) => res.json());
-
-    if (!data.error) {
-      setImageSrc(data.secure_url);
     }
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await mutateUpdateSessionUser({
-      name: data.username.toLowerCase(),
-      image: imageSrc,
-      biography: data.biography,
-      location: data.location,
-    });
-    await userRefetch();
-    await (async () => setIsModal(false))();
+    if (!imageSrc) {
+      await mutateUpdateSessionUser({
+        name: data.username.toLowerCase(),
+        image: userData.image,
+        biography: data.biography,
+        location: data.location,
+      });
+      await userRefetch();
+      await (async () => setIsModal(false))();
+    } else {
+      await mutateUpdateSessionUser({
+        name: data.username.toLowerCase(),
+        image: imageSrc,
+        biography: data.biography,
+        location: data.location,
+      });
+      await userRefetch();
+      await (async () => setIsModal(false))();
+    }
   };
 
   if (userIsLoading) return <LoaderSpinner />;
@@ -597,6 +615,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 ) : (
                   <button
                     type="submit"
+                    onClick={() => setIsOnClick(!isOnClick)}
                     className="py-2 px-5 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]"
                   >
                     Submit
