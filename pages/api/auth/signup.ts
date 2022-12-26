@@ -1,7 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { hash } from 'bcrypt';
 import usersConnect from '../../../database/usersConnect';
 import Users from '../../../models/Users';
-import { hash } from 'bcrypt';
+
+type Data = {
+  name: string;
+  email: string;
+  password: string;
+  _id: string;
+  __v: number;
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -34,7 +42,7 @@ export default async function handler(
         email,
         password: await hash(password, 12),
       },
-      function (err: Error | null, data: any) {
+      function (err: Error | null, data: Data) {
         if (err) return res.status(404).json({ err });
         res.status(201).json({ status: true, user: data });
       }
