@@ -1,26 +1,75 @@
+import { Fragment, useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { FaRegComment } from 'react-icons/fa';
-import { HiDotsHorizontal } from 'react-icons/hi';
-import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
-import { ProfileDoodlePostSuccessModal } from './ProfileDoodlePostSuccessModal.components';
-import * as Yup from 'yup';
-import { LoaderSpinner } from '../../LoaderSpinner.components';
 import { useSession } from 'next-auth/react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import useFetchLikesDocumentByUserAndDoodle from '../../../hooks/useFetchLikesDocumentByUserAndDoodle';
-import useIncrementLikeIfTrue from '../../../hooks/useIncrementLikeIfTrue';
-import useDecrementLikeIfFalse from '../../../hooks/useDecrementLikeIfFalse';
 import useCreateNewComment from '../../../hooks/useCreateNewComment';
 import useGetAllLikesNum from '../../../hooks/useGetAllLikesNum';
 import useCreateNewLikesNum from '../../../hooks/useCreateNewLikesNum';
 import useDeleteLikesNum from '../../../hooks/useDeleteLikesNum';
+import { LoaderSpinner } from '../../LoaderSpinner.components';
+import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
+import { ProfileDoodlePostSuccessModal } from './ProfileDoodlePostSuccessModal.components';
+import * as Yup from 'yup';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { FaRegComment } from 'react-icons/fa';
+import { HiDotsHorizontal } from 'react-icons/hi';
+
+type ProfileDoodleCardProps = {
+  doodleWithCommentsData: {
+    doodle: {
+      _id: string;
+      user: string;
+      image: string;
+      likes: number;
+      created_at: string;
+      updated_at: string;
+      __v: number;
+    };
+    usersAndComments: Array<{
+      _id: string;
+      user: string;
+      doodle: string;
+      text: string;
+      likes: number;
+      created_at: string;
+      updated_at: string;
+      __v: number;
+    }>;
+  };
+  userDoodlesWithAllCommentsRefetch: () => void;
+  doodleWithCommentsRefetch: () => void;
+  userData: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    __v: number;
+    biography: string;
+    image: string;
+    location: string;
+  };
+  dataSessionUser: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    __v: number;
+    biography: string;
+    image: string;
+    location: string;
+  };
+};
 
 type Inputs = {
   comment: String;
+};
+
+type CommentData = {
+  user?: any;
+  comments?: any;
 };
 
 const CommentSchema = Yup.object().shape({
@@ -36,8 +85,7 @@ export const ProfileDoodleCard = ({
   doodleWithCommentsRefetch,
   userData,
   dataSessionUser,
-  isUsernamePage,
-}: any) => {
+}: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
   const [commentHeight, setCommentHeight] = useState<string>(
@@ -55,18 +103,6 @@ export const ProfileDoodleCard = ({
     doodleWithCommentsData.doodle._id,
     loggedInSession.user.id
   );
-
-  /*   const { mutateIncrementLikeIfTrue, isLoadingIncrementLikeIfTrue } =
-    useIncrementLikeIfTrue(
-      doodleWithCommentsData.doodle._id,
-      loggedInSession.user.id
-    );
-
-  const { mutateDecrementLikeIfFalse, isLoadingDecrementLikeIfFalse } =
-    useDecrementLikeIfFalse(
-      doodleWithCommentsData.doodle._id,
-      loggedInSession.user.id
-    ); */
 
   const {
     dataGetAllLikesNum,
@@ -229,7 +265,7 @@ export const ProfileDoodleCard = ({
               <span className="font-semibold">{userData.name}</span>
             </Link>
           </div>
-          {isUsernamePage ? null : (
+          {loggedInSession.user.name !== userData.name ? null : (
             <HiDotsHorizontal
               onClick={() => setIsOptionsModal(true)}
               className="text-2xl cursor-pointer hover:text-sunset"
@@ -255,56 +291,60 @@ export const ProfileDoodleCard = ({
             </div>
           ) : (
             <>
-              {doodleWithCommentsData.usersAndComments.map((data: any) => (
-                <Fragment key={data.comments._id}>
-                  <div
-                    key={data.comments._id}
-                    className="flex flex-col w-10/12 gap-1 mt-4"
-                  >
-                    <div className="flex flex-col w-full">
-                      <div className="text-sm">
-                        <span className="font-semibold hover:text-sunset">
-                          <Link href={`/profile/${data.user.name}`}>
-                            {data.user.name}
-                          </Link>
-                        </span>
-                        &nbsp;
-                        <span className="">{data.comments.comment}</span>
+              {doodleWithCommentsData.usersAndComments.map(
+                (data: CommentData) => (
+                  <Fragment key={data.comments._id}>
+                    <div
+                      key={data.comments._id}
+                      className="flex flex-col w-10/12 gap-1 mt-4"
+                    >
+                      <div className="flex flex-col w-full">
+                        <div className="text-sm">
+                          <span className="font-semibold hover:text-sunset">
+                            <Link href={`/profile/${data.user.name}`}>
+                              {data.user.name}
+                            </Link>
+                          </span>
+                          &nbsp;
+                          <span className="">{data.comments.comment}</span>
+                        </div>
                       </div>
+                      <p className="text-[10px] text-placeholder">
+                        {getDayDifference(data.comments.created_at) > 0 ? (
+                          <>{getDayDifference(data.comments.created_at)}d</>
+                        ) : (
+                          <>
+                            {getHourDifference(data.comments.created_at) > 0 ? (
+                              <>
+                                {getHourDifference(data.comments.created_at)}h
+                              </>
+                            ) : (
+                              <>
+                                {getMinuteDifference(data.comments.created_at) >
+                                0 ? (
+                                  <>
+                                    {getMinuteDifference(
+                                      data.comments.created_at
+                                    )}
+                                    m
+                                  </>
+                                ) : (
+                                  <>
+                                    {getSecondsDifference(
+                                      data.comments.created_at
+                                    )}
+                                    s
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </p>
                     </div>
-                    <p className="text-[10px] text-placeholder">
-                      {getDayDifference(data.comments.created_at) > 0 ? (
-                        <>{getDayDifference(data.comments.created_at)}d</>
-                      ) : (
-                        <>
-                          {getHourDifference(data.comments.created_at) > 0 ? (
-                            <>{getHourDifference(data.comments.created_at)}h</>
-                          ) : (
-                            <>
-                              {getMinuteDifference(data.comments.created_at) >
-                              0 ? (
-                                <>
-                                  {getMinuteDifference(
-                                    data.comments.created_at
-                                  )}
-                                  m
-                                </>
-                              ) : (
-                                <>
-                                  {getSecondsDifference(
-                                    data.comments.created_at
-                                  )}
-                                  s
-                                </>
-                              )}
-                            </>
-                          )}
-                        </>
-                      )}
-                    </p>
-                  </div>
-                </Fragment>
-              ))}
+                  </Fragment>
+                )
+              )}
             </>
           )}
 
