@@ -19,12 +19,12 @@ export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
           <RiCloseFill />
         </button>
         {/*  */}
-        <div className="container mx-auto w-11/12 md:w-8/12 lg:max-w-[600px]">
+        <div className="container mx-auto w-11/12 md:w-10/12 lg:max-w-[768px]">
           <div className="relative py-6 bg-white rounded-3xl flex flex-col gap-6 items-center">
             <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center">
               Your doodle has succesfully been uploaded!
             </h1>
-            <div className="flex justify-end gap-5 w-full mr-20">
+            <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-5 w-full px-10">
               {/* Cancel Button */}
               <span
                 onClick={() => setIsSuccessModal(false)}
