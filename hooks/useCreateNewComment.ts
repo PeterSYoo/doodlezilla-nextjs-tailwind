@@ -1,10 +1,18 @@
 import { useMutation } from '@tanstack/react-query';
 
-const useCreateNewComment = (setIsPostSuccessModal: any) => {
+type Data = {
+  comment: String;
+  doodle: string;
+  user: string;
+};
+
+const useCreateNewComment = (
+  setIsPostSuccessModal: (arg0: boolean) => void
+) => {
   const {
     mutateAsync: mutateCreateNewComment,
     isLoading: isLoadingCreateNewComment,
-  } = useMutation(async (data: any) => {
+  } = useMutation(async (data: Data) => {
     try {
       const Options = {
         method: 'POST',
