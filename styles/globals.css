@@ -4,6 +4,7 @@
 
 html {
   @apply text-neutral-800 bg-zinc-50 transition-all duration-500 ease-in-out scroll-smooth;
+  @apply dark:text-egg dark:bg-midnight dark:transition-all dark:duration-500 dark:ease-in-out dark:scroll-smooth;
 }
 
 body::-webkit-scrollbar {
