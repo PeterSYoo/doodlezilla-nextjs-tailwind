@@ -1,10 +1,17 @@
 import { useMutation } from '@tanstack/react-query';
 
+type Data = {
+  biography: string;
+  image: string;
+  location: string;
+  name: string;
+};
+
 const useUpdateSessionUser = (userId: string) => {
   const {
     mutateAsync: mutateUpdateSessionUser,
     isLoading: isLoadingUpdateSessionUser,
-  } = useMutation(async (data: any) => {
+  } = useMutation(async (data: Data) => {
     try {
       const Options = {
         method: 'PUT',
