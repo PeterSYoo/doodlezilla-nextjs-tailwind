@@ -10,6 +10,7 @@ const useInfiniteQueriesAllDoodles = () => {
     fetchNextPage: fetchNextPageInfiniteQueriesAllDoodles,
     isFetching: isFetchingInfiniteQueriesAllDoodles,
     isFetchingNextPage: isFetchingNextPageInfiniteQueriesAllDoodles,
+    refetch: refetchInfiniteQueriesAllDoodles,
   } = useInfiniteQuery(
     ['infiniteQueriesAllDoodles'],
     async ({ pageParam = 1 }) => {
@@ -36,6 +37,7 @@ const useInfiniteQueriesAllDoodles = () => {
     fetchNextPageInfiniteQueriesAllDoodles,
     isFetchingInfiniteQueriesAllDoodles,
     isFetchingNextPageInfiniteQueriesAllDoodles,
+    refetchInfiniteQueriesAllDoodles,
   };
 };
 
