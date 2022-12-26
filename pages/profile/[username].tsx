@@ -1,21 +1,53 @@
+import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import Image from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
-import { LoaderSpinner } from '../../components/LoaderSpinner.components';
-import { ProfileSlugUsersRightBar } from '../../components/profile/slug/ProfileSlugUsersRightBar.components';
-import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
-import { authOptions } from '../api/auth/[...nextauth]';
-import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
-import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
-import { AiFillHeart } from 'react-icons/ai';
-import { FaComment } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { authOptions } from '../api/auth/[...nextauth]';
+import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
+import { LoaderSpinner } from '../../components/LoaderSpinner.components';
+import { ProfileSlugUsersRightBar } from '../../components/profile/slug/ProfileSlugUsersRightBar.components';
+import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
+import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 import { useRouter } from 'next/router';
+import { AiFillHeart } from 'react-icons/ai';
+import { FaComment } from 'react-icons/fa';
 
-const UserIdPage = ({ session, username }: any) => {
+type Session = {
+  expires: string;
+  user: {
+    email: string;
+    id: string;
+    name: string;
+  };
+};
+
+type ProfileUserIdPageProps = {
+  session: Session;
+  username: string;
+};
+
+type Doodle = {
+  doodle: any;
+  likesNum: Array<any>;
+  comments: Array<any>;
+  user: any;
+};
+
+type User = {
+  name: string;
+  email: string;
+  id: string;
+};
+
+type SessionSSR = {
+  user: User;
+  expires: string;
+} | null;
+
+const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
@@ -31,13 +63,6 @@ const UserIdPage = ({ session, username }: any) => {
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
     useCreateNewLikesDocument(tempDoodleId, loggedInSession.user.id);
-
-  /*   const {
-    userDoodlesWithAllCommentsData,
-    userDoodlesWithAllCommentsIsLoading,
-    userDoodlesWithAllCommentsIsError,
-    userDoodlesWithAllCommentsRefetch,
-  } = useFetchUserDoodlesWithAllComments(userData?._id); */
 
   const {
     userDoodlesWithAllCommentsAndLikesNumData,
@@ -146,7 +171,7 @@ const UserIdPage = ({ session, username }: any) => {
                 userId={tempUserId}
               />
             ) : null}
-            {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (
+            {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: Doodle) => (
               <Fragment key={doodle.doodle._id}>
                 <div
                   onClick={() => {
@@ -189,7 +214,7 @@ export default UserIdPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const username = context.query.username;
 
-  const session: any = await unstable_getServerSession(
+  const session: SessionSSR = await unstable_getServerSession(
     context.req,
     context.res,
     authOptions
