@@ -1,11 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 
+type Data = {
+  doodle: string;
+  user: string;
+};
+
 const useCreateNewLikesDocument = (doodleId: string, userId: string) => {
   const {
     mutate: mutateCreateNewLikesDocument,
     isLoading: isLoadingCreateNewLikesDocument,
   } = useMutation(
-    async (data: any) => {
+    async (data: Data) => {
       try {
         const Options = {
           method: 'POST',
