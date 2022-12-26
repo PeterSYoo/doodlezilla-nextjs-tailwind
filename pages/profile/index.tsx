@@ -1,19 +1,39 @@
+import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { Fragment, useEffect, useState } from 'react';
-import { LoaderSpinner } from '../../components/LoaderSpinner.components';
-import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
-import useFetchUser from '../../hooks/useFetchUser';
-import { authOptions } from '../api/auth/[...nextauth]';
-import { AiFillHeart } from 'react-icons/ai';
-import { FaComment } from 'react-icons/fa';
-import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
 import { useSession } from 'next-auth/react';
+import { authOptions } from '../api/auth/[...nextauth]';
+import useFetchUser from '../../hooks/useFetchUser';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
+import { LoaderSpinner } from '../../components/LoaderSpinner.components';
+import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
+import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
+import { AiFillHeart } from 'react-icons/ai';
+import { FaComment } from 'react-icons/fa';
 
-const ProfilePage = ({ session }: any) => {
+type Session = {
+  expires: string;
+  user: {
+    email: string;
+    id: string;
+    name: string;
+  };
+};
+
+type ProfilePageProps = {
+  session: Session;
+};
+
+type Doodle = {
+  doodle: any;
+  likesNum: Array<any>;
+  comments: Array<any>;
+  user: any;
+};
+
+const ProfilePage = ({ session }: ProfilePageProps) => {
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
@@ -28,13 +48,6 @@ const ProfilePage = ({ session }: any) => {
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
     useCreateNewLikesDocument(tempDoodleId, loggedInSession?.user?.id);
-
-  /*   const {
-    userDoodlesWithAllCommentsData,
-    userDoodlesWithAllCommentsIsLoading,
-    userDoodlesWithAllCommentsIsError,
-    userDoodlesWithAllCommentsRefetch,
-  } = useFetchUserDoodlesWithAllComments(session?.user?.id); */
 
   const {
     userDoodlesWithAllCommentsAndLikesNumData,
@@ -141,7 +154,7 @@ const ProfilePage = ({ session }: any) => {
               userId={tempUserId}
             />
           ) : null}
-          {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: any) => (
+          {userDoodlesWithAllCommentsAndLikesNumData.map((doodle: Doodle) => (
             <Fragment key={doodle.doodle._id}>
               <div
                 onClick={() => {
