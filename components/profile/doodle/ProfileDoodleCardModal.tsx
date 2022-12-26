@@ -1,11 +1,34 @@
+import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
-import { RiCloseFill } from 'react-icons/ri';
-import useCreateNewLikesDocument from '../../../hooks/useCreateNewLikesDocument';
 import useFetchDoodleWithAllComments from '../../../hooks/useFetchDoodleWIthAllComments';
 import useFetchUser from '../../../hooks/useFetchUser';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
 import { ProfileDoodleCard } from './ProfileDoodleCard.components';
+import { RiCloseFill } from 'react-icons/ri';
+
+type ProfileDoodleCardModalProps = {
+  setIsDoodleModal: (arg0: boolean) => void;
+  userData: {
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    __v: number;
+    biography: string;
+    image: string;
+    location: string;
+  };
+  doodleId: string;
+  userId: string;
+  userDoodlesWithAllCommentsRefetch: () => void;
+  mutateCreateNewLikesDocument: ({
+    doodle,
+    user,
+  }: {
+    doodle: string;
+    user: string;
+  }) => void;
+};
 
 export const ProfileDoodleCardModal = ({
   setIsDoodleModal,
@@ -14,8 +37,7 @@ export const ProfileDoodleCardModal = ({
   userId,
   userDoodlesWithAllCommentsRefetch,
   mutateCreateNewLikesDocument,
-  isUsernamePage,
-}: any) => {
+}: ProfileDoodleCardModalProps) => {
   const { data: session }: any = useSession();
 
   const {
@@ -60,7 +82,6 @@ export const ProfileDoodleCardModal = ({
           dataSessionUser={dataSessionUser}
           doodleWithCommentsRefetch={doodleWithCommentsRefetch}
           userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
-          isUsernamePage={isUsernamePage}
         />
       </div>
     </>
