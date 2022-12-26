@@ -4,10 +4,10 @@ import Doodles from '../models/Doodles';
 import LikesNum from '../models/LikesNum';
 import Users from '../models/Users';
 
-interface UserAndComment {
+type UserAndComment = {
   user: { [key: string]: any };
   comments: { [key: string]: any };
-}
+};
 
 /* GET all Doodles With all Comments Referencing Each Individual Doodle Document. */
 export const getAllDoodlesWithAllComments = async (
