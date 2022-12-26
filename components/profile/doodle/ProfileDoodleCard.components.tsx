@@ -16,6 +16,12 @@ import * as Yup from 'yup';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { HiDotsHorizontal } from 'react-icons/hi';
+import {
+  getDayDifference,
+  getHourDifference,
+  getMinuteDifference,
+  getSecondsDifference,
+} from '../../../utils/findTimeDifference';
 
 type ProfileDoodleCardProps = {
   doodleWithCommentsData: {
@@ -62,6 +68,7 @@ type ProfileDoodleCardProps = {
     location: string;
   };
   refetchInfiniteQueriesAllDoodles?: any;
+  isFeedPage?: boolean;
 };
 
 type Inputs = {
@@ -87,6 +94,7 @@ export const ProfileDoodleCard = ({
   userData,
   dataSessionUser,
   refetchInfiniteQueriesAllDoodles,
+  isFeedPage,
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
@@ -144,85 +152,27 @@ export const ProfileDoodleCard = ({
     });
     await doodleWithCommentsRefetch();
     await userDoodlesWithAllCommentsRefetch();
-    await refetchInfiniteQueriesAllDoodles();
-  };
-
-  const getDayDifference = (dateTime: string) => {
-    const currentTime = new Date().toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const specificDate = new Date(dateTime).toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const currentTimeInMilliseconds = new Date(currentTime).getTime();
-    const specificDateInMilliseconds = new Date(specificDate).getTime();
-    const timeDifference =
-      currentTimeInMilliseconds - specificDateInMilliseconds;
-    const dayDifference = Math.floor(timeDifference / 1000 / 60 / 60 / 24);
-
-    return dayDifference;
-  };
-
-  const getHourDifference = (dateTime: string) => {
-    const currentTime = new Date().toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const specificDate = new Date(dateTime).toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const currentTimeInMilliseconds = new Date(currentTime).getTime();
-    const specificDateInMilliseconds = new Date(specificDate).getTime();
-    const timeDifference =
-      currentTimeInMilliseconds - specificDateInMilliseconds;
-    const timeDifferenceInHours = Math.floor(timeDifference / 1000 / 60 / 60);
-
-    return timeDifferenceInHours;
-  };
-
-  const getMinuteDifference = (dateTime: string) => {
-    const currentTime = new Date().toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const specificDate = new Date(dateTime).toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const currentTimeInMilliseconds = new Date(currentTime).getTime();
-    const specificDateInMilliseconds = new Date(specificDate).getTime();
-    const timeDifference =
-      currentTimeInMilliseconds - specificDateInMilliseconds;
-    const timeDifferenceInMinutes = Math.floor(timeDifference / 1000 / 60);
-
-    return timeDifferenceInMinutes;
-  };
-
-  const getSecondsDifference = (dateTime: string) => {
-    const currentTime = new Date().toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const specificDate = new Date(dateTime).toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    });
-    const currentTimeInMilliseconds = new Date(currentTime).getTime();
-    const specificDateInMilliseconds = new Date(specificDate).getTime();
-    const timeDifference =
-      currentTimeInMilliseconds - specificDateInMilliseconds;
-    const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
-
-    return timeDifferenceInSeconds;
+    if (isFeedPage) {
+      await refetchInfiniteQueriesAllDoodles();
+    }
   };
 
   const handleLikeTrueOnClick = async () => {
     await mutateCreateNewLikesNum();
     await refetchGetAllLikesNum();
     await userDoodlesWithAllCommentsRefetch();
-    await refetchInfiniteQueriesAllDoodles();
+    if (isFeedPage) {
+      await refetchInfiniteQueriesAllDoodles();
+    }
   };
 
   const handleLikeFalseOnClick = async () => {
     await mutateDeleteLikesNum();
     await refetchGetAllLikesNum();
     await userDoodlesWithAllCommentsRefetch();
-    await refetchInfiniteQueriesAllDoodles();
+    if (isFeedPage) {
+      await refetchInfiniteQueriesAllDoodles();
+    }
   };
 
   useEffect(() => {
@@ -247,10 +197,10 @@ export const ProfileDoodleCard = ({
           setIsPostSuccessModal={setIsPostSuccessModal}
         />
       ) : null}
-      <div className="bg-white border border-grayBorder w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
+      <div className="bg-white dark:bg-midnight border border-grayBorder dark:border-shadeDark w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center dark:text-egg dark:hover:text-sunset">
             <Link href={`/profile/${userData.name}`}>
               <Image
                 src={
@@ -271,7 +221,7 @@ export const ProfileDoodleCard = ({
           {loggedInSession.user.name !== userData.name ? null : (
             <HiDotsHorizontal
               onClick={() => setIsOptionsModal(true)}
-              className="text-2xl cursor-pointer hover:text-sunset"
+              className="text-2xl cursor-pointer hover:text-sunset dark:text-egg dark:hover:text-sunset"
             />
           )}
         </div>
@@ -288,7 +238,7 @@ export const ProfileDoodleCard = ({
         <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
           {/* Likes and Comments */}
           {doodleWithCommentsData.usersAndComments.length === 0 ? (
-            <div className="text-grayText text-lg flex h-full justify-center items-center">
+            <div className="text-grayText dark:text-shadeText text-lg flex h-full justify-center items-center">
               No Comments
             </div>
           ) : (
@@ -302,13 +252,15 @@ export const ProfileDoodleCard = ({
                     >
                       <div className="flex flex-col w-full">
                         <div className="text-sm">
-                          <span className="font-semibold hover:text-sunset">
+                          <span className="font-semibold hover:text-sunset dark:text-egg dark:hover:text-sunset">
                             <Link href={`/profile/${data.user.name}`}>
                               {data.user.name}
                             </Link>
                           </span>
                           &nbsp;
-                          <span className="">{data.comments.comment}</span>
+                          <span className="dark:text-shadeText">
+                            {data.comments.comment}
+                          </span>
                         </div>
                       </div>
                       <p className="text-[10px] text-placeholder">
@@ -352,7 +304,7 @@ export const ProfileDoodleCard = ({
 
           {/*  */}
         </div>
-        <div className="w-full border-t border-grayBorder">
+        <div className="w-full border-t border-grayBorder dark:border-shadeDark">
           <div className="w-11/12 mx-auto gap-0 md:gap-3 my-3 px-0 md:px-4 grid grid-cols-12">
             <div className="col-start-1 col-span-3 flex gap-1 items-center">
               {dataLikesDocumentByUserAndDoodle.likes ? (
@@ -363,24 +315,26 @@ export const ProfileDoodleCard = ({
               ) : (
                 <AiOutlineHeart
                   onClick={() => handleLikeTrueOnClick()}
-                  className="text-2xl cursor-pointer"
+                  className="text-2xl cursor-pointer dark:text-shadeText dark:hover:text-egg text-placeholder hover:text-black"
                 />
               )}
 
-              <p className="font-semibold text-xs">
-                {dataGetAllLikesNum.length}{' '}
-                <span className="text-placeholder">likes</span>
+              <p className="font-semibold text-xs dark:text-egg">
+                {dataGetAllLikesNum.length}&nbsp;
+                <span className="text-placeholder dark:text-shadeText">
+                  likes
+                </span>
               </p>
             </div>
             <div className="col-start-4 col-span-4 md:col-span-3 flex gap-2 items-center">
-              <FaRegComment className="text-[22px] transform -scale-x-100" />
-              <p className="font-semibold text-xs">
-                {doodleWithCommentsData.usersAndComments.length}{' '}
+              <FaRegComment className="text-[22px] transform -scale-x-100 dark:text-shadeText text-placeholder" />
+              <p className="font-semibold text-xs dark:text-egg">
+                {doodleWithCommentsData.usersAndComments.length}&nbsp;
                 <span className="text-placeholder">comments</span>
               </p>
             </div>
             <div className="col-start-9 col-span-4 md:col-start-8 md:col-span-6 flex gap-2 items-center justify-end">
-              <p className="text-xs text-placeholder">
+              <p className="text-xs text-placeholder dark:text-shadeText">
                 Created&nbsp;
                 {getDayDifference(doodleWithCommentsData.doodle.created_at) >
                 0 ? (
@@ -426,7 +380,7 @@ export const ProfileDoodleCard = ({
             </div>
           </div>
         </div>
-        <div className="w-full border-t border-grayBorder">
+        <div className="w-full border-t border-grayBorder dark:border-shadeDark">
           {/* Comments Form */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div
@@ -441,13 +395,13 @@ export const ProfileDoodleCard = ({
                 placeholder="Comment"
                 className={
                   errors.comment
-                    ? 'w-full h-full focus:outline-none overflow-auto resize-none border border-red-600 rounded-md px-2 py-1 text-sm'
-                    : 'w-full h-full focus:outline-none overflow-auto resize-none rounded-md px-2 py-1 text-sm'
+                    ? 'w-full h-full focus:outline-none overflow-auto resize-none border border-red-600 rounded-md px-2 py-1 text-sm dark:text-egg dark:bg-shadeMedium'
+                    : 'w-full h-full focus:outline-none overflow-auto resize-none rounded-md px-2 py-1 text-sm dark:text-egg dark:bg-shadeMedium'
                 }
                 {...register('comment')}
               />
               {errors.comment ? (
-                <span className="text-grayText font-semibold text-sm cursor-default">
+                <span className="text-grayText dark:text-shadeText font-semibold text-sm cursor-default">
                   Post
                 </span>
               ) : (
@@ -465,7 +419,7 @@ export const ProfileDoodleCard = ({
                 >
                   <button
                     type="submit"
-                    className="text-cobalt font-semibold text-sm"
+                    className="text-cobalt font-semibold text-sm hover:text-sunset"
                   >
                     Post
                   </button>
