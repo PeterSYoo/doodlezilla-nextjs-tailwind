@@ -28,6 +28,7 @@ type ProfileDoodleCardModalProps = {
     doodle: string;
     user: string;
   }) => void;
+  refetchInfiniteQueriesAllDoodles?: () => void;
 };
 
 export const ProfileDoodleCardModal = ({
@@ -37,6 +38,7 @@ export const ProfileDoodleCardModal = ({
   userId,
   userDoodlesWithAllCommentsRefetch,
   mutateCreateNewLikesDocument,
+  refetchInfiniteQueriesAllDoodles,
 }: ProfileDoodleCardModalProps) => {
   const { data: session }: any = useSession();
 
@@ -82,6 +84,7 @@ export const ProfileDoodleCardModal = ({
           dataSessionUser={dataSessionUser}
           doodleWithCommentsRefetch={doodleWithCommentsRefetch}
           userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
+          refetchInfiniteQueriesAllDoodles={refetchInfiniteQueriesAllDoodles}
         />
       </div>
     </>

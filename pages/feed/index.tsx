@@ -79,6 +79,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
     isFetchingInfiniteQueriesAllDoodles,
     isFetchingNextPageInfiniteQueriesAllDoodles,
     fetchNextPageInfiniteQueriesAllDoodles,
+    refetchInfiniteQueriesAllDoodles,
   } = useInfiniteQueriesAllDoodles();
 
   const { mutateCreateNewLikesDocument, isLoadingCreateNewLikesDocument } =
@@ -198,6 +199,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
           }
           mutateCreateNewLikesDocument={mutateCreateNewLikesDocument}
           userId={tempUserId}
+          refetchInfiniteQueriesAllDoodles={refetchInfiniteQueriesAllDoodles}
         />
       ) : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start">

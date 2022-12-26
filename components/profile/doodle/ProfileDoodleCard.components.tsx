@@ -61,6 +61,7 @@ type ProfileDoodleCardProps = {
     image: string;
     location: string;
   };
+  refetchInfiniteQueriesAllDoodles?: any;
 };
 
 type Inputs = {
@@ -85,6 +86,7 @@ export const ProfileDoodleCard = ({
   doodleWithCommentsRefetch,
   userData,
   dataSessionUser,
+  refetchInfiniteQueriesAllDoodles,
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
@@ -142,6 +144,7 @@ export const ProfileDoodleCard = ({
     });
     await doodleWithCommentsRefetch();
     await userDoodlesWithAllCommentsRefetch();
+    await refetchInfiniteQueriesAllDoodles();
   };
 
   const getDayDifference = (dateTime: string) => {
@@ -209,17 +212,17 @@ export const ProfileDoodleCard = ({
   };
 
   const handleLikeTrueOnClick = async () => {
-    /*     await mutateIncrementLikeIfTrue(); */
     await mutateCreateNewLikesNum();
     await refetchGetAllLikesNum();
     await userDoodlesWithAllCommentsRefetch();
+    await refetchInfiniteQueriesAllDoodles();
   };
 
   const handleLikeFalseOnClick = async () => {
-    /*     await mutateDecrementLikeIfFalse(); */
     await mutateDeleteLikesNum();
     await refetchGetAllLikesNum();
     await userDoodlesWithAllCommentsRefetch();
+    await refetchInfiniteQueriesAllDoodles();
   };
 
   useEffect(() => {
@@ -279,9 +282,8 @@ export const ProfileDoodleCard = ({
           width={533}
           height={900}
           alt="tree"
-          className="object-container shrink rounded-3xl w-2/3 mb-3"
+          className="object-contain shrink rounded-3xl w-2/3 mb-3 max-h-[375px]"
         />
-
         {/*  */}
         <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
           {/* Likes and Comments */}
