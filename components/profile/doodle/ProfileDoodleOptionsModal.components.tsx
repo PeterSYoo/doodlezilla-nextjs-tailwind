@@ -1,12 +1,22 @@
-import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { RiCloseFill } from 'react-icons/ri';
+import { useRouter } from 'next/router';
 import useDeleteDoodle from '../../../hooks/useDeleteDoodle';
+import { RiCloseFill } from 'react-icons/ri';
 
-export interface DoodleCardModalProps {
+type DoodleCardModalProps = {
   setIsOptionsModal: (isModal: boolean) => void;
-  doodleWithCommentsData: any;
-}
+  doodleWithCommentsData: {
+    doodle: {
+      _id: string;
+      user: string;
+      image: string;
+      likes: number;
+      created_at: string;
+      updated_at: string;
+      __v: number;
+    };
+  };
+};
 
 export const ProfileDoodleOptionsModal = ({
   doodleWithCommentsData,
