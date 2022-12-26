@@ -180,7 +180,7 @@ export const getInfiniteQuriesAllDoodles = async (
   res: NextApiResponse
 ) => {
   try {
-    const perPage = 3; // Number of doodles to display per page
+    const perPage = 6; // Number of doodles to display per page
     const page =
       typeof req.query.page === 'string' ? parseInt(req.query.page) : 1;
 
