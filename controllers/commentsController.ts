@@ -1,6 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Comments from '../models/Comments';
 
+type Comment = {
+  doodle: string;
+  user: string;
+  comment: string;
+  _id: string;
+  created_at: Date;
+  updated_at: Date;
+  __v: number;
+};
+
 /* GET all Comments */
 export const getAllComments = async (
   req: NextApiRequest,
@@ -44,7 +54,7 @@ export const postComment = async (
       return res.status(404).json({ error: 'Form data not provided!' });
     }
 
-    Comments.create(formData, (err: Error, data: any) => {
+    Comments.create(formData, (err: Error, data: Comment) => {
       return res.status(200).json(data);
     });
   } catch (error) {
