@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserDoodleWithAllCommentsAndLikesNum } from '../../../controllers/doodleWithAllCommentsController';
 import usersConnect from '../../../database/usersConnect';
+import { getUserDoodleWithAllCommentsAndLikesNum } from '../../../controllers/doodleWithAllCommentsController';
 
 export default async function userDoodlesWithAllCommentsAndLikesNumAPI(
   req: NextApiRequest,

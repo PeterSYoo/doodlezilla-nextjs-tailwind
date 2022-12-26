@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useState } from 'react';
 import useFetchUser from '../../hooks/useFetchUser';
 import useFetchUserDoodles from '../../hooks/useFetchUsersDoodles';
 import { LoaderSpinner } from '../LoaderSpinner.components';

@@ -1,9 +1,9 @@
-import { useCanvas } from '../../contexts/CanvasContext';
-import { HexColorPicker } from 'react-colorful';
 import React, { useEffect, useState } from 'react';
-import { RiCloseFill } from 'react-icons/ri';
+import { HexColorPicker } from 'react-colorful';
 import { useMutation } from '@tanstack/react-query';
+import { useCanvas } from '../../contexts/CanvasContext';
 import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
+import { RiCloseFill } from 'react-icons/ri';
 
 export const CreateFooter = () => {
   const [penColorState, setPenColorState] = useState<string>('#000000');

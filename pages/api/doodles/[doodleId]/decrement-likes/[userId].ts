@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  postLike,
-  putLikeUpdateFalse,
-} from '../../../../../controllers/likesController';
 import usersConnect from '../../../../../database/usersConnect';
+import { putLikeUpdateFalse } from '../../../../../controllers/likesController';
 
 export default async function doodleIdApi(
   req: NextApiRequest,

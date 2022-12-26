@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import { HiDotsHorizontal } from 'react-icons/hi';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { FaRegComment } from 'react-icons/fa';
 import { useState } from 'react';
+import Image from 'next/image';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { FaRegComment } from 'react-icons/fa';
+import { HiDotsHorizontal } from 'react-icons/hi';
 
 export const FeedDoodleCard = () => {
   const [isModal, setIsModal] = useState<boolean>();

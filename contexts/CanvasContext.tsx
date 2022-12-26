@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import React, {
   useContext,
   useRef,
@@ -6,6 +5,7 @@ import React, {
   MouseEvent,
   TouchEvent,
 } from 'react';
+import { useSession } from 'next-auth/react';
 import { CreateSuccessModal } from '../components/create/CreateSuccessModal.components';
 
 type CanvasContextValue = {

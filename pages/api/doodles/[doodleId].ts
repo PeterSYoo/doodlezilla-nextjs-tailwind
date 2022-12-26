@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import usersConnect from '../../../database/usersConnect';
 import {
   deleteDoodle,
   getDoodle,
 } from '../../../controllers/doodlesController';
-import usersConnect from '../../../database/usersConnect';
 
 export default async function doodlesApi(
   req: NextApiRequest,

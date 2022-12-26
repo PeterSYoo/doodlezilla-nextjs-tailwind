@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import usersConnect from '../../../database/usersConnect';
 import {
   getAllComments,
   postComment,
 } from '../../../controllers/commentsController';
-import usersConnect from '../../../database/usersConnect';
 
 export default async function commentsApi(
   req: NextApiRequest,

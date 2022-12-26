@@ -1,6 +1,6 @@
 import '../styles/globals.css';
-import type { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
+import type { AppProps } from 'next/app';
 import { Router, useRouter } from 'next/router';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';

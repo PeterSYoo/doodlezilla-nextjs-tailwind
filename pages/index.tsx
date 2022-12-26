@@ -1,13 +1,13 @@
+import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiLogIn } from 'react-icons/fi';
-import { AiOutlineGoogle } from 'react-icons/ai';
-import { LoginForm } from '../components/login/LoginForm.components';
-import { FcGoogle } from 'react-icons/fc';
-import { getSession, signIn, signOut } from 'next-auth/react';
-import { GetServerSideProps } from 'next';
+import { signIn } from 'next-auth/react';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]';
+import { LoginForm } from '../components/login/LoginForm.components';
+import { AiOutlineGoogle } from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
+import { FiLogIn } from 'react-icons/fi';
 
 export default function Home() {
   /* Google Handler Function */

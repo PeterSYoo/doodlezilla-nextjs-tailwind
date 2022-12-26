@@ -1,11 +1,11 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import usersConnect from '../../../database/usersConnect';
-import Users from '../../../models/Users';
-import { compare } from 'bcrypt';
 import GoogleProvider from 'next-auth/providers/google';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import { compare } from 'bcrypt';
+import usersConnect from '../../../database/usersConnect';
 import clientPromise from '../../../database/clientPromise';
+import Users from '../../../models/Users';
 
 export const authOptions: any = {
   providers: [

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserDoodlesByUsername } from '../../../controllers/doodlesController';
 import usersConnect from '../../../database/usersConnect';
+import { getUserDoodlesByUsername } from '../../../controllers/doodlesController';
 
 export default async function usernameApi(
   req: NextApiRequest,

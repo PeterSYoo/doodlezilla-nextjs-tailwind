@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserByUsername } from '../../../controllers/usersController';
 import usersConnect from '../../../database/usersConnect';
+import { getUserByUsername } from '../../../controllers/usersController';
 
 export default async function usernameApi(
   req: NextApiRequest,

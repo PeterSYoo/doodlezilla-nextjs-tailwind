@@ -1,9 +1,9 @@
+import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChangeEvent, Fragment, useEffect, useState } from 'react';
-import { MdSearch, MdClear } from 'react-icons/md';
 import useFetchAllUsers from '../../hooks/useFetchAllUsers';
 import { LoaderSpinner } from '../LoaderSpinner.components';
+import { MdSearch, MdClear } from 'react-icons/md';
 
 type User = {
   _id: string;

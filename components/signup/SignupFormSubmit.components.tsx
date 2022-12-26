@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { BsFillExclamationCircleFill } from 'react-icons/bs';
-import { FaRegEye } from 'react-icons/fa';
-import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import useCreateNewUser from '../../hooks/useCreateNewUser';
 import { SignupUsernameErrorModal } from './SignupUsernameErrorModal.components';
 import { SignupEmailErrorModal } from './SignupEmailErrorModal.components';
 import { SignupSuccessModal } from './SignupSuccessModal.components';
-import useCreateNewUser from '../../hooks/useCreateNewUser';
+import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
+import { BsFillExclamationCircleFill } from 'react-icons/bs';
+import { FaRegEye } from 'react-icons/fa';
 
 type Inputs = {
   username: string;

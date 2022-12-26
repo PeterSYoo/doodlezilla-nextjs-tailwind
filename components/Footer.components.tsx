@@ -2,10 +2,10 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { AiFillHome } from 'react-icons/ai';
-import { FiLogOut } from 'react-icons/fi';
 import useFetchUser from '../hooks/useFetchUser';
 import { LoaderSpinner } from './LoaderSpinner.components';
+import { AiFillHome } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
 
 export const Footer = () => {
   const router = useRouter();

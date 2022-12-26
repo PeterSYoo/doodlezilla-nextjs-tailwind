@@ -1,13 +1,13 @@
+import { GetServerSideProps } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
+import { unstable_getServerSession } from 'next-auth';
+import { signIn } from 'next-auth/react';
+import { authOptions } from '../api/auth/[...nextauth]';
+import { SignupFormSubmit } from '../../components/signup/SignupFormSubmit.components';
 import { FcGoogle } from 'react-icons/fc';
 import { FaUserPlus } from 'react-icons/fa';
 import { AiOutlineGoogle } from 'react-icons/ai';
-import Link from 'next/link';
-import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]';
-import { signIn } from 'next-auth/react';
-import { SignupFormSubmit } from '../../components/signup/SignupFormSubmit.components';
 
 const SignUp = () => {
   /* Google Handler Function */

@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { useEffect } from 'react';
 import { useCanvas } from '../../contexts/CanvasContext';
 import { authOptions } from '../api/auth/[...nextauth]';
 
-const CreatePage: React.FC = () => {
+const CreatePage = () => {
   const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw } =
     useCanvas();
 
