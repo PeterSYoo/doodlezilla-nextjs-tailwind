@@ -36,6 +36,11 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const { userId } = req.query;
     const formData = req.body;
 
+    /* 
+    - Check if formData.name is same as Users.findById(userId), if it exists then continue to update user with formData.
+    - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it exists then return an error.
+    */
+
     if (userId && formData) {
       const userToUpdate = await Users.findById(userId);
       if (formData.name === userToUpdate.name) {
