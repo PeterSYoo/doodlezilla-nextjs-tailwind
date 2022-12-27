@@ -154,7 +154,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
         />
       ) : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
-        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-6 w-2/3">
+        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-10 w-2/3">
           Feed
         </h1>
         <div className="columns-1 px-10 md:w-2/3">
