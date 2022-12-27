@@ -52,11 +52,11 @@ export const postComment = async (
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
+    } else {
+      Comments.create(formData, (err: Error, data: Comment) => {
+        return res.status(200).json(data);
+      });
     }
-
-    Comments.create(formData, (err: Error, data: Comment) => {
-      return res.status(200).json(data);
-    });
   } catch (error) {
     return res.status(404).json({ error });
   }

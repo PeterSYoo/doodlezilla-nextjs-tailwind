@@ -16,10 +16,11 @@ export const getLikesRelatedToUserAndDoodle = async (
       user: userId,
     });
 
-    if (!likes)
+    if (!likes) {
       return res.status(404).json({ error: 'Likes Document not Found' });
-
-    res.status(200).json(likes);
+    } else {
+      res.status(200).json(likes);
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching Likes' });
   }
@@ -38,10 +39,9 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
         user: userId,
       });
 
-      if (!likes)
+      if (!likes) {
         res.status(404).json({ error: 'Could not find Likes document' });
-
-      if (likes === null) {
+      } else if (likes === null) {
         /* create a new like document if none was found */
         const newLikes = await Likes.create({
           doodle: doodleId,
@@ -80,9 +80,7 @@ export const putLikeUpdateTrue = async (
 
       if (!likes) {
         res.status(404).json({ error: 'Could not find Likes document.' });
-      }
-
-      if (likes) {
+      } else if (likes) {
         const ifLikesIsTrue = await Likes.findOne({
           user: userId,
           doodle: doodleId,
@@ -120,9 +118,7 @@ export const putLikeUpdateFalse = async (
       );
       if (!likes) {
         res.status(404).json({ error: 'Likes document does not exist.' });
-      }
-
-      if (likes) {
+      } else if (likes) {
         const ifLikesIsFalse = await Likes.findOne({
           user: userId,
           doodle: doodleId,

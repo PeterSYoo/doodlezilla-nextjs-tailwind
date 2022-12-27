@@ -15,10 +15,11 @@ export const getAllLikesNum = async (
         doodle: doodleId,
       });
 
-      if (!likes)
+      if (!likes) {
         return res.status(404).json({ error: 'LikesNum Document not Found' });
-
-      res.status(200).json(likes);
+      } else {
+        res.status(200).json(likes);
+      }
     }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching LikesNum' });
@@ -43,18 +44,17 @@ export const postLikesNum = async (
       );
       if (!likes) {
         res.status(404).json({ error: 'Likes document does not exist.' });
-      }
-
-      if (likes) {
+      } else if (likes) {
         const likesNum = await LikesNum.create({
           doodle: doodleId,
           user: userId,
         });
 
-        if (!likesNum)
+        if (!likesNum) {
           return res.status(404).json({ error: 'Likes Document not Found' });
-
-        res.status(200).json(likesNum);
+        } else {
+          res.status(200).json(likesNum);
+        }
       }
     }
   } catch (error) {
@@ -80,9 +80,7 @@ export const deleteLikesNum = async (
       );
       if (!likes) {
         res.status(404).json({ error: 'Likes document does not exist.' });
-      }
-
-      if (likes) {
+      } else if (likes) {
         await LikesNum.findOneAndDelete({ doodle: doodleId, user: userId });
         res.status(200).json('Deleted LikesNum');
       }

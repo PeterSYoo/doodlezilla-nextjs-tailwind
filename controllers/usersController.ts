@@ -9,8 +9,11 @@ export const getAllUsers = async (
   try {
     const users = await Users.find({});
 
-    if (!users) return res.status(404).json({ error: 'Data not Found' });
-    res.status(200).json(users);
+    if (!users) {
+      return res.status(404).json({ error: 'Data not Found' });
+    } else {
+      res.status(200).json(users);
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching Users' });
   }
@@ -68,11 +71,11 @@ export const postUsers = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
+    } else {
+      Users.create(formData, (err: Error, data: any) => {
+        return res.status(200).json(data);
+      });
     }
-
-    Users.create(formData, (err: Error, data: any) => {
-      return res.status(200).json(data);
-    });
   } catch (error) {
     return res.status(404).json({ error });
   }
@@ -87,6 +90,7 @@ export const getUserByUsername = async (
     const { username } = req.query;
 
     const user = await Users.findOne({ name: username });
+
     if (!user) {
       throw new Error('No user found with that Username!');
     } else {

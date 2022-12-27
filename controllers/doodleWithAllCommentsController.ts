@@ -16,24 +16,26 @@ export const getAllDoodlesWithAllComments = async (
 ) => {
   try {
     const doodles = await Doodles.find({});
-    if (!doodles) return res.status(404).json({ error: 'Data not Found' });
+    if (!doodles) {
+      return res.status(404).json({ error: 'Data not Found' });
+    } else {
+      const doodleIds = [];
 
-    const doodleIds = [];
+      for (let i = 0; i < doodles.length; i++) {
+        doodleIds.push(doodles[i]._id);
+      }
 
-    for (let i = 0; i < doodles.length; i++) {
-      doodleIds.push(doodles[i]._id);
+      const combinedData = [];
+      for (let i = 0; i < doodleIds.length; i++) {
+        let comments = await Comments.find({ doodle: doodleIds[i] });
+        combinedData.push({
+          doodle: doodleIds[i],
+          comments: comments,
+        });
+      }
+
+      res.status(200).json(combinedData);
     }
-
-    const combinedData = [];
-    for (let i = 0; i < doodleIds.length; i++) {
-      let comments = await Comments.find({ doodle: doodleIds[i] });
-      combinedData.push({
-        doodle: doodleIds[i],
-        comments: comments,
-      });
-    }
-
-    res.status(200).json(combinedData);
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
   }
@@ -50,19 +52,22 @@ export const getUserDoodleWithAllComments = async (
 
     if (userId) {
       const doodles = await Doodles.find({ user: userId });
-      if (!doodles) return res.status(404).json({ error: 'Data not Found' });
+      if (!doodles) {
+        return res.status(404).json({ error: 'Data not Found' });
+      } else {
+        let combinedData = [];
 
-      let combinedData = [];
-      for (let i = 0; i < doodles.length; i++) {
-        let comments = await Comments.find({ doodle: doodles[i]._id });
+        for (let i = 0; i < doodles.length; i++) {
+          let comments = await Comments.find({ doodle: doodles[i]._id });
 
-        combinedData.push({
-          doodle: doodles[i],
-          comments: comments,
-        });
+          combinedData.push({
+            doodle: doodles[i],
+            comments: comments,
+          });
+        }
+
+        res.status(200).json(combinedData);
       }
-
-      res.status(200).json(combinedData);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
@@ -80,9 +85,9 @@ export const getDoodleWithAllComments = async (
 
     if (doodleId) {
       const doodle = await Doodles.findById(doodleId);
-      if (!doodle) return res.status(404).json({ error: 'Doodle not found' });
-
-      if (doodle) {
+      if (!doodle) {
+        return res.status(404).json({ error: 'Doodle not found' });
+      } else if (doodle) {
         const comments = await Comments.find({ doodle: doodle._id });
         if (!comments) {
           return res.status(404).json({ error: 'Comments not found' });
@@ -122,21 +127,23 @@ export const getUserDoodleWithAllCommentsAndLikesNum = async (
 
     if (userId) {
       const doodles = await Doodles.find({ user: userId });
-      if (!doodles) return res.status(404).json({ error: 'Data not Found' });
+      if (!doodles) {
+        return res.status(404).json({ error: 'Data not Found' });
+      } else {
+        let combinedData = [];
+        for (let i = 0; i < doodles.length; i++) {
+          let comments = await Comments.find({ doodle: doodles[i]._id });
+          let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
 
-      let combinedData = [];
-      for (let i = 0; i < doodles.length; i++) {
-        let comments = await Comments.find({ doodle: doodles[i]._id });
-        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+          combinedData.push({
+            doodle: doodles[i],
+            likesNum: likesNum,
+            comments: comments,
+          });
+        }
 
-        combinedData.push({
-          doodle: doodles[i],
-          likesNum: likesNum,
-          comments: comments,
-        });
+        res.status(200).json(combinedData);
       }
-
-      res.status(200).json(combinedData);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
@@ -151,23 +158,25 @@ export const getAllDoodleWithAllCommentsAndLikesNum = async (
 ) => {
   try {
     const doodles = await Doodles.find();
-    if (!doodles) return res.status(404).json({ error: 'Doodles not Found' });
+    if (!doodles) {
+      return res.status(404).json({ error: 'Doodles not Found' });
+    } else {
+      let combinedData = [];
+      for (let i = 0; i < doodles.length; i++) {
+        let comments = await Comments.find({ doodle: doodles[i]._id });
+        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+        let user = await Users.findById(doodles[i].user);
 
-    let combinedData = [];
-    for (let i = 0; i < doodles.length; i++) {
-      let comments = await Comments.find({ doodle: doodles[i]._id });
-      let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
-      let user = await Users.findById(doodles[i].user);
+        combinedData.push({
+          doodle: doodles[i],
+          likesNum: likesNum,
+          comments: comments,
+          user: user,
+        });
+      }
 
-      combinedData.push({
-        doodle: doodles[i],
-        likesNum: likesNum,
-        comments: comments,
-        user: user,
-      });
+      res.status(200).json(combinedData);
     }
-
-    res.status(200).json(combinedData);
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
   }
@@ -191,27 +200,30 @@ export const getInfiniteQuriesAllDoodles = async (
       .sort({ created_at: -1 })
       .skip(skip)
       .limit(perPage);
-    if (!doodles) return res.status(404).json({ error: 'Doodles not Found' });
 
-    let combinedData = [];
-    for (let i = 0; i < doodles.length; i++) {
-      let comments = await Comments.find({ doodle: doodles[i]._id });
-      let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
-      let user = await Users.findById(doodles[i].user);
+    if (!doodles) {
+      return res.status(404).json({ error: 'Doodles not Found' });
+    } else {
+      let combinedData = [];
+      for (let i = 0; i < doodles.length; i++) {
+        let comments = await Comments.find({ doodle: doodles[i]._id });
+        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+        let user = await Users.findById(doodles[i].user);
 
-      combinedData.push({
-        doodle: doodles[i],
-        likesNum: likesNum,
-        comments: comments,
-        user: user,
-      });
+        combinedData.push({
+          doodle: doodles[i],
+          likesNum: likesNum,
+          comments: comments,
+          user: user,
+        });
+      }
+
+      // Calculate the previous and next page numbers
+      const previousPage = page > 1 ? page - 1 : null;
+      const nextPage = combinedData.length === perPage ? page + 1 : null;
+
+      res.status(200).json({ combinedData, previousPage, nextPage });
     }
-
-    // Calculate the previous and next page numbers
-    const previousPage = page > 1 ? page - 1 : null;
-    const nextPage = combinedData.length === perPage ? page + 1 : null;
-
-    res.status(200).json({ combinedData, previousPage, nextPage });
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
   }

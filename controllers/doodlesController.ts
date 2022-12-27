@@ -55,11 +55,11 @@ export const postDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
+    } else {
+      Doodles.create(formData, (err: Error, data: any) => {
+        return res.status(200).json(data);
+      });
     }
-
-    Doodles.create(formData, (err: Error, data: any) => {
-      return res.status(200).json(data);
-    });
   } catch (error) {
     return res.status(404).json({ error });
   }
@@ -108,9 +108,9 @@ export const getUserDoodlesByUsername = async (
   try {
     const { username } = req.query;
     const user = await Users.findOne({ name: username });
-    if (!user) return res.status(404).json({ error: 'User not found' });
-
-    if (user) {
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    } else if (user) {
       const doodles = await Doodles.find({ user: user._id });
       if (!doodles) return res.status(404).json({ error: 'Doodle not found' });
       res.status(200).json(doodles);
