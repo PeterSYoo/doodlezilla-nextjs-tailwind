@@ -10,6 +10,7 @@ import { LoaderSpinner } from '../LoaderSpinner.components';
 import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 import { BsFillExclamationCircleFill } from 'react-icons/bs';
 import { RiCloseFill } from 'react-icons/ri';
+import { ProfileUsernameErrorModal } from './ProfileUsernameErrorModal.components';
 
 type Inputs = {
   username: string;
@@ -38,7 +39,8 @@ type DoodleCardModalProps = {
 export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   const { data: session }: any = useSession();
   const [imageSrc, setImageSrc] = useState<string>('');
-  const [isOnClick, setIsOnClick] = useState<boolean>(false);
+  const [isUsernameErrorModal, setIsUsernameErrorModal] =
+    useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
@@ -46,7 +48,11 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
   );
 
   const { mutateUpdateSessionUser, isLoadingUpdateSessionUser } =
-    useUpdateSessionUser(session?.user?.id);
+    useUpdateSessionUser(
+      session?.user?.id,
+      setIsUsernameErrorModal,
+      setIsModal
+    );
 
   const {
     handleSubmit,
@@ -95,7 +101,6 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         location: data.location,
       });
       await userRefetch();
-      await (async () => setIsModal(false))();
     } else {
       await mutateUpdateSessionUser({
         name: data.username.toLowerCase(),
@@ -104,7 +109,6 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         location: data.location,
       });
       await userRefetch();
-      await (async () => setIsModal(false))();
     }
   };
 
@@ -113,11 +117,16 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
+      {isUsernameErrorModal ? (
+        <ProfileUsernameErrorModal
+          setIsUsernameErrorModal={setIsUsernameErrorModal}
+        />
+      ) : null}
+      <div className="fixed top-0 left-0 w-full h-screen z-40 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         {/* Close X Top Right Button */}
         <button
           onClick={() => setIsModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white"
+          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
         >
           <RiCloseFill />
         </button>
@@ -615,7 +624,6 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                 ) : (
                   <button
                     type="submit"
-                    onClick={() => setIsOnClick(!isOnClick)}
                     className="py-2 px-5 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]"
                   >
                     Submit
