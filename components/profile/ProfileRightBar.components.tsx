@@ -23,7 +23,7 @@ export const ProfileRightBar = () => {
   return (
     <>
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
-      <div className="z-40 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-transparent md:flex-col px-1">
+      <div className="z-30 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-transparent md:flex-col px-1">
         <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
           <div className="flex justify-between items-center mt-[18px]">
             <h1 className="font-semibold ml-2 lg:ml-0 dark:text-egg">
