@@ -4,7 +4,6 @@ import useFetchDoodleWithAllComments from '../../../hooks/useFetchDoodleWIthAllC
 import useFetchUser from '../../../hooks/useFetchUser';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
 import { ProfileDoodleCard } from './ProfileDoodleCard.components';
-import { RiCloseFill } from 'react-icons/ri';
 
 type ProfileDoodleCardModalProps = {
   setIsDoodleModal: (arg0: boolean) => void;
