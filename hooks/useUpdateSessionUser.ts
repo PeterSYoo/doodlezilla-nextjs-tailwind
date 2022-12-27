@@ -7,7 +7,11 @@ type Data = {
   name: string;
 };
 
-const useUpdateSessionUser = (userId: string) => {
+const useUpdateSessionUser = (
+  userId: string,
+  setIsUsernameErrorModal: (arg0: boolean) => void,
+  setIsModal: (arg0: boolean) => void
+) => {
   const {
     mutateAsync: mutateUpdateSessionUser,
     isLoading: isLoadingUpdateSessionUser,
@@ -21,7 +25,13 @@ const useUpdateSessionUser = (userId: string) => {
 
       const response = await fetch(`/api/users/${userId}`, Options);
       const json = await response.json();
-      return json;
+
+      if (json.error === 'Name already exists') {
+        setIsUsernameErrorModal(true);
+      } else {
+        setIsModal(false);
+        return json;
+      }
     } catch (error) {
       return error;
     }
