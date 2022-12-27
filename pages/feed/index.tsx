@@ -154,10 +154,10 @@ const FeedPage = ({ session }: FeedPageProps) => {
         />
       ) : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
-        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
+        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-6 w-2/3">
           Feed
         </h1>
-        <div className="columns-1 md:columns-1 lg:columns-1 xl:columns-1 2xl:columns-1 3xl:columns-1 px-5 md:px-20 lg:px-20">
+        <div className="columns-1 px-10 md:w-2/3">
           {dataInfiniteQueriesAllDoodles?.pages.map((page: Page, i: number) => (
             <Fragment key={i}>
               {page.combinedData?.map((doodle: Doodle) => (
