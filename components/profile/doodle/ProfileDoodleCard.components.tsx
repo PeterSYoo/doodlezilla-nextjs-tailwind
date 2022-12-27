@@ -23,6 +23,7 @@ import {
   getSecondsDifference,
 } from '../../../utils/findTimeDifference';
 import { RiCloseFill } from 'react-icons/ri';
+import { ProfileDoodleFullImageModal } from './ProfileDoodleFullImageModal';
 
 type ProfileDoodleCardProps = {
   doodleWithCommentsData: {
@@ -101,6 +102,7 @@ export const ProfileDoodleCard = ({
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
+  const [isImageModal, setIsImageModal] = useState<boolean>(false);
   const [commentHeight, setCommentHeight] = useState<string>(
     'w-11/12 flex justify-center mx-auto items-center px-4 mt-3 gap-5 border border-transparent h-8 w-full'
   );
@@ -189,6 +191,12 @@ export const ProfileDoodleCard = ({
 
   return (
     <>
+      {isImageModal ? (
+        <ProfileDoodleFullImageModal
+          setIsImageModal={setIsImageModal}
+          doodleImage={doodleWithCommentsData.doodle.image}
+        />
+      ) : null}
       {isOptionsModal ? (
         <ProfileDoodleOptionsModal
           setIsOptionsModal={setIsOptionsModal}
@@ -229,25 +237,24 @@ export const ProfileDoodleCard = ({
               />
             )}
             {/* Close X Top Right Button */}
-
             <span
               onClick={() => setIsDoodleModal(false)}
               className="text-3xl dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
             >
               <RiCloseFill />
             </span>
-
             {/*  */}
           </div>
         </div>
         {/*  */}
         {/* Doodle Image */}
         <Image
+          onClick={() => setIsImageModal(true)}
           src={doodleWithCommentsData.doodle.image}
           width={533}
           height={900}
           alt="tree"
-          className="object-contain shrink rounded-3xl w-2/3 mb-3 max-h-[375px]"
+          className="object-contain shrink rounded-3xl w-2/3 mb-3 max-h-[375px] cursor-pointer"
         />
         {/*  */}
         <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
