@@ -157,7 +157,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
         <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
           Feed
         </h1>
-        <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 3xl:columns-6 px-5 md:px-20 lg:px-20">
+        <div className="columns-1 md:columns-1 lg:columns-1 xl:columns-1 2xl:columns-1 3xl:columns-1 px-5 md:px-20 lg:px-20">
           {dataInfiniteQueriesAllDoodles?.pages.map((page: Page, i: number) => (
             <Fragment key={i}>
               {page.combinedData?.map((doodle: Doodle) => (
