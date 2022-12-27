@@ -11,14 +11,6 @@ export const ProfileUsernameErrorModal = ({
   return (
     <>
       <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-60 dark:bg-white dark:bg-opacity-50 flex justify-center items-center">
-        {/* Close X Top Right Button */}
-        <button
-          onClick={() => setIsUsernameErrorModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
-        >
-          <RiCloseFill />
-        </button>
-        {/*  */}
         <div className="container mx-auto w-11/12 md:w-8/12 lg:max-w-[600px]">
           <div className="relative py-14 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-10 items-center">
             <BsFillExclamationCircleFill className="text-sunset text-4xl" />
