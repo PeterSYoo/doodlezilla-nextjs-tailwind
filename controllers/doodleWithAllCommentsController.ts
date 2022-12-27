@@ -81,7 +81,7 @@ export const getDoodleWithAllComments = async (
   res: NextApiResponse
 ) => {
   try {
-    const { doodleId } = req.query;
+    const { doodleId }: any = req.query;
 
     if (doodleId) {
       const doodle = await Doodles.findById(doodleId);
@@ -151,6 +151,40 @@ export const getUserDoodleWithAllCommentsAndLikesNum = async (
 };
 /*  */
 
+/* GET Single Doodle With all Comments and Likes Num */
+export const getDoodleWithAllCommentsAndLikesNum = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { doodleId } = req.query;
+
+    const doodles = await Doodles.findById(doodleId);
+
+    if (!doodles) {
+      return res.status(404).json({ error: 'Doodles not Found' });
+    } else {
+      const combinedData = [];
+
+      const comments = await Comments.find({ doodle: doodles._id });
+      const likesNum = await LikesNum.find({ doodle: doodles._id });
+      const user = await Users.findById(doodles.user);
+
+      combinedData.push({
+        doodle: doodles,
+        likesNum: likesNum,
+        comments: comments,
+        user: user,
+      });
+
+      res.status(200).json(combinedData);
+    }
+  } catch (error) {
+    res.status(404).json({ error: 'Error while fetching users doodles' });
+  }
+};
+/*  */
+
 /* GET all Doodles With all Comments and Likes Num */
 export const getAllDoodleWithAllCommentsAndLikesNum = async (
   req: NextApiRequest,
@@ -189,7 +223,7 @@ export const getInfiniteQuriesAllDoodles = async (
   res: NextApiResponse
 ) => {
   try {
-    const perPage = 6; // Number of doodles to display per page
+    const perPage = 3; // Number of doodles to display per page
     const page =
       typeof req.query.page === 'string' ? parseInt(req.query.page) : 1;
 
