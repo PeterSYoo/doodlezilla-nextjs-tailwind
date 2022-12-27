@@ -48,15 +48,13 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
       if (formData.name === userToUpdate.name) {
         const user = await Users.findByIdAndUpdate(userId, formData);
         res.status(200).json(user);
-      }
-
-      if (nameExists) {
+      } else if (nameExists) {
         res.status(400).json({ error: 'Name already exists' });
         return;
+      } else {
+        const user = await Users.findByIdAndUpdate(userId, formData);
+        res.status(200).json(user);
       }
-
-      const user = await Users.findByIdAndUpdate(userId, formData);
-      res.status(200).json(user);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while updating User!' });
