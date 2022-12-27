@@ -119,7 +119,6 @@ const FeedPage = ({ session }: FeedPageProps) => {
 
   useEffect(() => {
     setTempUserId(session?.user?.id);
-    fetchNextPageInfiniteQueriesAllDoodles();
   }, []);
 
   useEffect(() => {
