@@ -28,7 +28,8 @@ const useUpdateSessionUser = (
 
       if (json.error === 'Name already exists') {
         setIsUsernameErrorModal(true);
-      } else {
+      }
+      if (json) {
         setIsModal(false);
         return json;
       }
