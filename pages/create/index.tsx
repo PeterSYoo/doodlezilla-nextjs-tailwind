@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { useCanvas } from '../../contexts/CanvasContext';
 import { authOptions } from '../api/auth/[...nextauth]';
+import { getSession } from 'next-auth/react';
 
 const CreatePage = () => {
   const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw } =
@@ -34,11 +35,7 @@ const CreatePage = () => {
 export default CreatePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session = await getSession(context);
 
   if (!session) {
     return {

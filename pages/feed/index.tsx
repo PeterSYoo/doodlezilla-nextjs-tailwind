@@ -21,6 +21,7 @@ import {
 } from '../../utils/findTimeDifference';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 
 type Session = {
   expires: string;
@@ -286,11 +287,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
 export default FeedPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session = await getSession(context);
 
   if (!session) {
     return {

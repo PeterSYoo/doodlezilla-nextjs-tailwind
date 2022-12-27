@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { authOptions } from '../api/auth/[...nextauth]';
 import useFetchUserByUsername from '../../hooks/useFetchUserByUsername';
@@ -203,11 +203,7 @@ export default UserIdPage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const username = context.query.username;
 
-  const session: SessionSSR = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session: any = await getSession(context);
 
   if (!session) {
     return {

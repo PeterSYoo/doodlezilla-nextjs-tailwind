@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { SignupFormSubmit } from '../../components/signup/SignupFormSubmit.components';
 import { FcGoogle } from 'react-icons/fc';
@@ -89,11 +89,7 @@ const SignUp = () => {
 export default SignUp;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session = await getSession(context);
 
   if (session) {
     return {

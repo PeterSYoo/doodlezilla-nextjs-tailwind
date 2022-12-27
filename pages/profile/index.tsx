@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { authOptions } from '../api/auth/[...nextauth]';
 import useFetchUser from '../../hooks/useFetchUser';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
@@ -181,11 +181,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
 export default ProfilePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  const session = await getSession(context);
 
   if (!session) {
     return {
