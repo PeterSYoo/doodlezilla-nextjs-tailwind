@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
+import useFetchDoodleWithCommentsAndLikes from '../../hooks/useFetchDoodleWithCommentsAndLikes';
 
 type Session = {
   expires: string;
@@ -76,6 +77,27 @@ const FeedPage = ({ session }: FeedPageProps) => {
   const router = useRouter();
 
   const isFeedPage = router.asPath === '/feed';
+
+  const {
+    dataDoodleWithCommentsAndLikes: dataEditorsPick1,
+    isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick1,
+    isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick1,
+    refetchDoodleWithCommentsAndLikes: refetchEditorsPick1,
+  } = useFetchDoodleWithCommentsAndLikes('63aa86c016c0eac9db45498d');
+
+  const {
+    dataDoodleWithCommentsAndLikes: dataEditorsPick2,
+    isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick2,
+    isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick2,
+    refetchDoodleWithCommentsAndLikes: refetchEditorsPick2,
+  } = useFetchDoodleWithCommentsAndLikes('63aa7f3aa302ae27986b6c56');
+
+  const {
+    dataDoodleWithCommentsAndLikes: dataEditorsPick3,
+    isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick3,
+    isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick3,
+    refetchDoodleWithCommentsAndLikes: refetchEditorsPick3,
+  } = useFetchDoodleWithCommentsAndLikes('63aa7dd5fe6ec5fa955bfbf5');
 
   const {
     dataAllDoodlesWithCommentsAndLikesNum,
@@ -134,8 +156,20 @@ const FeedPage = ({ session }: FeedPageProps) => {
     }
   }, [inView]);
 
-  if (isLoadingAllDoodlesWithCommentsAndLikesNum) return <LoaderSpinner />;
-  if (isErrorAllDoodlesWithCommentsAndLikesNum) return <>Error</>;
+  if (
+    isLoadingAllDoodlesWithCommentsAndLikesNum ||
+    isLoadingEditorsPick1 ||
+    isLoadingEditorsPick2 ||
+    isLoadingEditorsPick3
+  )
+    return <LoaderSpinner />;
+  if (
+    isErrorAllDoodlesWithCommentsAndLikesNum ||
+    isErrorEditorsPick1 ||
+    isErrorEditorsPick2 ||
+    isErrorEditorsPick3
+  )
+    return <>Error</>;
 
   return (
     <>
@@ -153,8 +187,112 @@ const FeedPage = ({ session }: FeedPageProps) => {
           isFeedPage={isFeedPage}
         />
       ) : null}
-      <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
-        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-10 w-2/3">
+      <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-2 md:gap-2 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
+        {/* Editor's Picks */}
+        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg w-5/6 text-xl">
+          Editor&apos;s Picks
+        </h1>
+        <div className="columns-3 w-5/6 mb-3">
+          {/* Pick 1 */}
+          <div
+            onClick={() => {
+              handleModalClickUser(dataEditorsPick1[0].doodle.user);
+              handleModalClick(dataEditorsPick1[0].doodle._id);
+            }}
+            className="overlay-container rounded-3xl overflow-hidden relative group"
+          >
+            <Image
+              src={dataEditorsPick1[0].doodle.image}
+              alt="doodle card"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+            />
+            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
+              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
+                <div className="flex items-center gap-8 dark:text-midnight">
+                  <div className="flex items-center gap-2">
+                    <AiFillHeart />
+                    {dataEditorsPick1[0].likesNum.length}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaComment className="transform -scale-x-100" />
+                    {dataEditorsPick1[0].comments.length}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*  */}
+          {/* Pick 2 */}
+          <div
+            onClick={() => {
+              handleModalClickUser(dataEditorsPick2[0].doodle.user);
+              handleModalClick(dataEditorsPick2[0].doodle._id);
+            }}
+            className="overlay-container rounded-3xl overflow-hidden relative group"
+          >
+            <Image
+              src={dataEditorsPick2[0].doodle.image}
+              alt="doodle card"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+            />
+            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
+              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
+                <div className="flex items-center gap-8 dark:text-midnight">
+                  <div className="flex items-center gap-2">
+                    <AiFillHeart />
+                    {dataEditorsPick2[0].likesNum.length}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaComment className="transform -scale-x-100" />
+                    {dataEditorsPick2[0].comments.length}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*  */}
+          {/* Pick 3 */}
+          <div
+            onClick={() => {
+              handleModalClickUser(dataEditorsPick3[0].doodle.user);
+              handleModalClick(dataEditorsPick3[0].doodle._id);
+            }}
+            className="overlay-container rounded-3xl overflow-hidden relative group"
+          >
+            <Image
+              src={dataEditorsPick3[0].doodle.image}
+              alt="doodle card"
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+            />
+            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
+              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
+                <div className="flex items-center gap-8 dark:text-midnight">
+                  <div className="flex items-center gap-2">
+                    <AiFillHeart />
+                    {dataEditorsPick3[0].likesNum.length}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <FaComment className="transform -scale-x-100" />
+                    {dataEditorsPick3[0].comments.length}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*  */}
+        </div>
+        {/*  */}
+        <div className="border-b border-grayBorder dark:border-shadeMedium w-5/6"></div>
+        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg md:px-10 md:w-2/3 w-5/6 text-xl mt-5">
           Feed
         </h1>
         <div className="columns-1 px-10 md:w-2/3">
