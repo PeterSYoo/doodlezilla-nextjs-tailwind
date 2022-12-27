@@ -174,7 +174,7 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
                           className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
                         />
                         <div className="overlay group-hover:bg-black dark:group-hover:bg-white dark:group-hover:bg-opacity-30 group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white dark:text-black group-hover:backdrop-blur-sm dark:group-hover:backdrop-blur-sm">
-                          <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible">
+                          <div className="overlay-text p-4 flex justify-center gap-8 items-center h-full w-full invisible group-hover:visible">
                             <div className="flex items-center gap-2">
                               <AiFillHeart />
                               {doodle.likesNum.length}
