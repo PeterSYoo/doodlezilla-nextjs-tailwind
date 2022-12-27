@@ -22,6 +22,7 @@ import {
   getMinuteDifference,
   getSecondsDifference,
 } from '../../../utils/findTimeDifference';
+import { RiCloseFill } from 'react-icons/ri';
 
 type ProfileDoodleCardProps = {
   doodleWithCommentsData: {
@@ -69,6 +70,7 @@ type ProfileDoodleCardProps = {
   };
   refetchInfiniteQueriesAllDoodles?: any;
   isFeedPage?: boolean;
+  setIsDoodleModal: (arg0: boolean) => void;
 };
 
 type Inputs = {
@@ -95,6 +97,7 @@ export const ProfileDoodleCard = ({
   dataSessionUser,
   refetchInfiniteQueriesAllDoodles,
   isFeedPage,
+  setIsDoodleModal,
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
@@ -218,12 +221,24 @@ export const ProfileDoodleCard = ({
               <span className="font-semibold">{userData.name}</span>
             </Link>
           </div>
-          {loggedInSession.user.name !== userData.name ? null : (
-            <HiDotsHorizontal
-              onClick={() => setIsOptionsModal(true)}
-              className="text-2xl cursor-pointer hover:text-sunset dark:text-egg dark:hover:text-sunset"
-            />
-          )}
+          <div className="flex items-center gap-6">
+            {loggedInSession.user.name !== userData.name ? null : (
+              <HiDotsHorizontal
+                onClick={() => setIsOptionsModal(true)}
+                className="text-2xl cursor-pointer hover:text-sunset dark:text-egg dark:hover:text-sunset"
+              />
+            )}
+            {/* Close X Top Right Button */}
+
+            <span
+              onClick={() => setIsDoodleModal(false)}
+              className="text-3xl dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
+            >
+              <RiCloseFill />
+            </span>
+
+            {/*  */}
+          </div>
         </div>
         {/*  */}
         {/* Doodle Image */}

@@ -72,14 +72,6 @@ export const ProfileDoodleCardModal = ({
   return (
     <>
       <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
-        {/* Close X Top Right Button */}
-        <button
-          onClick={() => setIsDoodleModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
-        >
-          <RiCloseFill />
-        </button>
-        {/*  */}
         <ProfileDoodleCard
           doodleWithCommentsData={doodleWithCommentsData}
           userData={userData}
@@ -88,6 +80,7 @@ export const ProfileDoodleCardModal = ({
           userDoodlesWithAllCommentsRefetch={userDoodlesWithAllCommentsRefetch}
           refetchInfiniteQueriesAllDoodles={refetchInfiniteQueriesAllDoodles}
           isFeedPage={isFeedPage}
+          setIsDoodleModal={setIsDoodleModal}
         />
       </div>
     </>

@@ -123,16 +123,18 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
         />
       ) : null}
       <div className="fixed top-0 left-0 w-full h-screen z-40 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
-        {/* Close X Top Right Button */}
-        <button
-          onClick={() => setIsModal(false)}
-          className="fixed right-2 top-2 text-3xl text-white dark:text-black"
-        >
-          <RiCloseFill />
-        </button>
-        {/*  */}
         <div className="container mx-auto w-11/12 md:max-w-[768px]">
-          <div className="relative py-12 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:py-14">
+          <div className="relative pb-12 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center md:grid md:grid-cols-12 md:gap-0 md:items-start md:pb-14">
+            {/* Close X Top Right Button */}
+            <div className="flex justify-end w-full">
+              <span
+                onClick={() => setIsModal(false)}
+                className="text-3xl dark:text-egg mx-5 mt-3 cursor-pointer md:hidden dark:hover:text-sunset hover:text-sunset"
+              >
+                <RiCloseFill />
+              </span>
+            </div>
+            {/*  */}
             {/* Edit Avatar Photo */}
             <div className="flex flex-col justify-end items-center gap-5 md:gap-12 md:col-start-1 md:col-span-4 md:items-center md:ml-20 w-full md:h-full">
               <div className="flex justify-center md:justify-center w-full items-center gap-6 md:gap-0 md:h-full md:mt-5">
@@ -185,6 +187,16 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
               onSubmit={handleSubmit(onSubmit)}
               className="md:col-start-6 md:col-span-7"
             >
+              {/* Close X Top Right Button */}
+              <div className="flex justify-end w-full">
+                <span
+                  onClick={() => setIsModal(false)}
+                  className="text-3xl dark:text-egg mx-5 mt-3 cursor-pointer hidden md:flex dark:hover:text-sunset hover:text-sunset"
+                >
+                  <RiCloseFill />
+                </span>
+              </div>
+              {/*  */}
               <div className="flex flex-col items-center justify-center gap-3 mb-10">
                 {/* Username */}
                 <p className="w-[310px] pl-3 -mb-3 text-sm text-placeholder dark:text-shadeText">
