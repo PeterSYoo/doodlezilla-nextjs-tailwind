@@ -63,7 +63,7 @@ export const SearchInput = () => {
         )}
       </div>
       {searchTerm && (
-        <div className="w-[188px] md:w-[210px] lg:w-[400px] flex gap-4 rounded-3xl border border-grayBorder px-7 absolute bg-white dark:bg-midnight dark:border-transparent dark:bg-opacity-90 mt-2.5 md:mt-[50px] py-5 bg-opacity-90 flex-col">
+        <div className="w-[188px] md:w-[245px] lg:w-[420px] flex gap-4 rounded-3xl border border-grayBorder px-7 absolute bg-white dark:bg-midnight dark:border-transparent dark:bg-opacity-90 mt-2.5 md:mt-[50px] py-5 bg-opacity-90 flex-col">
           {filteredUsers
             ?.slice()
             .sort((a, b) => {
@@ -78,7 +78,7 @@ export const SearchInput = () => {
                 <div className="flex">
                   <Link
                     href={`/profile/${user.name}`}
-                    className="flex gap-3 group"
+                    className="flex gap-3 group items-center"
                   >
                     <Image
                       src={
