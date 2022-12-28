@@ -255,7 +255,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
                   <>
                     {errors.biography.message ===
                     'Please Enter a Biography' ? null : (
-                      <div className="text-red-600 text-xs max-w-[260px] -mt-2 mx-auto grid grid-cols-12">
+                      <div className="text-red-600 text-xs max-w-[260px] -mt-2 mx-auto grid grid-cols-12 gap-2">
                         <div className="col-start-1 col-span-1">
                           <BsFillExclamationCircleFill className="mt-0.5" />
                         </div>
