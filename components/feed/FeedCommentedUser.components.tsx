@@ -34,12 +34,18 @@ type Doodle = {
 
 type FeedCommentedUserProps = {
   doodle: Doodle;
-  setIsDoodleModal: (arg0: boolean) => void;
+  userId: string;
+  doodleId: string;
+  handleModalClickUser: (arg0: string) => void;
+  handleModalClick: (arg0: string) => void;
 };
 
 export const FeedCommentedUser = ({
   doodle,
-  setIsDoodleModal,
+  userId,
+  doodleId,
+  handleModalClick,
+  handleModalClickUser,
 }: FeedCommentedUserProps) => {
   const findMostRecentComment = (object: Doodle) => {
     const comments = object.comments;
@@ -74,8 +80,20 @@ export const FeedCommentedUser = ({
             {userData.name}
           </Link>
         </span>
-        <span className="dark:text-shadeText">{comment.comment}</span>
-        <div className="dark:z-20 dark:bg-gradient-to-t dark:from-shadeDark dark:to-transparent w-full h-[60px] -mt-14"></div>
+        <span className="dark:text-shadeText text-placeholder">
+          {comment.comment}
+        </span>
+        <div>
+          <p
+            onClick={() => {
+              handleModalClickUser(doodle.doodle.user);
+              handleModalClick(doodle.doodle._id);
+            }}
+            className="dark:text-shadeText mt-2 cursor-pointer dark:hover:text-sunset w-fit hover:text-sunset text-placeholder"
+          >
+            View more comments...
+          </p>
+        </div>
       </div>
     </>
   );
