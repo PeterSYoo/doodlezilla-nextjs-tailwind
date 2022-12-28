@@ -12,17 +12,7 @@ export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
     <>
       <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
         <div className="container mx-auto w-11/12 md:w-10/12 lg:max-w-[768px]">
-          <div className="relative pb-10 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center md:gap-3">
-            {/* Close X Top Right Button */}
-            <div className="flex justify-end w-full">
-              <span
-                onClick={() => setIsSuccessModal(false)}
-                className="text-3xl dark:text-egg mx-5 mt-3 cursor-pointer md:flex"
-              >
-                <RiCloseFill />
-              </span>
-            </div>
-            {/*  */}
+          <div className="relative py-10 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center md:gap-3">
             <h1 className="font-semibold text-xl md:text-2xl mx-auto text-center dark:text-egg">
               Your doodle has succesfully been uploaded!
             </h1>
