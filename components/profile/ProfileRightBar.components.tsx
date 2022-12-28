@@ -62,7 +62,7 @@ export const ProfileRightBar = () => {
             />
           </div>
           {/*  */}
-          <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-center lg:items-start">
+          <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-start lg:items-start">
             {/* Username */}
             <h1 className="font-bold break-all text-lg lg:items-start w-3/4 lg:w-full dark:text-egg">
               {userData.name.toUpperCase()}

@@ -62,7 +62,7 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
               />
             </div>
             {/*  */}
-            <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-center lg:items-start">
+            <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-start lg:items-start">
               {/* Username */}
               <h1 className="font-bold w-full break-all text-lg dark:text-egg">
                 {userData.name.toUpperCase()}
