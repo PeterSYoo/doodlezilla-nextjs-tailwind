@@ -133,7 +133,52 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
             userId={tempUserId}
           />
         ) : null}
-        <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
+        <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-start items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
+          {/* Mobile Profile Avatar & bio */}
+          <div className="md:hidden grid grid-cols-12 w-[375px] gap-8">
+            {/* Column 1 */}
+            <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder dark:border-shadeMedium rounded-2xl py-4 px-2">
+              <div className="flex flex-col items-center gap-1">
+                <Image
+                  src={
+                    userData.image
+                      ? userData.image
+                      : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                  }
+                  width={75}
+                  height={75}
+                  alt="profile avatar mobile"
+                  className="rounded-full aspect-square"
+                />
+                <h1 className="font-bold break-all text-center dark:text-egg">
+                  {userData.name}
+                </h1>
+                <p className="font-semibold text-xs dark:text-egg">
+                  {userDoodlesWithAllCommentsAndLikesNumData.length}&nbsp;
+                  <span className="font-normal text-placeholder dark:text-shadeText">
+                    DOODLES
+                  </span>
+                </p>
+              </div>
+              <p className="font-semibold text-xs text-placeholder dark:text-egg">
+                {userData.location ? userData.location : null}
+              </p>
+            </div>
+            {/*  */}
+            {/* Column 2 */}
+            <div className="col-start-6 col-span-7 mt-4 flex flex-col gap-3">
+              <p className="text-xs dark:text-egg">
+                {userData.biography ? (
+                  userData.biography
+                ) : (
+                  <>Please edit your profile to write your biography.</>
+                )}
+              </p>
+            </div>
+            {/*  */}
+          </div>
+          <div className="border-b border-grayBorder dark:border-shadeMedium w-[375px] md:hidden"></div>
+          {/*  */}
           {/* Header Text */}
           <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
             Doodles
