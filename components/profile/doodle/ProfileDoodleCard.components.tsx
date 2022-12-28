@@ -226,24 +226,24 @@ export const ProfileDoodleCard = ({
       <div className="bg-white dark:bg-midnight border border-grayBorder dark:border-shadeDark w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
-          <div className="flex gap-3 items-center dark:text-egg dark:hover:text-sunset">
-            <Link href={`/profile/${userData.name}`}>
-              <Image
-                src={
-                  userData.image
-                    ? userData.image
-                    : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                }
-                width={43}
-                height={43}
-                alt="avatar feed"
-                className="rounded-full"
-              />
-            </Link>
-            <Link href={`/profile/${userData.name}`}>
-              <span className="font-semibold">{userData.name}</span>
-            </Link>
-          </div>
+          <Link
+            href={`/profile/${userData.name}`}
+            className="flex gap-3 items-center dark:text-egg dark:hover:text-sunset hover:text-sunset"
+          >
+            <Image
+              src={
+                userData.image
+                  ? userData.image
+                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+              }
+              width={43}
+              height={43}
+              alt="avatar feed"
+              className="rounded-full"
+            />
+            <span className="font-semibold">{userData.name}</span>
+          </Link>
+
           <div className="flex items-center gap-6">
             {loggedInSession.user.name !== userData.name ? null : (
               <HiDotsHorizontal
@@ -269,7 +269,7 @@ export const ProfileDoodleCard = ({
           width={533}
           height={900}
           alt="tree"
-          className="object-contain shrink rounded-3xl w-2/3 mb-3 max-h-[375px] cursor-pointer"
+          className="object-contain shrink rounded-3xl w-3/4 my-3 max-h-[375px] cursor-pointer"
         />
         {/*  */}
         <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
@@ -297,7 +297,7 @@ export const ProfileDoodleCard = ({
                               {data.user.name}
                             </Link>
                           </span>
-                          <span className="dark:text-shadeText">
+                          <span className="dark:text-shadeText text-placeholder">
                             {data.comments.comment}
                           </span>
                         </div>

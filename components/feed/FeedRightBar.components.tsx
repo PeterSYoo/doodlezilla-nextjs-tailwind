@@ -48,33 +48,25 @@ export const FeedRightBar = () => {
               .map((user: User) => (
                 <Fragment key={user._id}>
                   {userData._id === user._id ? null : (
-                    <div className="grid grid-cols-12 items-center gap-2">
-                      <div className="col-start-1 col-span-3">
-                        <Link href={`/profile/${user.name}`}>
-                          <Image
-                            src={
-                              user.image
-                                ? user.image
-                                : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                            }
-                            width={43}
-                            height={43}
-                            alt="suggestions avatar"
-                            className="rounded-full"
-                          />
-                        </Link>
-                      </div>
-                      <div className="col-start-4 col-span-9">
-                        <p className="font-semibold text-sm break-all dark:text-egg">
-                          <Link
-                            href={`/profile/${user.name}`}
-                            className="dark:hover:text-sunset hover:text-sunset"
-                          >
-                            {user.name}
-                          </Link>
-                        </p>
-                      </div>
-                    </div>
+                    <Link
+                      href={`/profile/${user.name}`}
+                      className="flex items-center gap-3 group w-fit"
+                    >
+                      <Image
+                        src={
+                          user.image
+                            ? user.image
+                            : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                        }
+                        width={33}
+                        height={33}
+                        alt="suggestions avatar"
+                        className="rounded-full"
+                      />
+                      <p className="font-semibold text-sm break-all dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset">
+                        {user.name}
+                      </p>
+                    </Link>
                   )}
                 </Fragment>
               ))}
