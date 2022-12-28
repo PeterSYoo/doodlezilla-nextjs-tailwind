@@ -34,9 +34,13 @@ type Doodle = {
 
 type FeedCommentedUserProps = {
   doodle: Doodle;
+  setIsDoodleModal: (arg0: boolean) => void;
 };
 
-export const FeedCommentedUser = ({ doodle }: FeedCommentedUserProps) => {
+export const FeedCommentedUser = ({
+  doodle,
+  setIsDoodleModal,
+}: FeedCommentedUserProps) => {
   const findMostRecentComment = (object: Doodle) => {
     const comments = object.comments;
 
@@ -60,14 +64,19 @@ export const FeedCommentedUser = ({ doodle }: FeedCommentedUserProps) => {
 
   return (
     <>
-      <div className="text-xs my-3 px-1">
-        <span className="font-semibold hover:text-sunset dark:text-egg dark:hover:text-sunset">
-          <Link href={`/profile/${userData.name}`}>{userData.name}</Link>
+      <div className="border-b border-borderGray dark:border-shadeMedium mx-1 my-3"></div>
+      <div className="text-xs px-1 flex flex-col gap-0.5">
+        <span>
+          <Link
+            href={`/profile/${userData.name}`}
+            className="font-semibold hover:text-sunset dark:text-egg dark:hover:text-sunset"
+          >
+            {userData.name}
+          </Link>
         </span>
-        &nbsp;
         <span className="dark:text-shadeText">{comment.comment}</span>
+        <div className="dark:z-20 dark:bg-gradient-to-t dark:from-shadeDark dark:to-transparent w-full h-[60px] -mt-14"></div>
       </div>
-      <div className="border-b border-borderGray dark:border-shadeMedium mx-1"></div>
     </>
   );
 };
