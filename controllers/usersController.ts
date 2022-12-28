@@ -47,28 +47,17 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
     /* 
     - Check if formData.name is same as Users.findById(userId), if it exists then continue to update user with formData.
-    - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it exists then return an error.
+    - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it doesn't exist then return an error.
     */
 
     if (userId && formData) {
       const userToUpdate = await Users.findById(userId);
-      const nameExists = await Users.findOne({ name: formData.name });
 
-      if (formData.name === userToUpdate.name) {
-        const user = await Users.findByIdAndUpdate(userId, formData);
-
-        if (!user) {
-          res.status(404).json({ error: 'Error While Updating User' });
-        }
-
-        if (user) {
-          res.status(200).json(user);
-        }
+      if (formData.name !== userToUpdate.name) {
+        res.status(400).json({ error: 'Name already exists' });
       }
 
-      if (nameExists) {
-        res.status(400).json({ error: 'Name already exists' });
-      } else {
+      if (formData.name === userToUpdate.name) {
         const user = await Users.findByIdAndUpdate(userId, formData);
 
         if (!user) {
