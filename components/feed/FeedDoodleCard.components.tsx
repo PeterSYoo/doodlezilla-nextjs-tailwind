@@ -1,75 +1,166 @@
-import { useState } from 'react';
+import { Fragment } from 'react';
 import Image from 'next/image';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { FaRegComment } from 'react-icons/fa';
-import { HiDotsHorizontal } from 'react-icons/hi';
+import Link from 'next/link';
+import {
+  getDayDifference,
+  getHourDifference,
+  getMinuteDifference,
+  getSecondsDifference,
+} from '../../utils/findTimeDifference';
+import { FeedCommentedUser } from './FeedCommentedUser.components';
 
-export const FeedDoodleCard = () => {
-  const [isModal, setIsModal] = useState<boolean>();
+type FeedDoodleCardProps = {
+  dataInfiniteQueriesAllDoodles: any;
+  handleModalClickUser: (arg0: string) => void;
+  handleModalClick: (arg0: string) => void;
+};
 
+type Page = {
+  combinedData: Array<{
+    doodle: {
+      _id: string;
+      image: string;
+      created_at: string;
+      user: {
+        name: string;
+        image: string;
+      };
+    };
+    user: {
+      name: string;
+      image: string;
+    };
+    likesNum: Array<any>;
+    comments: Array<any>;
+  }>;
+};
+
+type Doodle = {
+  doodle: any;
+  likesNum: Array<any>;
+  comments: Array<any>;
+  user: any;
+};
+
+export const FeedDoodleCard = ({
+  dataInfiniteQueriesAllDoodles,
+  handleModalClickUser,
+  handleModalClick,
+}: FeedDoodleCardProps) => {
   return (
     <>
-      {/* {isModal ? <DoodleCardModal setIsModal={setIsModal} /> : null} */}
-      <div className="bg-white border border-grayBorder w-full max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[474px] lg:max-w-[733px]">
-        {/* Doodle Header */}
-        <div className="flex justify-between items-center w-10/12 pb-3">
-          <div className="flex gap-3 items-center">
-            <Image
-              src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670910840/nudoodle/assets/cat_avatar_cmp6xf.png"
-              width={43}
-              height={43}
-              alt="avatar feed"
-            />
-            <span className="font-semibold">Apple</span>
-          </div>
-          <HiDotsHorizontal
-            onClick={() => setIsModal(true)}
-            className="text-2xl cursor-pointer hover:text-sunset"
-          />
-        </div>
-        {/*  */}
-        {/* Doodle Image */}
-        <div className="bg-zinc-50 border border-grayBorder rounded-[50px] w-11/12 flex justify-center items-center py-2">
-          <Image
-            src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670922076/nudoodle/assets/image_3_6_gifnqn.png"
-            width={272}
-            height={400}
-            alt="tree"
-          />
-        </div>
-        {/*  */}
-        {/* Likes and Comments */}
-        <div className="flex flex-col w-10/12 gap-4 mt-4">
-          <div className="flex justify-between items-center w-full">
-            <div className="flex items-center gap-3">
-              <AiOutlineHeart />
-              <span className="font-semibold text-sm">5 likes</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <FaRegComment />
-              <span className="font-semibold text-sm">4 Comments</span>
-            </div>
-          </div>
-          <div className="border-b border-grayBorder w-full"></div>
-          <div className="flex flex-col w-full">
-            <div className="text-sm">
-              <span className="font-semibold">Apple</span>&nbsp;
-              <span className="">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat...
-              </span>
-              &nbsp;
-              <span className="text-placeholder">more</span>
-            </div>
-          </div>
-          <p className="font-bold text-placeholder text-sm">
-            View all 4 comments
-          </p>
-          <p className="text-[10px] text-placeholder">2 HOURS AGO</p>
-        </div>
-        {/*  */}
+      <div className="columns-1 px-10 md:w-5/6 lg:w-2/3">
+        {dataInfiniteQueriesAllDoodles?.pages.map((page: Page, i: number) => (
+          <Fragment key={i}>
+            {page.combinedData?.map((doodle: Doodle) => (
+              <Fragment key={doodle.doodle._id}>
+                <div className="mb-16">
+                  {/* User Avatar and Username */}
+                  <Link
+                    href={`/profile/${doodle.user.name}`}
+                    className="flex items-center gap-3 mb-3 group w-fit px-1"
+                  >
+                    <Image
+                      src={
+                        doodle.user.image
+                          ? doodle.user.image
+                          : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                      }
+                      width={33}
+                      height={33}
+                      alt="avatar feed"
+                      className="rounded-full"
+                    />
+                    <span className="font-semibold break-all w-7/8 text-center text-sm dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset cursor-pointer">
+                      {doodle.user.name}
+                    </span>
+                  </Link>
+                  {/*  */}
+                  {/* Doodle Image */}
+                  <div
+                    onClick={() => {
+                      handleModalClickUser(doodle.doodle.user);
+                      handleModalClick(doodle.doodle._id);
+                    }}
+                    className="overlay-container rounded-3xl overflow-hidden relative group"
+                  >
+                    <Image
+                      src={doodle.doodle.image}
+                      alt="doodle card"
+                      width="0"
+                      height="0"
+                      sizes="100vw"
+                      className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+                    />
+                  </div>
+                  {/*  */}
+                  <div className="flex justify-between items-center px-2 mt-2">
+                    {/* Likes and Comments */}
+                    <div className="flex items-center gap-2 dark:text-shadeText text-xs">
+                      <div className="flex items-center gap-2">
+                        {doodle.likesNum.length} likes
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {doodle.comments.length} comments
+                      </div>
+                    </div>
+                    {/*  */}
+                    {/* Created Time ago */}
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs dark:text-shadeText">
+                        {getDayDifference(doodle.doodle.created_at) > 0 ? (
+                          <>{getDayDifference(doodle.doodle.created_at)}d ago</>
+                        ) : (
+                          <>
+                            {getHourDifference(doodle.doodle.created_at) > 0 ? (
+                              <>
+                                {getHourDifference(doodle.doodle.created_at)}h
+                                ago
+                              </>
+                            ) : (
+                              <>
+                                {getMinuteDifference(doodle.doodle.created_at) >
+                                0 ? (
+                                  <>
+                                    {getMinuteDifference(
+                                      doodle.doodle.created_at
+                                    )}
+                                    m ago
+                                  </>
+                                ) : (
+                                  <>
+                                    {getSecondsDifference(
+                                      doodle.doodle.created_at
+                                    )}
+                                    s ago
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </p>
+                    </div>
+                    {/*  */}
+                  </div>
+                  {/* Most Recent Comment */}
+                  <div className="flex flex-col w-full px-1">
+                    {doodle.comments[0] ? (
+                      <FeedCommentedUser
+                        doodle={doodle}
+                        userId={doodle.doodle.user}
+                        doodleId={doodle.doodle._id}
+                        handleModalClickUser={handleModalClickUser}
+                        handleModalClick={handleModalClick}
+                      />
+                    ) : null}
+                  </div>
+                  {/*  */}
+                </div>
+              </Fragment>
+            ))}
+          </Fragment>
+        ))}
       </div>
     </>
   );

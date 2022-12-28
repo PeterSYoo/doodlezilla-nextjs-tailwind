@@ -1,17 +1,16 @@
 import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
 import { getSession, useSession } from 'next-auth/react';
-import { authOptions } from '../api/auth/[...nextauth]';
 import useFetchUser from '../../hooks/useFetchUser';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 import useFetchUserDoodlesWithAllCommentsAndLikesNum from '../../hooks/useFetchUserDoodlesWithAllCommentsAndLikesNum';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
+import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
+import { ProfileUserMobile } from '../../components/profile/ProfileUserMobile.components';
 import { AiFillHeart } from 'react-icons/ai';
 import { FaComment } from 'react-icons/fa';
-import { ProfileEditModal } from '../../components/profile/ProfileEditModal.components';
 
 type Session = {
   expires: string;
@@ -103,6 +102,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
 
   return (
     <>
+      {/* Open Doodle Modal */}
       {isDoodleModal ? (
         <ProfileDoodleCardModal
           setIsDoodleModal={setIsDoodleModal}
@@ -115,117 +115,91 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
           userId={tempUserId}
         />
       ) : null}
+      {/*  */}
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-start items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
         {/* Mobile Profile Avatar & bio */}
-        <div className="md:hidden grid grid-cols-12 w-[375px] gap-8">
-          {/* Column 1 */}
-          <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder dark:border-shadeMedium rounded-2xl py-4 px-2">
-            <div className="flex flex-col items-center gap-1">
-              <Image
-                src={
-                  userData.image
-                    ? userData.image
-                    : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                }
-                width={75}
-                height={75}
-                alt="profile avatar mobile"
-                className="rounded-full aspect-square"
-              />
-              <h1 className="font-bold break-all text-center dark:text-egg">
-                {userData.name}
-              </h1>
-              <p className="font-semibold text-xs dark:text-egg">
-                {userDoodlesWithAllCommentsAndLikesNumData.length}&nbsp;
-                <span className="font-normal text-placeholder dark:text-shadeText">
-                  DOODLES
-                </span>
-              </p>
-            </div>
-            <p className="font-semibold text-xs text-placeholder dark:text-egg">
-              {userData.location ? userData.location : null}
-            </p>
-            <button
-              onClick={() => setIsModal(true)}
-              className="border py-1 w-10/12 text-xs rounded-lg border-placeholder dark:border-shadeText transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white font-semibold dark:text-egg dark:hover:border-transparent"
-            >
-              Edit
-            </button>
-          </div>
-          {/*  */}
-          {/* Column 2 */}
-          <div className="col-start-6 col-span-7 mt-4 flex flex-col gap-3">
-            <p className="text-xs dark:text-egg">
-              {userData.biography ? (
-                userData.biography
-              ) : (
-                <>Please edit your profile to write your biography.</>
-              )}
-            </p>
-          </div>
-          {/*  */}
-        </div>
+        <ProfileUserMobile
+          userData={userData}
+          userDoodlesWithAllCommentsAndLikesNumData={
+            userDoodlesWithAllCommentsAndLikesNumData
+          }
+          setIsModal={setIsModal}
+        />
+        {/*  */}
         <div className="border-b border-grayBorder dark:border-shadeMedium w-[375px] md:hidden"></div>
-        {/*  */}
-        {/* Header Text */}
-        <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
-          Doodles
-        </h1>
-        {/*  */}
-        {/* Doodles List */}
-        <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 3xl:columns-6 px-5 md:px-20 lg:px-20">
-          <div>
-            {userDoodlesWithAllCommentsAndLikesNumData
-              .sort((a: DoodleData, b: DoodleData) => {
-                // Get the doodle objects from the doodle data objects
-                const doodleA = a.doodle;
-                const doodleB = b.doodle;
+        {/* If no Doodles Exist */}
+        {userDoodlesWithAllCommentsAndLikesNumData.length === 0 ? (
+          <>
+            <h1 className="flex justify-center mt-20 dark:text-shadeText text-placeholder text-2xl">
+              No Doodles
+            </h1>
+          </>
+        ) : (
+          <>
+            {/* Header Text */}
+            <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
+              Doodles
+            </h1>
+            {/*  */}
+            {/* Doodles List */}
+            <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 3xl:columns-6 px-5 md:px-20 lg:px-20">
+              <div>
+                {userDoodlesWithAllCommentsAndLikesNumData
+                  .sort((a: DoodleData, b: DoodleData) => {
+                    // Get the doodle objects from the doodle data objects
+                    const doodleA = a.doodle;
+                    const doodleB = b.doodle;
 
-                // Compare the created_at properties of the doodle objects
-                if (doodleA.created_at < doodleB.created_at) {
-                  return 1;
-                } else if (doodleA.created_at > doodleB.created_at) {
-                  return -1;
-                } else {
-                  return 0;
-                }
-              })
-              .map((doodle: Doodle) => (
-                <Fragment key={doodle.doodle._id}>
-                  <div className="mb-5">
-                    <div
-                      onClick={() => {
-                        handleModalClick(doodle.doodle._id);
-                      }}
-                      className="overlay-container rounded-3xl overflow-hidden relative group h-full w-full"
-                    >
-                      <Image
-                        src={doodle.doodle.image}
-                        alt="doodle card"
-                        width="0"
-                        height="0"
-                        sizes="100vw"
-                        className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
-                      />
-                      <div className="overlay group-hover:bg-black dark:group-hover:bg-white dark:group-hover:bg-opacity-30 group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white dark:text-black group-hover:backdrop-blur-sm dark:group-hover:backdrop-blur-sm">
-                        <div className="overlay-text p-4 flex justify-center gap-8 items-center h-full w-full invisible group-hover:visible">
-                          <div className="flex items-center gap-2">
-                            <AiFillHeart />
-                            {doodle.likesNum.length}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <FaComment className="transform -scale-x-100" />
-                            {doodle.comments.length}
+                    // Compare the created_at properties of the doodle objects
+                    if (doodleA.created_at < doodleB.created_at) {
+                      return 1;
+                    } else if (doodleA.created_at > doodleB.created_at) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  })
+                  .map((doodle: Doodle) => (
+                    <Fragment key={doodle.doodle._id}>
+                      {/* Doodle Card */}
+                      <div className="mb-5">
+                        <div
+                          onClick={() => {
+                            handleModalClick(doodle.doodle._id);
+                          }}
+                          className="overlay-container rounded-3xl overflow-hidden relative group h-full w-full"
+                        >
+                          <Image
+                            src={doodle.doodle.image}
+                            alt="doodle card"
+                            width="0"
+                            height="0"
+                            sizes="100vw"
+                            className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+                          />
+                          <div className="overlay group-hover:bg-black dark:group-hover:bg-white dark:group-hover:bg-opacity-30 group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white dark:text-black group-hover:backdrop-blur-sm dark:group-hover:backdrop-blur-sm">
+                            <div className="overlay-text p-4 flex justify-center gap-8 items-center h-full w-full invisible group-hover:visible">
+                              <div className="flex items-center gap-2">
+                                <AiFillHeart />
+                                {doodle.likesNum.length}
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <FaComment className="transform -scale-x-100" />
+                                {doodle.comments.length}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </Fragment>
-              ))}
-          </div>
-        </div>
+                      {/*  */}
+                    </Fragment>
+                  ))}
+              </div>
+            </div>
+            {/*  */}
+          </>
+        )}
         {/*  */}
       </div>
     </>
