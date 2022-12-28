@@ -35,10 +35,6 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
     const { userId, doodleId } = req.query;
     /* First look for a likes document that have the specific userId and doodleId prop then create a new like document if none was found */
 
-    if (!userId || !doodleId) {
-      res.status(404).json({ error: 'Error While Creating new Like' });
-    }
-
     if (userId && doodleId) {
       const likes = await Likes.findOne({
         doodle: doodleId,
@@ -49,21 +45,21 @@ export const postLike = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(404).json({ error: 'Could not find Likes document' });
       }
 
-      if (likes) {
-        if (likes !== null) {
-          res.status(200).json('Likes document already exists.');
-        }
-
-        if (likes === null) {
-          /* create a new like document if none was found */
-          const newLikes = await Likes.create({
-            doodle: doodleId,
-            user: userId,
-          });
-          res.status(200).json(newLikes);
-        }
+      if (likes !== null) {
+        res.status(200).json('Likes document already exists.');
       }
-    } else {
+
+      if (likes === null) {
+        /* create a new like document if none was found */
+        const newLikes = await Likes.create({
+          doodle: doodleId,
+          user: userId,
+        });
+        res.status(200).json(newLikes);
+      }
+    }
+
+    if (!userId && !doodleId) {
       res
         .status(404)
         .json({ error: 'UserId and DoodleId were not passed correctly' });
