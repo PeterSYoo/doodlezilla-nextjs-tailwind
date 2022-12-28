@@ -50,7 +50,7 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
     - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it exists then return an error.
     */
 
-    if (!userId || !formData) {
+    if (!userId && !formData) {
       res.status(404).json({ error: 'Error While Updating User' });
     }
 
@@ -63,14 +63,14 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json(user);
       }
 
-      if (!nameExists) {
-        const user = await Users.findByIdAndUpdate(userId, formData);
-        res.status(200).json(user);
-      }
-
       if (nameExists) {
         res.status(400).json({ error: 'Name already exists' });
         return;
+      }
+
+      if (!nameExists) {
+        const user = await Users.findByIdAndUpdate(userId, formData);
+        res.status(200).json(user);
       }
     }
   } catch (error) {
