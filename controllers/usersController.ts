@@ -66,7 +66,9 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
 
-      if (!nameExists) {
+      if (nameExists) {
+        res.status(400).json({ error: 'Name already exists' });
+      } else {
         const user = await Users.findByIdAndUpdate(userId, formData);
 
         if (!user) {
@@ -76,10 +78,6 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
         if (user) {
           res.status(200).json(user);
         }
-      }
-
-      if (nameExists) {
-        res.status(400).json({ error: 'Name already exists' });
       }
     }
   } catch (error) {
