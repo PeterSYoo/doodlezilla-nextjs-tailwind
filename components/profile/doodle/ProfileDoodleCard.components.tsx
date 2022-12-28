@@ -72,6 +72,9 @@ type ProfileDoodleCardProps = {
   refetchInfiniteQueriesAllDoodles?: any;
   isFeedPage?: boolean;
   setIsDoodleModal: (arg0: boolean) => void;
+  refetchEditorsPick1?: any;
+  refetchEditorsPick2?: any;
+  refetchEditorsPick3?: any;
 };
 
 type Inputs = {
@@ -99,6 +102,9 @@ export const ProfileDoodleCard = ({
   refetchInfiniteQueriesAllDoodles,
   isFeedPage,
   setIsDoodleModal,
+  refetchEditorsPick1,
+  refetchEditorsPick2,
+  refetchEditorsPick3,
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
@@ -159,6 +165,9 @@ export const ProfileDoodleCard = ({
     await userDoodlesWithAllCommentsRefetch();
     if (isFeedPage) {
       await refetchInfiniteQueriesAllDoodles();
+      await refetchEditorsPick1();
+      await refetchEditorsPick2();
+      await refetchEditorsPick3();
     }
   };
 
@@ -168,6 +177,9 @@ export const ProfileDoodleCard = ({
     await userDoodlesWithAllCommentsRefetch();
     if (isFeedPage) {
       await refetchInfiniteQueriesAllDoodles();
+      await refetchEditorsPick1();
+      await refetchEditorsPick2();
+      await refetchEditorsPick3();
     }
   };
 
@@ -177,6 +189,9 @@ export const ProfileDoodleCard = ({
     await userDoodlesWithAllCommentsRefetch();
     if (isFeedPage) {
       await refetchInfiniteQueriesAllDoodles();
+      await refetchEditorsPick1();
+      await refetchEditorsPick2();
+      await refetchEditorsPick3();
     }
   };
 
@@ -273,19 +288,21 @@ export const ProfileDoodleCard = ({
                       className="flex flex-col w-10/12 gap-1 mt-4"
                     >
                       <div className="flex flex-col w-full">
-                        <div className="text-sm">
-                          <span className="font-semibold hover:text-sunset dark:text-egg dark:hover:text-sunset">
-                            <Link href={`/profile/${data.user.name}`}>
+                        <div className="text-sm flex flex-col gap-0.5">
+                          <span>
+                            <Link
+                              href={`/profile/${data.user.name}`}
+                              className="font-semibold hover:text-sunset dark:text-egg dark:hover:text-sunset"
+                            >
                               {data.user.name}
                             </Link>
                           </span>
-                          &nbsp;
                           <span className="dark:text-shadeText">
                             {data.comments.comment}
                           </span>
                         </div>
                       </div>
-                      <p className="text-[10px] text-placeholder">
+                      <p className="text-[10px] text-placeholder dark:text-shadeText">
                         {getDayDifference(data.comments.created_at) > 0 ? (
                           <>{getDayDifference(data.comments.created_at)}d</>
                         ) : (
