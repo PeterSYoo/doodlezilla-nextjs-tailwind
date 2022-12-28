@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
 import { useCanvas } from '../../contexts/CanvasContext';
-import { authOptions } from '../api/auth/[...nextauth]';
 import { getSession } from 'next-auth/react';
 
 const CreatePage = () => {
@@ -15,7 +13,7 @@ const CreatePage = () => {
 
   return (
     <>
-      <div className="md:ml-[94px] lg:ml-[213px] flex justify-center overflow-hidden">
+      <div className="md:ml-[94px] lg:ml-[213px] flex justify-center overflow-hidden bg-gray-300">
         <canvas
           id="drawing-canvas"
           onMouseDown={(event) => startDrawing(event)}
