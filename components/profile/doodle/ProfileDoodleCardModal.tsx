@@ -29,6 +29,9 @@ type ProfileDoodleCardModalProps = {
   }) => void;
   refetchInfiniteQueriesAllDoodles?: () => void;
   isFeedPage?: boolean;
+  refetchEditorsPick1?: any;
+  refetchEditorsPick2?: any;
+  refetchEditorsPick3?: any;
 };
 
 export const ProfileDoodleCardModal = ({
@@ -40,6 +43,9 @@ export const ProfileDoodleCardModal = ({
   mutateCreateNewLikesDocument,
   refetchInfiniteQueriesAllDoodles,
   isFeedPage,
+  refetchEditorsPick1,
+  refetchEditorsPick2,
+  refetchEditorsPick3,
 }: ProfileDoodleCardModalProps) => {
   const { data: session }: any = useSession();
 
@@ -80,6 +86,9 @@ export const ProfileDoodleCardModal = ({
           refetchInfiniteQueriesAllDoodles={refetchInfiniteQueriesAllDoodles}
           isFeedPage={isFeedPage}
           setIsDoodleModal={setIsDoodleModal}
+          refetchEditorsPick1={refetchEditorsPick1}
+          refetchEditorsPick2={refetchEditorsPick2}
+          refetchEditorsPick3={refetchEditorsPick3}
         />
       </div>
     </>
