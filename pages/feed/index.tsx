@@ -1,7 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
@@ -10,18 +8,11 @@ import useFetchAllDoodlesWithCommentsAndLikesNum from '../../hooks/useFetchAllDo
 import useFetchUser from '../../hooks/useFetchUser';
 import useInfiniteQueriesAllDoodles from '../../hooks/useInfiniteQueriesAllDoodles';
 import useFetchDoodleWithCommentsAndLikes from '../../hooks/useFetchDoodleWithCommentsAndLikes';
-import {
-  getDayDifference,
-  getHourDifference,
-  getMinuteDifference,
-  getSecondsDifference,
-} from '../../utils/findTimeDifference';
 import { LoaderSpinner } from '../../components/LoaderSpinner.components';
 import { LoaderSpinnerInline } from '../../components/LoaderSpinnerInline.components';
 import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
-import { FeedCommentedUser } from '../../components/feed/FeedCommentedUser.components';
-import { AiFillHeart } from 'react-icons/ai';
-import { FaComment } from 'react-icons/fa';
+import { FeedDoodleCard } from '../../components/feed/FeedDoodleCard.components';
+import { FeedEditorsPickCard } from '../../components/feed/FeedEditorsPickCard.components';
 
 type Session = {
   expires: string;
@@ -34,33 +25,6 @@ type Session = {
 
 type FeedPageProps = {
   session: Session;
-};
-
-type Page = {
-  combinedData: Array<{
-    doodle: {
-      _id: string;
-      image: string;
-      created_at: string;
-      user: {
-        name: string;
-        image: string;
-      };
-    };
-    user: {
-      name: string;
-      image: string;
-    };
-    likesNum: Array<any>;
-    comments: Array<any>;
-  }>;
-};
-
-type Doodle = {
-  doodle: any;
-  likesNum: Array<any>;
-  comments: Array<any>;
-  user: any;
 };
 
 const FeedPage = ({ session }: FeedPageProps) => {
@@ -172,6 +136,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
 
   return (
     <>
+      {/* Open Doodle Modal */}
       {isDoodleModal ? (
         <ProfileDoodleCardModal
           setIsDoodleModal={setIsDoodleModal}
@@ -189,6 +154,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
           refetchEditorsPick3={refetchEditorsPick3}
         />
       ) : null}
+      {/*  */}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-2 md:gap-2 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
         {/* Editor's Picks */}
         <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg w-5/6 text-xl">
@@ -196,100 +162,25 @@ const FeedPage = ({ session }: FeedPageProps) => {
         </h1>
         <div className="grid grid-cols-3 w-5/6 mb-3 gap-3">
           {/* Pick 1 */}
-          <div
-            onClick={() => {
-              handleModalClickUser(dataEditorsPick1[0].doodle.user);
-              handleModalClick(dataEditorsPick1[0].doodle._id);
-            }}
-            className="overlay-container rounded-3xl overflow-hidden relative group"
-          >
-            <Image
-              src={dataEditorsPick1[0].doodle.image}
-              alt="doodle card"
-              width="0"
-              height="0"
-              sizes="100vw"
-              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
-            />
-            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
-              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
-                  <div className="flex items-center gap-2">
-                    <AiFillHeart />
-                    {dataEditorsPick1[0].likesNum.length}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <FaComment className="transform -scale-x-100" />
-                    {dataEditorsPick1[0].comments.length}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FeedEditorsPickCard
+            handleModalClickUser={handleModalClickUser}
+            handleModalClick={handleModalClick}
+            data={dataEditorsPick1[0]}
+          />
           {/*  */}
           {/* Pick 2 */}
-          <div
-            onClick={() => {
-              handleModalClickUser(dataEditorsPick2[0].doodle.user);
-              handleModalClick(dataEditorsPick2[0].doodle._id);
-            }}
-            className="overlay-container rounded-3xl overflow-hidden relative group"
-          >
-            <Image
-              src={dataEditorsPick2[0].doodle.image}
-              alt="doodle card"
-              width="0"
-              height="0"
-              sizes="100vw"
-              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
-            />
-            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
-              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
-                  <div className="flex items-center gap-2">
-                    <AiFillHeart />
-                    {dataEditorsPick2[0].likesNum.length}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <FaComment className="transform -scale-x-100" />
-                    {dataEditorsPick2[0].comments.length}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FeedEditorsPickCard
+            handleModalClickUser={handleModalClickUser}
+            handleModalClick={handleModalClick}
+            data={dataEditorsPick2[0]}
+          />
           {/*  */}
           {/* Pick 3 */}
-          <div
-            onClick={() => {
-              handleModalClickUser(dataEditorsPick3[0].doodle.user);
-              handleModalClick(dataEditorsPick3[0].doodle._id);
-            }}
-            className="overlay-container rounded-3xl overflow-hidden relative group"
-          >
-            <Image
-              src={dataEditorsPick3[0].doodle.image}
-              alt="doodle card"
-              width="0"
-              height="0"
-              sizes="100vw"
-              className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
-            />
-            <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
-              <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
-                  <div className="flex items-center gap-2">
-                    <AiFillHeart />
-                    {dataEditorsPick3[0].likesNum.length}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <FaComment className="transform -scale-x-100" />
-                    {dataEditorsPick3[0].comments.length}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <FeedEditorsPickCard
+            handleModalClickUser={handleModalClickUser}
+            handleModalClick={handleModalClick}
+            data={dataEditorsPick3[0]}
+          />
           {/*  */}
         </div>
         {/*  */}
@@ -297,124 +188,15 @@ const FeedPage = ({ session }: FeedPageProps) => {
         <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg px-10 w-full md:w-5/6 lg:w-2/3 text-xl mt-5 mb-7">
           Feed
         </h1>
-        <div className="columns-1 px-10 md:w-5/6 lg:w-2/3">
-          {dataInfiniteQueriesAllDoodles?.pages.map((page: Page, i: number) => (
-            <Fragment key={i}>
-              {page.combinedData?.map((doodle: Doodle) => (
-                <Fragment key={doodle.doodle._id}>
-                  <div className="mb-16">
-                    <div className="flex items-center gap-3 mb-3 px-2">
-                      <Link href={`/profile/${doodle.user.name}`}>
-                        <Image
-                          src={
-                            doodle.user.image
-                              ? doodle.user.image
-                              : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                          }
-                          width={33}
-                          height={33}
-                          alt="avatar feed"
-                          className="rounded-full"
-                        />
-                      </Link>
-                      <Link href={`/profile/${doodle.user.name}`}>
-                        <span className="font-semibold break-all w-7/8 text-center text-sm dark:text-egg dark:hover:text-sunset hover:text-sunset cursor-pointer">
-                          {doodle.user.name}
-                        </span>
-                      </Link>
-                    </div>
-                    <div
-                      onClick={() => {
-                        handleModalClickUser(doodle.doodle.user);
-                        handleModalClick(doodle.doodle._id);
-                      }}
-                      className="overlay-container rounded-3xl overflow-hidden relative group"
-                    >
-                      <Image
-                        src={doodle.doodle.image}
-                        alt="doodle card"
-                        width="0"
-                        height="0"
-                        sizes="100vw"
-                        className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
-                      />
-                    </div>
-                    <div className="flex justify-between items-center px-2 mt-2">
-                      {/* Likes and Comments */}
-                      <div className="flex items-center gap-2 dark:text-shadeText text-xs">
-                        <div className="flex items-center gap-2">
-                          {doodle.likesNum.length} likes
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {doodle.comments.length} comments
-                        </div>
-                      </div>
-                      {/*  */}
-                      {/* User and Created time ago */}
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs dark:text-shadeText">
-                          {getDayDifference(doodle.doodle.created_at) > 0 ? (
-                            <>
-                              {getDayDifference(doodle.doodle.created_at)}d ago
-                            </>
-                          ) : (
-                            <>
-                              {getHourDifference(doodle.doodle.created_at) >
-                              0 ? (
-                                <>
-                                  {getHourDifference(doodle.doodle.created_at)}h
-                                  ago
-                                </>
-                              ) : (
-                                <>
-                                  {getMinuteDifference(
-                                    doodle.doodle.created_at
-                                  ) > 0 ? (
-                                    <>
-                                      {getMinuteDifference(
-                                        doodle.doodle.created_at
-                                      )}
-                                      m ago
-                                    </>
-                                  ) : (
-                                    <>
-                                      {getSecondsDifference(
-                                        doodle.doodle.created_at
-                                      )}
-                                      s ago
-                                    </>
-                                  )}
-                                </>
-                              )}
-                            </>
-                          )}
-                        </p>
-                      </div>
-                      {/*  */}
-                    </div>
-                    {/* Most Recent Comment */}
-                    <div
-                      onClick={() => {
-                        handleModalClickUser(doodle.doodle.user);
-                        handleModalClick(doodle.doodle._id);
-                      }}
-                      className="flex flex-col w-full px-1 cursor-pointer"
-                    >
-                      {doodle.comments[0] ? (
-                        <FeedCommentedUser
-                          setIsDoodleModal={setIsDoodleModal}
-                          doodle={doodle}
-                        />
-                      ) : null}
-                    </div>
-                    {/*  */}
-                  </div>
-                </Fragment>
-              ))}
-            </Fragment>
-          ))}
-        </div>
+        {/* Doodle Card */}
+        <FeedDoodleCard
+          dataInfiniteQueriesAllDoodles={dataInfiniteQueriesAllDoodles}
+          handleModalClickUser={handleModalClickUser}
+          handleModalClick={handleModalClick}
+        />
+        {/*  */}
       </div>
+      {/* Pagination Load More Button */}
       <div className="flex flex-col justify-center mb-48 md:-ml-10 md:mb-20">
         <button
           ref={ref}
@@ -438,6 +220,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
           <LoaderSpinnerInline />
         ) : null}
       </div>
+      {/*  */}
     </>
   );
 };
