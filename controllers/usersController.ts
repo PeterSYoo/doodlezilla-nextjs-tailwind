@@ -9,13 +9,8 @@ export const getAllUsers = async (
   try {
     const users = await Users.find({});
 
-    if (!users) {
-      return res.status(404).json({ error: 'Data not Found' });
-    }
-
-    if (users) {
-      res.status(200).json(users);
-    }
+    if (!users) return res.status(404).json({ error: 'Users not Found' });
+    if (users) return res.status(200).json(users);
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching Users' });
   }
@@ -25,15 +20,10 @@ export const getAllUsers = async (
 export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId } = req.query;
+    const user = await Users.findById(userId);
 
-    if (!userId) {
-      res.status(404).json({ error: 'Error While Fetching Single User' });
-    }
-
-    if (userId) {
-      const user = await Users.findById(userId);
-      res.status(200).json(user);
-    }
+    if (!user) return res.status(404).json({ error: 'User not Found' });
+    if (user) return res.status(200).json(user);
   } catch (error) {
     res.status(404).json({ error: 'Cannot get the User!' });
   }
@@ -42,32 +32,42 @@ export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
 /* PUT a Single User */
 export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    /* 
+
+    - If Username in the Form Data object already exists in any of the User's documents in the User collection, except userId's name in the users collection ,then return a 404 error 'Name already exists'.
+
+    - If Username in the Form Data object is the same as the User document's Username, then update 'name', 'biography' and 'location' props using the Form Data object.
+
+    - If Username in the Form Data object is not the same as the User document's Username,
+    then update 'name', 'biography' and 'location' props using the Form Data object.
+
+    */
+
     const { userId } = req.query;
     const formData = req.body;
 
-    /* 
-    - Check if formData.name is same as Users.findById(userId), if it exists then continue to update user with formData.
-    - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it doesn't exist then return an error.
-    */
+    // Check if the username in the form data already exists in any of the User's documents
+    const existingUser = await Users.findOne({
+      // except the current user's document (identified by userId)
+      _id: { $ne: userId },
+      name: formData.name,
+    });
 
-    if (userId && formData) {
-      const userToUpdate = await Users.findById(userId);
+    if (existingUser) {
+      // Check if the name in the form data is the same as the current user's document's name
+      const currentUser = await Users.findById(userId);
+      if (currentUser.name !== formData.name)
+        return res.status(404).json({ error: 'Name already exists' });
 
-      if (formData.name !== userToUpdate.name) {
-        res.status(400).json({ error: 'Name already exists' });
+      if (currentUser.name === formData.name) {
+        const updatedUser = await Users.findByIdAndUpdate(userId, formData);
+        return res.status(200).json(updatedUser);
       }
+    }
 
-      if (formData.name === userToUpdate.name) {
-        const user = await Users.findByIdAndUpdate(userId, formData);
-
-        if (!user) {
-          res.status(404).json({ error: 'Error While Updating User' });
-        }
-
-        if (user) {
-          res.status(200).json(user);
-        }
-      }
+    if (!existingUser) {
+      const updatedUser = await Users.findByIdAndUpdate(userId, formData);
+      return res.status(200).json(updatedUser);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while updating User!' });
