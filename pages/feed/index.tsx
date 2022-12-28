@@ -184,6 +184,9 @@ const FeedPage = ({ session }: FeedPageProps) => {
           userId={tempUserId}
           refetchInfiniteQueriesAllDoodles={refetchInfiniteQueriesAllDoodles}
           isFeedPage={isFeedPage}
+          refetchEditorsPick1={refetchEditorsPick1}
+          refetchEditorsPick2={refetchEditorsPick2}
+          refetchEditorsPick3={refetchEditorsPick3}
         />
       ) : null}
       <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-2 md:gap-2 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
@@ -191,7 +194,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
         <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg w-5/6 text-xl">
           Editor&apos;s Picks
         </h1>
-        <div className="columns-3 w-5/6 mb-3">
+        <div className="grid grid-cols-3 w-5/6 mb-3 gap-3">
           {/* Pick 1 */}
           <div
             onClick={() => {
@@ -291,7 +294,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
         </div>
         {/*  */}
         <div className="border-b border-grayBorder dark:border-shadeMedium w-5/6"></div>
-        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg px-10 w-full md:w-5/6 lg:w-2/3 text-xl mt-5">
+        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg px-10 w-full md:w-5/6 lg:w-2/3 text-xl mt-5 mb-7">
           Feed
         </h1>
         <div className="columns-1 px-10 md:w-5/6 lg:w-2/3">
@@ -299,7 +302,27 @@ const FeedPage = ({ session }: FeedPageProps) => {
             <Fragment key={i}>
               {page.combinedData?.map((doodle: Doodle) => (
                 <Fragment key={doodle.doodle._id}>
-                  <div className="mb-20">
+                  <div className="mb-16">
+                    <div className="flex items-center gap-3 mb-3 px-2">
+                      <Link href={`/profile/${doodle.user.name}`}>
+                        <Image
+                          src={
+                            doodle.user.image
+                              ? doodle.user.image
+                              : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                          }
+                          width={33}
+                          height={33}
+                          alt="avatar feed"
+                          className="rounded-full"
+                        />
+                      </Link>
+                      <Link href={`/profile/${doodle.user.name}`}>
+                        <span className="font-semibold break-all w-7/8 text-center text-sm dark:text-egg dark:hover:text-sunset hover:text-sunset cursor-pointer">
+                          {doodle.user.name}
+                        </span>
+                      </Link>
+                    </div>
                     <div
                       onClick={() => {
                         handleModalClickUser(doodle.doodle.user);
@@ -316,14 +339,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
                         className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
                       />
                     </div>
-                    {/* Most Recent Comment */}
-                    <div className="flex flex-col w-full">
-                      {doodle.comments[0] ? (
-                        <FeedCommentedUser doodle={doodle} />
-                      ) : null}
-                    </div>
-                    {/*  */}
-                    <div className="flex justify-between items-center px-1 mt-2">
+                    <div className="flex justify-between items-center px-2 mt-2">
                       {/* Likes and Comments */}
                       <div className="flex items-center gap-2 dark:text-shadeText text-xs">
                         <div className="flex items-center gap-2">
@@ -336,27 +352,6 @@ const FeedPage = ({ session }: FeedPageProps) => {
                       {/*  */}
                       {/* User and Created time ago */}
                       <div className="flex items-center gap-2">
-                        <Link
-                          href={`/profile/${doodle.user.name}`}
-                          className="group"
-                        >
-                          <div className="flex items-center gap-2">
-                            <Image
-                              src={
-                                doodle.user.image
-                                  ? doodle.user.image
-                                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                              }
-                              width={33}
-                              height={33}
-                              alt="avatar feed"
-                              className="rounded-full"
-                            />
-                            <span className="font-semibold break-all w-7/8 text-center text-xs dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset cursor-pointer">
-                              {doodle.user.name}
-                            </span>
-                          </div>
-                        </Link>
                         <p className="text-xs dark:text-shadeText">
                           {getDayDifference(doodle.doodle.created_at) > 0 ? (
                             <>
@@ -397,6 +392,22 @@ const FeedPage = ({ session }: FeedPageProps) => {
                       </div>
                       {/*  */}
                     </div>
+                    {/* Most Recent Comment */}
+                    <div
+                      onClick={() => {
+                        handleModalClickUser(doodle.doodle.user);
+                        handleModalClick(doodle.doodle._id);
+                      }}
+                      className="flex flex-col w-full px-1 cursor-pointer"
+                    >
+                      {doodle.comments[0] ? (
+                        <FeedCommentedUser
+                          setIsDoodleModal={setIsDoodleModal}
+                          doodle={doodle}
+                        />
+                      ) : null}
+                    </div>
+                    {/*  */}
                   </div>
                 </Fragment>
               ))}
