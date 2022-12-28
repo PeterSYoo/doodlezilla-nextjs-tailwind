@@ -9,26 +9,13 @@ export const getAllLikesNum = async (
 ) => {
   try {
     const { doodleId } = req.query;
+    const likes = await LikesNum.find({
+      doodle: doodleId,
+    });
 
-    if (!doodleId) {
-      res
-        .status(404)
-        .json({ error: 'Error While Fetching all LikesNum Documents' });
-    }
-
-    if (doodleId) {
-      const likes = await LikesNum.find({
-        doodle: doodleId,
-      });
-
-      if (!likes) {
-        return res.status(404).json({ error: 'LikesNum Document not Found' });
-      }
-
-      if (likes) {
-        res.status(200).json(likes);
-      }
-    }
+    if (!likes)
+      return res.status(404).json({ error: 'LikesNum Document not Found' });
+    if (likes) return res.status(200).json(likes);
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching LikesNum' });
   }
@@ -42,37 +29,24 @@ export const postLikesNum = async (
 ) => {
   try {
     const { doodleId, userId } = req.query;
-
-    if (!doodleId || !userId) {
-      res.status(404).json({ error: 'Error While Creating new LikesNum' });
-    }
-
-    if (doodleId && userId) {
-      const likes = await Likes.findOneAndUpdate(
-        { user: userId, doodle: doodleId },
-        {
-          $set: { likes: true },
-        }
-      );
-
-      if (!likes) {
-        res.status(404).json({ error: 'Likes document does not exist.' });
+    const likes = await Likes.findOneAndUpdate(
+      { user: userId, doodle: doodleId },
+      {
+        $set: { likes: true },
       }
+    );
 
-      if (likes) {
-        const likesNum = await LikesNum.create({
-          doodle: doodleId,
-          user: userId,
-        });
+    if (!likes)
+      return res.status(404).json({ error: 'Likes document does not exist.' });
+    if (likes) {
+      const likesNum = await LikesNum.create({
+        doodle: doodleId,
+        user: userId,
+      });
 
-        if (!likesNum) {
-          return res.status(404).json({ error: 'Likes Document not Found' });
-        }
-
-        if (likesNum) {
-          res.status(200).json(likesNum);
-        }
-      }
+      if (!likesNum)
+        return res.status(404).json({ error: 'Likes Document not Found' });
+      if (likesNum) return res.status(200).json(likesNum);
     }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching Likes' });
@@ -87,27 +61,18 @@ export const deleteLikesNum = async (
 ) => {
   try {
     const { doodleId, userId } = req.query;
-
-    if (!doodleId || !userId) {
-      res.status(404).json({ error: 'Error While Deleting LikesNum Document' });
-    }
-
-    if (doodleId && userId) {
-      const likes = await Likes.findOneAndUpdate(
-        { user: userId, doodle: doodleId },
-        {
-          $set: { likes: false },
-        }
-      );
-
-      if (!likes) {
-        res.status(404).json({ error: 'Likes document does not exist.' });
+    const likes = await Likes.findOneAndUpdate(
+      { user: userId, doodle: doodleId },
+      {
+        $set: { likes: false },
       }
+    );
 
-      if (likes) {
-        await LikesNum.findOneAndDelete({ doodle: doodleId, user: userId });
-        res.status(200).json('Deleted LikesNum');
-      }
+    if (!likes)
+      return res.status(404).json({ error: 'Likes document does not exist.' });
+    if (likes) {
+      await LikesNum.findOneAndDelete({ doodle: doodleId, user: userId });
+      return res.status(200).json('Deleted LikesNum');
     }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching LikesNum' });
