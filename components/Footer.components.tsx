@@ -26,7 +26,7 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="z-40 fixed bottom-0 flex w-full h-[50px] bg-white dark:bg-midnight border-t border-grayBorder dark:border-transparent text-xl px-9 pt-3 text-placeholder backdrop-blur-sm bg-opacity-75 dark:bg-opacity-90 dark:backdrop-blur-sm dark:bg-opacity-75">
+      <footer className="z-40 fixed bottom-0 flex w-full h-[50px] bg-white dark:bg-midnight border-t border-grayBorder dark:border-transparent text-xl px-9 pt-3 text-placeholder backdrop-blur-sm bg-opacity-75 dark:bg-opacity-90 dark:backdrop-blur-sm">
         <div className="flex justify-between w-full max-w-[375px] mx-auto">
           {/* Feed Button */}
           {isFeedPage ? (
@@ -89,7 +89,7 @@ export const Footer = () => {
             <div className="-mt-1 flex flex-col justify-between items-center">
               <Link href="/profile">
                 <div className="animate-border rounded-full from-transparent via-transparent to-transparent bg-[length:400%_400%] p-0.5 bg-transparent bg-gradient-to-tr duration-300 dark:hover:from-[#D055D3] dark:hover:via-sunset dark:hover:to-[#F97E1C]">
-                  <button className="bg-transparent rounded-full p-0.5 flex justify-center items-center">
+                  <button className="bg-white rounded-full p-0.5 flex justify-center items-center">
                     <Image
                       src={
                         userData.image
