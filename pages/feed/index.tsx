@@ -1,28 +1,27 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 import { useInView } from 'react-intersection-observer';
-import { authOptions } from '../api/auth/[...nextauth]';
 import useCreateNewLikesDocument from '../../hooks/useCreateNewLikesDocument';
 import useFetchAllDoodlesWithCommentsAndLikesNum from '../../hooks/useFetchAllDoodlesWithCommentsAndLikesNum';
 import useFetchUser from '../../hooks/useFetchUser';
 import useInfiniteQueriesAllDoodles from '../../hooks/useInfiniteQueriesAllDoodles';
-import { LoaderSpinner } from '../../components/LoaderSpinner.components';
-import { LoaderSpinnerInline } from '../../components/LoaderSpinnerInline.components';
-import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
-import { AiFillHeart } from 'react-icons/ai';
-import { FaComment } from 'react-icons/fa';
+import useFetchDoodleWithCommentsAndLikes from '../../hooks/useFetchDoodleWithCommentsAndLikes';
 import {
   getDayDifference,
   getHourDifference,
   getMinuteDifference,
   getSecondsDifference,
 } from '../../utils/findTimeDifference';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
-import useFetchDoodleWithCommentsAndLikes from '../../hooks/useFetchDoodleWithCommentsAndLikes';
+import { LoaderSpinner } from '../../components/LoaderSpinner.components';
+import { LoaderSpinnerInline } from '../../components/LoaderSpinnerInline.components';
+import { ProfileDoodleCardModal } from '../../components/profile/doodle/ProfileDoodleCardModal';
+import { FeedCommentedUser } from '../../components/feed/FeedCommentedUser.components';
+import { AiFillHeart } from 'react-icons/ai';
+import { FaComment } from 'react-icons/fa';
 
 type Session = {
   expires: string;
@@ -70,8 +69,6 @@ const FeedPage = ({ session }: FeedPageProps) => {
   const [tempUserId, setTempUserId] = useState<string>('');
   const [isHandleClick, setIsHandleClick] = useState<boolean>(false);
   const [tempUserFeed, setTempUserFeed] = useState<string>('');
-  const [pinSize, setPinSize] = useState<string>('');
-  const imgRef = useRef<any>(null);
 
   const { ref, inView } = useInView();
   const router = useRouter();
@@ -83,14 +80,14 @@ const FeedPage = ({ session }: FeedPageProps) => {
     isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick1,
     isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick1,
     refetchDoodleWithCommentsAndLikes: refetchEditorsPick1,
-  } = useFetchDoodleWithCommentsAndLikes('63aa86c016c0eac9db45498d');
+  } = useFetchDoodleWithCommentsAndLikes('63aa808d80e21b4f1c0ef5ac');
 
   const {
     dataDoodleWithCommentsAndLikes: dataEditorsPick2,
     isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick2,
     isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick2,
     refetchDoodleWithCommentsAndLikes: refetchEditorsPick2,
-  } = useFetchDoodleWithCommentsAndLikes('63aa7f3aa302ae27986b6c56');
+  } = useFetchDoodleWithCommentsAndLikes('63aa83f1f31ee8adac1b2cd3');
 
   const {
     dataDoodleWithCommentsAndLikes: dataEditorsPick3,
@@ -160,14 +157,16 @@ const FeedPage = ({ session }: FeedPageProps) => {
     isLoadingAllDoodlesWithCommentsAndLikesNum ||
     isLoadingEditorsPick1 ||
     isLoadingEditorsPick2 ||
-    isLoadingEditorsPick3
+    isLoadingEditorsPick3 ||
+    userIsLoading
   )
     return <LoaderSpinner />;
   if (
     isErrorAllDoodlesWithCommentsAndLikesNum ||
     isErrorEditorsPick1 ||
     isErrorEditorsPick2 ||
-    isErrorEditorsPick3
+    isErrorEditorsPick3 ||
+    userIsError
   )
     return <>Error</>;
 
@@ -211,7 +210,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
             />
             <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
               <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-8 dark:text-midnight">
+                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
                   <div className="flex items-center gap-2">
                     <AiFillHeart />
                     {dataEditorsPick1[0].likesNum.length}
@@ -243,7 +242,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
             />
             <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
               <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-8 dark:text-midnight">
+                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
                   <div className="flex items-center gap-2">
                     <AiFillHeart />
                     {dataEditorsPick2[0].likesNum.length}
@@ -275,7 +274,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
             />
             <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
               <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                <div className="flex items-center gap-8 dark:text-midnight">
+                <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
                   <div className="flex items-center gap-2">
                     <AiFillHeart />
                     {dataEditorsPick3[0].likesNum.length}
@@ -292,10 +291,10 @@ const FeedPage = ({ session }: FeedPageProps) => {
         </div>
         {/*  */}
         <div className="border-b border-grayBorder dark:border-shadeMedium w-5/6"></div>
-        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg md:px-10 md:w-2/3 w-5/6 text-xl mt-5">
+        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg px-10 w-full md:w-5/6 lg:w-2/3 text-xl mt-5">
           Feed
         </h1>
-        <div className="columns-1 px-10 md:w-2/3">
+        <div className="columns-1 px-10 md:w-5/6 lg:w-2/3">
           {dataInfiniteQueriesAllDoodles?.pages.map((page: Page, i: number) => (
             <Fragment key={i}>
               {page.combinedData?.map((doodle: Doodle) => (
@@ -316,77 +315,87 @@ const FeedPage = ({ session }: FeedPageProps) => {
                         sizes="100vw"
                         className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
                       />
-                      <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
-                        <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-                          <div className="flex items-center gap-8 dark:text-midnight">
-                            <div className="flex items-center gap-2">
-                              <AiFillHeart />
-                              {doodle.likesNum.length}
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <FaComment className="transform -scale-x-100" />
-                              {doodle.comments.length}
-                            </div>
-                          </div>
+                    </div>
+                    {/* Most Recent Comment */}
+                    <div className="flex flex-col w-full">
+                      {doodle.comments[0] ? (
+                        <FeedCommentedUser doodle={doodle} />
+                      ) : null}
+                    </div>
+                    {/*  */}
+                    <div className="flex justify-between items-center px-1 mt-2">
+                      {/* Likes and Comments */}
+                      <div className="flex items-center gap-2 dark:text-shadeText text-xs">
+                        <div className="flex items-center gap-2">
+                          {doodle.likesNum.length} likes
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {doodle.comments.length} comments
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center absolute px-2 mt-2 justify-between gap-1">
-                      <Link
-                        href={`/profile/${doodle.user.name}`}
-                        className="group"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Image
-                            src={
-                              doodle.user.image
-                                ? doodle.user.image
-                                : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
-                            }
-                            width={33}
-                            height={33}
-                            alt="avatar feed"
-                            className="rounded-full"
-                          />
-                          <span className="font-semibold break-all w-7/8 text-center text-xs dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset cursor-pointer">
-                            {doodle.user.name}
-                          </span>
-                        </div>
-                      </Link>
-                      <p className="text-xs mt-0.5 dark:text-shadeText">
-                        -&nbsp;
-                        {getDayDifference(doodle.doodle.created_at) > 0 ? (
-                          <>{getDayDifference(doodle.doodle.created_at)}d ago</>
-                        ) : (
-                          <>
-                            {getHourDifference(doodle.doodle.created_at) > 0 ? (
-                              <>
-                                {getHourDifference(doodle.doodle.created_at)}h
-                                ago
-                              </>
-                            ) : (
-                              <>
-                                {getMinuteDifference(doodle.doodle.created_at) >
-                                0 ? (
-                                  <>
-                                    {getMinuteDifference(
-                                      doodle.doodle.created_at
-                                    )}
-                                    m ago
-                                  </>
-                                ) : (
-                                  <>
-                                    {getSecondsDifference(
-                                      doodle.doodle.created_at
-                                    )}
-                                    s ago
-                                  </>
-                                )}
-                              </>
-                            )}
-                          </>
-                        )}
-                      </p>
+                      {/*  */}
+                      {/* User and Created time ago */}
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/profile/${doodle.user.name}`}
+                          className="group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Image
+                              src={
+                                doodle.user.image
+                                  ? doodle.user.image
+                                  : 'https://res.cloudinary.com/dryh1nvhk/image/upload/v1671393782/nudoodle/assets/user-avatar_th6utq.png'
+                              }
+                              width={33}
+                              height={33}
+                              alt="avatar feed"
+                              className="rounded-full"
+                            />
+                            <span className="font-semibold break-all w-7/8 text-center text-xs dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset cursor-pointer">
+                              {doodle.user.name}
+                            </span>
+                          </div>
+                        </Link>
+                        <p className="text-xs dark:text-shadeText">
+                          {getDayDifference(doodle.doodle.created_at) > 0 ? (
+                            <>
+                              {getDayDifference(doodle.doodle.created_at)}d ago
+                            </>
+                          ) : (
+                            <>
+                              {getHourDifference(doodle.doodle.created_at) >
+                              0 ? (
+                                <>
+                                  {getHourDifference(doodle.doodle.created_at)}h
+                                  ago
+                                </>
+                              ) : (
+                                <>
+                                  {getMinuteDifference(
+                                    doodle.doodle.created_at
+                                  ) > 0 ? (
+                                    <>
+                                      {getMinuteDifference(
+                                        doodle.doodle.created_at
+                                      )}
+                                      m ago
+                                    </>
+                                  ) : (
+                                    <>
+                                      {getSecondsDifference(
+                                        doodle.doodle.created_at
+                                      )}
+                                      s ago
+                                    </>
+                                  )}
+                                </>
+                              )}
+                            </>
+                          )}
+                        </p>
+                      </div>
+                      {/*  */}
                     </div>
                   </div>
                 </Fragment>
