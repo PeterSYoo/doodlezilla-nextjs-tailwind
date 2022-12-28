@@ -12,8 +12,13 @@ export const getAllDoodles = async (
   try {
     const doodles = await Doodles.find({});
 
-    if (!doodles) return res.status(404).json({ error: 'Data not Found' });
-    res.status(200).json(doodles);
+    if (!doodles) {
+      return res.status(404).json({ error: 'Doodles not Found' });
+    }
+
+    if (doodles) {
+      res.status(200).json(doodles);
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching all Doodles' });
   }
@@ -23,6 +28,10 @@ export const getAllDoodles = async (
 export const getDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { doodleId } = req.query;
+
+    if (!doodleId) {
+      return res.status(404).json({ error: 'Doodle not Found' });
+    }
 
     if (doodleId) {
       const doodle = await Doodles.findById(doodleId);
@@ -38,6 +47,10 @@ export const putDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { doodleId } = req.query;
     const formData = req.body;
+
+    if (!doodleId || !formData) {
+      return res.status(404).json({ error: 'Error Updating Doodle' });
+    }
 
     if (doodleId && formData) {
       const doodle = await Doodles.findByIdAndUpdate(doodleId, formData);
@@ -55,7 +68,9 @@ export const postDoodle = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
-    } else {
+    }
+
+    if (formData) {
       Doodles.create(formData, (err: Error, data: any) => {
         return res.status(200).json(data);
       });
@@ -72,6 +87,10 @@ export const deleteDoodle = async (
 ) => {
   try {
     const { doodleId }: any = req.query;
+
+    if (!doodleId) {
+      return res.status(404).json({ error: 'Error Deleting Doodle!' });
+    }
 
     if (doodleId) {
       await Doodles.findByIdAndDelete(doodleId);
@@ -93,8 +112,13 @@ export const getUserDoodles = async (
     const { userId } = req.query;
     const user = await Doodles.find({ user: userId });
 
-    if (!user) return res.status(404).json({ error: 'User not found' });
-    res.status(200).json(user);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (user) {
+      res.status(200).json(user);
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });
   }
@@ -110,10 +134,18 @@ export const getUserDoodlesByUsername = async (
     const user = await Users.findOne({ name: username });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
-    } else if (user) {
+    }
+
+    if (user) {
       const doodles = await Doodles.find({ user: user._id });
-      if (!doodles) return res.status(404).json({ error: 'Doodle not found' });
-      res.status(200).json(doodles);
+
+      if (!doodles) {
+        return res.status(404).json({ error: 'Doodle not found' });
+      }
+
+      if (doodles) {
+        res.status(200).json(doodles);
+      }
     }
   } catch (error) {
     res.status(404).json({ error: 'Error while fetching users doodles' });

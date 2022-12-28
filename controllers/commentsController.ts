@@ -19,8 +19,13 @@ export const getAllComments = async (
   try {
     const comments = await Comments.find({});
 
-    if (!comments) return res.status(404).json({ error: 'Comments not Found' });
-    res.status(200).json(comments);
+    if (!comments) {
+      return res.status(404).json({ error: 'Comments not Found' });
+    }
+
+    if (comments) {
+      res.status(200).json(comments);
+    }
   } catch (error) {
     res.status(404).json({ error: 'Error While Fetching all Comments' });
   }
@@ -31,6 +36,10 @@ export const putComment = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { commentId } = req.query;
     const formData = req.body;
+
+    if (!commentId || !formData) {
+      res.status(404).json({ error: 'Error While Updating Comment' });
+    }
 
     if (commentId && formData) {
       const comment = await Comments.findByIdAndUpdate(commentId, formData);
@@ -47,12 +56,13 @@ export const postComment = async (
   res: NextApiResponse
 ) => {
   try {
-    const { commentId } = req.query;
     const formData = req.body;
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
-    } else {
+    }
+
+    if (formData) {
       Comments.create(formData, (err: Error, data: Comment) => {
         return res.status(200).json(data);
       });
@@ -69,6 +79,10 @@ export const deleteComment = async (
 ) => {
   try {
     const { commentsId }: any = req.query;
+
+    if (!commentsId) {
+      res.status(404).json({ error: 'Error While Deleting Comment' });
+    }
 
     if (commentsId) {
       const comments = await Comments.findByIdAndDelete(commentsId);

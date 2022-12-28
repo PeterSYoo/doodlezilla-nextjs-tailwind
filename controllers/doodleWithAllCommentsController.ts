@@ -16,9 +16,12 @@ export const getAllDoodlesWithAllComments = async (
 ) => {
   try {
     const doodles = await Doodles.find({});
+
     if (!doodles) {
-      return res.status(404).json({ error: 'Data not Found' });
-    } else {
+      return res.status(404).json({ error: 'Doodles not Found' });
+    }
+
+    if (doodles) {
       const doodleIds = [];
 
       for (let i = 0; i < doodles.length; i++) {
@@ -27,7 +30,7 @@ export const getAllDoodlesWithAllComments = async (
 
       const combinedData = [];
       for (let i = 0; i < doodleIds.length; i++) {
-        let comments = await Comments.find({ doodle: doodleIds[i] });
+        const comments = await Comments.find({ doodle: doodleIds[i] });
         combinedData.push({
           doodle: doodleIds[i],
           comments: comments,
@@ -50,15 +53,21 @@ export const getUserDoodleWithAllComments = async (
   try {
     const { userId } = req.query;
 
+    if (!userId) {
+      res.status(404).json({ error: 'Error While Fetching all User Doodles' });
+    }
+
     if (userId) {
       const doodles = await Doodles.find({ user: userId });
       if (!doodles) {
         return res.status(404).json({ error: 'Data not Found' });
-      } else {
-        let combinedData = [];
+      }
+
+      if (doodles) {
+        const combinedData = [];
 
         for (let i = 0; i < doodles.length; i++) {
-          let comments = await Comments.find({ doodle: doodles[i]._id });
+          const comments = await Comments.find({ doodle: doodles[i]._id });
 
           combinedData.push({
             doodle: doodles[i],
@@ -83,32 +92,41 @@ export const getDoodleWithAllComments = async (
   try {
     const { doodleId }: any = req.query;
 
+    if (!doodleId) {
+      res.status(404).json({ error: 'Error While Fetching Doodle' });
+    }
+
     if (doodleId) {
       const doodle = await Doodles.findById(doodleId);
       if (!doodle) {
         return res.status(404).json({ error: 'Doodle not found' });
-      } else if (doodle) {
+      }
+
+      if (doodle) {
         const comments = await Comments.find({ doodle: doodle._id });
+
         if (!comments) {
           return res.status(404).json({ error: 'Comments not found' });
         }
 
-        const usersAndComments: UserAndComment[] = [];
+        if (comments) {
+          const usersAndComments: UserAndComment[] = [];
 
-        const combinedData = {
-          doodle,
-          usersAndComments,
-        };
+          const combinedData = {
+            doodle,
+            usersAndComments,
+          };
 
-        for (let i = 0; i < comments.length; i++) {
-          let users = await Users.findById(comments[i].user);
-          usersAndComments.push({
-            user: users,
-            comments: comments[i],
-          });
+          for (let i = 0; i < comments.length; i++) {
+            const users = await Users.findById(comments[i].user);
+            usersAndComments.push({
+              user: users,
+              comments: comments[i],
+            });
+          }
+
+          res.status(200).json(combinedData);
         }
-
-        res.status(200).json(combinedData);
       }
     }
   } catch (error) {
@@ -125,15 +143,22 @@ export const getUserDoodleWithAllCommentsAndLikesNum = async (
   try {
     const { userId } = req.query;
 
+    if (!userId) {
+      res.status(404).json({ error: 'Error While Fetching User Doodles' });
+    }
+
     if (userId) {
       const doodles = await Doodles.find({ user: userId });
       if (!doodles) {
         return res.status(404).json({ error: 'Data not Found' });
-      } else {
-        let combinedData = [];
+      }
+
+      if (doodles) {
+        const combinedData = [];
+
         for (let i = 0; i < doodles.length; i++) {
-          let comments = await Comments.find({ doodle: doodles[i]._id });
-          let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+          const comments = await Comments.find({ doodle: doodles[i]._id });
+          const likesNum = await LikesNum.find({ doodle: doodles[i]._id });
 
           combinedData.push({
             doodle: doodles[i],
@@ -158,12 +183,13 @@ export const getDoodleWithAllCommentsAndLikesNum = async (
 ) => {
   try {
     const { doodleId } = req.query;
-
     const doodles = await Doodles.findById(doodleId);
 
     if (!doodles) {
-      return res.status(404).json({ error: 'Doodles not Found' });
-    } else {
+      return res.status(404).json({ error: 'Doodle not Found' });
+    }
+
+    if (doodles) {
       const combinedData = [];
 
       const comments = await Comments.find({ doodle: doodles._id });
@@ -192,14 +218,17 @@ export const getAllDoodleWithAllCommentsAndLikesNum = async (
 ) => {
   try {
     const doodles = await Doodles.find();
+
     if (!doodles) {
       return res.status(404).json({ error: 'Doodles not Found' });
-    } else {
-      let combinedData = [];
+    }
+
+    if (doodles) {
+      const combinedData = [];
       for (let i = 0; i < doodles.length; i++) {
-        let comments = await Comments.find({ doodle: doodles[i]._id });
-        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
-        let user = await Users.findById(doodles[i].user);
+        const comments = await Comments.find({ doodle: doodles[i]._id });
+        const likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+        const user = await Users.findById(doodles[i].user);
 
         combinedData.push({
           doodle: doodles[i],
@@ -237,12 +266,14 @@ export const getInfiniteQuriesAllDoodles = async (
 
     if (!doodles) {
       return res.status(404).json({ error: 'Doodles not Found' });
-    } else {
-      let combinedData = [];
+    }
+
+    if (doodles) {
+      const combinedData = [];
       for (let i = 0; i < doodles.length; i++) {
-        let comments = await Comments.find({ doodle: doodles[i]._id });
-        let likesNum = await LikesNum.find({ doodle: doodles[i]._id });
-        let user = await Users.findById(doodles[i].user);
+        const comments = await Comments.find({ doodle: doodles[i]._id });
+        const likesNum = await LikesNum.find({ doodle: doodles[i]._id });
+        const user = await Users.findById(doodles[i].user);
 
         combinedData.push({
           doodle: doodles[i],

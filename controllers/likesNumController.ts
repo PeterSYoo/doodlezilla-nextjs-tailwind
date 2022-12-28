@@ -10,6 +10,12 @@ export const getAllLikesNum = async (
   try {
     const { doodleId } = req.query;
 
+    if (!doodleId) {
+      res
+        .status(404)
+        .json({ error: 'Error While Fetching all LikesNum Documents' });
+    }
+
     if (doodleId) {
       const likes = await LikesNum.find({
         doodle: doodleId,
@@ -17,7 +23,9 @@ export const getAllLikesNum = async (
 
       if (!likes) {
         return res.status(404).json({ error: 'LikesNum Document not Found' });
-      } else {
+      }
+
+      if (likes) {
         res.status(200).json(likes);
       }
     }
@@ -35,6 +43,10 @@ export const postLikesNum = async (
   try {
     const { doodleId, userId } = req.query;
 
+    if (!doodleId || !userId) {
+      res.status(404).json({ error: 'Error While Creating new LikesNum' });
+    }
+
     if (doodleId && userId) {
       const likes = await Likes.findOneAndUpdate(
         { user: userId, doodle: doodleId },
@@ -42,9 +54,12 @@ export const postLikesNum = async (
           $set: { likes: true },
         }
       );
+
       if (!likes) {
         res.status(404).json({ error: 'Likes document does not exist.' });
-      } else if (likes) {
+      }
+
+      if (likes) {
         const likesNum = await LikesNum.create({
           doodle: doodleId,
           user: userId,
@@ -52,7 +67,9 @@ export const postLikesNum = async (
 
         if (!likesNum) {
           return res.status(404).json({ error: 'Likes Document not Found' });
-        } else {
+        }
+
+        if (likesNum) {
           res.status(200).json(likesNum);
         }
       }
@@ -71,6 +88,10 @@ export const deleteLikesNum = async (
   try {
     const { doodleId, userId } = req.query;
 
+    if (!doodleId || !userId) {
+      res.status(404).json({ error: 'Error While Deleting LikesNum Document' });
+    }
+
     if (doodleId && userId) {
       const likes = await Likes.findOneAndUpdate(
         { user: userId, doodle: doodleId },
@@ -78,9 +99,12 @@ export const deleteLikesNum = async (
           $set: { likes: false },
         }
       );
+
       if (!likes) {
         res.status(404).json({ error: 'Likes document does not exist.' });
-      } else if (likes) {
+      }
+
+      if (likes) {
         await LikesNum.findOneAndDelete({ doodle: doodleId, user: userId });
         res.status(200).json('Deleted LikesNum');
       }

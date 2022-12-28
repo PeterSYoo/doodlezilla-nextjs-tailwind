@@ -11,7 +11,9 @@ export const getAllUsers = async (
 
     if (!users) {
       return res.status(404).json({ error: 'Data not Found' });
-    } else {
+    }
+
+    if (users) {
       res.status(200).json(users);
     }
   } catch (error) {
@@ -23,6 +25,10 @@ export const getAllUsers = async (
 export const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { userId } = req.query;
+
+    if (!userId) {
+      res.status(404).json({ error: 'Error While Fetching Single User' });
+    }
 
     if (userId) {
       const user = await Users.findById(userId);
@@ -44,6 +50,10 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
     - Check if formData.name already exists in Users.findOne({ name: formData.name });, if it exists then return an error.
     */
 
+    if (!userId || !formData) {
+      res.status(404).json({ error: 'Error While Updating User' });
+    }
+
     if (userId && formData) {
       const userToUpdate = await Users.findById(userId);
       const nameExists = await Users.findOne({ name: formData.name });
@@ -51,12 +61,16 @@ export const putUser = async (req: NextApiRequest, res: NextApiResponse) => {
       if (formData.name === userToUpdate.name) {
         const user = await Users.findByIdAndUpdate(userId, formData);
         res.status(200).json(user);
-      } else if (nameExists) {
-        res.status(400).json({ error: 'Name already exists' });
-        return;
-      } else {
+      }
+
+      if (!nameExists) {
         const user = await Users.findByIdAndUpdate(userId, formData);
         res.status(200).json(user);
+      }
+
+      if (nameExists) {
+        res.status(400).json({ error: 'Name already exists' });
+        return;
       }
     }
   } catch (error) {
@@ -71,7 +85,9 @@ export const postUsers = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!formData) {
       return res.status(404).json({ error: 'Form data not provided!' });
-    } else {
+    }
+
+    if (formData) {
       Users.create(formData, (err: Error, data: any) => {
         return res.status(200).json(data);
       });
@@ -88,12 +104,13 @@ export const getUserByUsername = async (
 ) => {
   try {
     const { username } = req.query;
-
     const user = await Users.findOne({ name: username });
 
     if (!user) {
       throw new Error('No user found with that Username!');
-    } else {
+    }
+
+    if (user) {
       res.status(200).json(user);
     }
   } catch (error) {
