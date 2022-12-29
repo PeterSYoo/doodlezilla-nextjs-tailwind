@@ -273,8 +273,13 @@ export const ProfileDoodleCard = ({
             </div>
           ) : (
             <>
-              {doodleWithCommentsData.usersAndComments.map(
-                (data: CommentData) => (
+              {doodleWithCommentsData.usersAndComments
+                .sort(
+                  (a: CommentData, b: CommentData) =>
+                    new Date(b.comments.created_at).getTime() -
+                    new Date(a.comments.created_at).getTime()
+                )
+                .map((data: CommentData) => (
                   <Fragment key={data.comments._id}>
                     <div
                       key={data.comments._id}
@@ -329,8 +334,7 @@ export const ProfileDoodleCard = ({
                       </p>
                     </div>
                   </Fragment>
-                )
-              )}
+                ))}
             </>
           )}
 
