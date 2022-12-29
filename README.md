@@ -1,4 +1,4 @@
-# Doodlezilla
+# Nudoodle
 
 ## Getting Started
 
