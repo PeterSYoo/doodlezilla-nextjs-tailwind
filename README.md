@@ -6,7 +6,7 @@ App Link - [http://nudoodle.vercel.app/](http://nudoodle.vercel.app/)
 
 If you don't wish to sign up, you can use these credentials to login.
 
-```js
+```
 Username: apple
 Password: Abcd1234!
 ```
