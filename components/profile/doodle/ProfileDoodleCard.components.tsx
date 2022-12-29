@@ -107,7 +107,6 @@ export const ProfileDoodleCard = ({
   refetchEditorsPick3,
 }: ProfileDoodleCardProps) => {
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
-  const [isPostSuccessModal, setIsPostSuccessModal] = useState<boolean>(false);
   const [isImageModal, setIsImageModal] = useState<boolean>(false);
   const [commentHeight, setCommentHeight] = useState<string>(
     'w-11/12 flex justify-center mx-auto items-center px-4 mt-3 gap-5 border border-transparent h-8 w-full'
@@ -152,7 +151,7 @@ export const ProfileDoodleCard = ({
   } = useForm<Inputs>({ resolver: yupResolver(CommentSchema) });
 
   const { mutateCreateNewComment, isLoadingCreateNewComment } =
-    useCreateNewComment(setIsPostSuccessModal);
+    useCreateNewComment();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     reset({ comment: '' });
@@ -218,11 +217,6 @@ export const ProfileDoodleCard = ({
           doodleWithCommentsData={doodleWithCommentsData}
         />
       ) : null}
-      {isPostSuccessModal ? (
-        <ProfileDoodlePostSuccessModal
-          setIsPostSuccessModal={setIsPostSuccessModal}
-        />
-      ) : null}
       <div className="bg-white dark:bg-midnight border border-grayBorder dark:border-shadeDark w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
         {/* Doodle Header */}
         <div className="flex justify-between items-center w-10/12 pb-3">
@@ -269,7 +263,7 @@ export const ProfileDoodleCard = ({
           width={533}
           height={900}
           alt="tree"
-          className="object-contain shrink rounded-3xl w-3/4 my-3 max-h-[375px] cursor-pointer"
+          className="object-contain shrink rounded-3xl w-3/4 my-3 max-h-[275px] cursor-pointer"
         />
         {/*  */}
         <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
