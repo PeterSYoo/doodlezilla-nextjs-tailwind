@@ -80,7 +80,7 @@ export const FeedCommentedUser = ({
             {userData.name}
           </Link>
         </span>
-        <span className="dark:text-shadeText text-placeholder">
+        <span className="dark:text-[#a9a9ab] text-[#575757]">
           {comment.comment}
         </span>
         <div>
