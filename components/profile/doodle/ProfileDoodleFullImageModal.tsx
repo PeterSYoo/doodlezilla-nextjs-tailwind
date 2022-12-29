@@ -13,17 +13,7 @@ export const ProfileDoodleFullImageModal = ({
   return (
     <>
       <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-black dark:bg-opacity-80 bg-opacity-50 flex flex-col justify-center items-center">
-        <div className="flex flex-col w-3/4 max-w-[1200px] justify-center gap-3">
-          {/* Close X Top Right Button */}
-          <div className="flex w-full justify-end">
-            <span
-              onClick={() => setIsImageModal(false)}
-              className="text-3xl text-egg dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
-            >
-              <RiCloseFill />
-            </span>
-          </div>
-          {/*  */}
+        <div className="flex flex-col justify-center items-center gap-3 w-full">
           <Image
             src={
               doodleImage
@@ -34,8 +24,18 @@ export const ProfileDoodleFullImageModal = ({
             height="0"
             sizes="100vw"
             alt="doodle full image"
-            className="w-full"
+            className="w-3/4 aspect-video object-contain"
           />
+          {/* Close X Top Right Button */}
+          <div>
+            <span
+              onClick={() => setIsImageModal(false)}
+              className="text-3xl text-egg dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
+            >
+              <RiCloseFill />
+            </span>
+          </div>
+          {/*  */}
         </div>
       </div>
     </>
