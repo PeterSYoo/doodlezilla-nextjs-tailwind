@@ -242,7 +242,7 @@ Place the button with the ref prop at the bottom of the page. Whenever inView bo
 
 ## Liking System Problem
 
-Currently, the way the liking system works is when a user clicks on a doodle to open up the modal for the 1st time, it will create a unique Likes document with a boolean prop. Then when the user clicks on the heart, if the heart is not filled in the onClick event will update the Likes document boolean value to true then it will create a LikesNum document. It would do the reverse when the user unclicks a filled in heart, deleting a LikesNum document. The likes are counted by how many LikesNum documents there are that's referencing the Doodle document.
+Currently, the way the liking system works is when a user clicks on a doodle to open up the modal for the 1st time, it will create a unique Likes document with a boolean prop. Then when the user clicks on the heart, if the heart is not filled in the onClick event will update the Likes document boolean value to true then it will create a LikesNum document. It would do the reverse when the user clicks a filled in heart to unfill it, setting the boolean prop to false and deleting a LikesNum document. The likes are counted by how many LikesNum documents there are that's referencing the Doodle document.
 
 The alternative is, instead of creating a LikesNum document, we increment a numerical value that's living as a prop on the Doodle document itself. I already tried implementing this method, but the response time was slower than the 1st method. It might be an issue with the free hosting, or some poor optimization on either the client side or API itself.
 
