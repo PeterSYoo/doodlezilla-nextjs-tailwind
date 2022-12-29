@@ -11,7 +11,6 @@ import useCreateNewLikesNum from '../../../hooks/useCreateNewLikesNum';
 import useDeleteLikesNum from '../../../hooks/useDeleteLikesNum';
 import { LoaderSpinner } from '../../LoaderSpinner.components';
 import { ProfileDoodleOptionsModal } from './ProfileDoodleOptionsModal.components';
-import { ProfileDoodlePostSuccessModal } from './ProfileDoodlePostSuccessModal.components';
 import * as Yup from 'yup';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
