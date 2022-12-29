@@ -7,20 +7,16 @@ const useFetchUserDoodlesWithAllCommentsAndLikesNum = (userId: string) => {
     isError: userDoodlesWithAllCommentsAndLikesNumIsError,
     refetch: userDoodlesWithAllCommentsAndLikesNumRefetch,
     isFetching: userDoodlesWithAllCommentsAndLikesNumIsFetching,
-  } = useQuery(
-    ['userDoodlesWithAllCommentsAndLikesNum', userId],
-    async () => {
-      try {
-        const response = await fetch(
-          `/api/user-doodles-with-all-comments-and-likes-num/${userId}`
-        );
-        return response.json();
-      } catch (error) {
-        throw error;
-      }
-    },
-    { refetchOnMount: 'always' }
-  );
+  } = useQuery(['userDoodlesWithAllCommentsAndLikesNum', userId], async () => {
+    try {
+      const response = await fetch(
+        `/api/user-doodles-with-all-comments-and-likes-num/${userId}`
+      );
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  });
 
   return {
     userDoodlesWithAllCommentsAndLikesNumData,

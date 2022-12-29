@@ -7,18 +7,14 @@ const useFetchUserDoodles = (userId: string) => {
     isError: userDoodlesIsError,
     refetch: userDoodlesRefetch,
     isSuccess: userDoodlesIsSuccess,
-  } = useQuery(
-    ['userDoodles', userId],
-    async () => {
-      try {
-        const response = await fetch(`/api/user-doodles/${userId}`);
-        return response.json();
-      } catch (error) {
-        throw error;
-      }
-    },
-    { refetchOnMount: 'always' }
-  );
+  } = useQuery(['userDoodles', userId], async () => {
+    try {
+      const response = await fetch(`/api/user-doodles/${userId}`);
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  });
 
   return {
     userDoodlesData,

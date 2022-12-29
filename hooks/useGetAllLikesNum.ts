@@ -6,18 +6,14 @@ const useGetAllLikesNum = (doodleId: string) => {
     isLoading: isLoadingGetAllLikesNum,
     isError: isErrorGetAllLikesNum,
     refetch: refetchGetAllLikesNum,
-  } = useQuery(
-    ['allDoodles'],
-    async () => {
-      try {
-        const response = await fetch(`/api/doodles/${doodleId}/likes-num`);
-        return response.json();
-      } catch (error) {
-        throw error;
-      }
-    },
-    { refetchOnMount: 'always' }
-  );
+  } = useQuery(['allDoodles'], async () => {
+    try {
+      const response = await fetch(`/api/doodles/${doodleId}/likes-num`);
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  });
 
   return {
     dataGetAllLikesNum,

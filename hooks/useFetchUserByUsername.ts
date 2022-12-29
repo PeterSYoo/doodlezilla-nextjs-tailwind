@@ -5,18 +5,14 @@ const useFetchUserByUsername = (username: string) => {
     data: userData,
     isLoading: userIsLoading,
     isError: userIsError,
-  } = useQuery(
-    ['userByUsername', username],
-    async () => {
-      try {
-        const response = await fetch(`/api/user-by-username/${username}`);
-        return response.json();
-      } catch (error) {
-        throw error;
-      }
-    },
-    { refetchOnMount: 'always' }
-  );
+  } = useQuery(['userByUsername', username], async () => {
+    try {
+      const response = await fetch(`/api/user-by-username/${username}`);
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  });
 
   return { userData, userIsLoading, userIsError };
 };

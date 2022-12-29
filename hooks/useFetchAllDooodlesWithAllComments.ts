@@ -6,18 +6,14 @@ const useFetchAllDoodlesWithAllComments = () => {
     isLoading: allDoodlesWithCommentsIsLoading,
     isError: allDoodlesWithCommentsIsError,
     refetch: allDoodlesWithCommentsRefetch,
-  } = useQuery(
-    ['allDoodlesWithComments'],
-    async () => {
-      try {
-        const response = await fetch(`/api/doodle-with-all-comments/`);
-        return response.json();
-      } catch (error) {
-        throw error;
-      }
-    },
-    { refetchOnMount: 'always' }
-  );
+  } = useQuery(['allDoodlesWithComments'], async () => {
+    try {
+      const response = await fetch(`/api/doodle-with-all-comments/`);
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  });
 
   return {
     allDoodlesWithCommentsData,
