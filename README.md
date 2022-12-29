@@ -6,7 +6,8 @@ App Link - [http://nudoodle.vercel.app/](http://nudoodle.vercel.app/)
 
 ## Wireframes & Database Models
 
-![figma](https://i.imgur.com/ABXewcr.jpg)
+![figma](https://i.imgur.com/w5hHJT7.jpg)
+![figma](https://i.imgur.com/rPwxGBT.png)
 [https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0](https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0)
 
 The finished app extended the designs from the the initial wireframe.
