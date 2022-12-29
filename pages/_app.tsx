@@ -21,6 +21,7 @@ import { CreateFooter } from '../components/create/CreateFooter.components';
 import { ProfileRightBar } from '../components/profile/ProfileRightBar.components';
 import { CanvasProvider } from '../contexts/CanvasContext';
 import { LeftNavBar } from '../components/LeftNavBar.components';
+import { LoaderSpinnerPage } from '../components/LoaderSpinnerPage.components';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -74,7 +75,7 @@ export default function App({ Component, pageProps }: AppProps) {
           {isLoginPage || isSignupPage ? (
             <LoaderSpinnerLogin />
           ) : (
-            <LoaderSpinner />
+            <LoaderSpinnerPage />
           )}
         </>
       ) : (
@@ -90,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
                           <Component {...pageProps} />
                         </div>
                       ) : (
-                        <div className="flex flex-col flex-grow">
+                        <div className="flex flex-col flex-grow dark:bg-shadeDark">
                           {isFeedPage || isProfilePage || isUsernamePage ? (
                             <HeaderCompressed />
                           ) : (
@@ -104,7 +105,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         </div>
                       )}
                       {isLoginPage || isSignupPage ? null : (
-                        <div className="flex md:hidden">
+                        <div className="flex md:hidden dark:bg-shadeDark">
                           <Footer />
                         </div>
                       )}
