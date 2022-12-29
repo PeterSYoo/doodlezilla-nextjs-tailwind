@@ -6,9 +6,7 @@ type Data = {
   user: string;
 };
 
-const useCreateNewComment = (
-  setIsPostSuccessModal: (arg0: boolean) => void
-) => {
+const useCreateNewComment = () => {
   const {
     mutateAsync: mutateCreateNewComment,
     isLoading: isLoadingCreateNewComment,
@@ -24,7 +22,6 @@ const useCreateNewComment = (
       const json = await response.json();
 
       if (json) {
-        setIsPostSuccessModal(true);
         return json;
       }
     } catch (error) {
