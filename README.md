@@ -17,7 +17,7 @@ Password: Abcd1234!
 ![figma](https://i.imgur.com/rPwxGBT.png)
 [https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0](https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0)
 
-The finished app extended the designs from the the initial wireframe.
+The finished app extends the designs from the the initial wireframe.
 
 ## Technologies Used
 
