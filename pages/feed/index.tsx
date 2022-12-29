@@ -118,11 +118,12 @@ const FeedPage = ({ session }: FeedPageProps) => {
   }, [inView]);
 
   if (
-    isLoadingAllDoodlesWithCommentsAndLikesNum ||
     isLoadingEditorsPick1 ||
     isLoadingEditorsPick2 ||
     isLoadingEditorsPick3 ||
-    userIsLoading
+    isLoadingAllDoodlesWithCommentsAndLikesNum ||
+    userIsLoading ||
+    isLoadingInfiniteQueriesAllDoodles
   )
     return <LoaderSpinner />;
   if (
@@ -130,7 +131,8 @@ const FeedPage = ({ session }: FeedPageProps) => {
     isErrorEditorsPick1 ||
     isErrorEditorsPick2 ||
     isErrorEditorsPick3 ||
-    userIsError
+    userIsError ||
+    isErrorInfiniteQueriesAllDoodles
   )
     return <>Error</>;
 

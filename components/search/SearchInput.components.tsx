@@ -29,7 +29,7 @@ export const SearchInput = () => {
     setFilteredUsers(filtered);
   }, [searchTerm]);
 
-  if (allUsersIsLoading) return <LoaderSpinner />;
+  if (false) return <LoaderSpinner />;
   if (allUsersIsError) return <>Error</>;
 
   return (

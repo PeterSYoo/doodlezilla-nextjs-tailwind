@@ -1,7 +1,7 @@
 export const LoaderSpinner = () => {
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-zinc-50 flex justify-center items-center dark:bg-midnight">
+      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-transparent flex justify-center items-center dark:bg-transparent">
         <svg
           className="h-8 w-8 animate-spinFast opacity-80"
           viewBox="3 3 18 18"
