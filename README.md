@@ -4,7 +4,7 @@
 
 App Link - [https://nudoodle.vercel.app/](https://nudoodle.vercel.app/)
 
-If you don't wish to sign up, you can use these credentials to login.
+If you don't want to sign up, you can use the following credentials to log in.
 
 ```
 Username: apple
@@ -17,7 +17,7 @@ Password: Abcd1234!
 ![figma](https://i.imgur.com/rPwxGBT.png)
 [https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0](https://www.figma.com/file/59myApT16LdQm9nxdVNFYY/Doodlezilla?node-id=0%3A1&t=cPQ4WkVXXtrXaaAo-0)
 
-The finished app extends the designs from the the initial wireframe.
+The finished app design is slightly different from the initial wireframe due to design changes made during development.
 
 ## Technologies Used
 
@@ -40,37 +40,37 @@ The finished app extends the designs from the the initial wireframe.
 - React Icons
 - React Intersection Observer
 
+## Using Postman to Test Routes
+
+![postman](https://i.imgur.com/ZtOxeeG.png)
+
 ## App Features
 
-### User can
+### Users can
 
-- Sign up with username and email.
-- Sign in with Google.
-- Edit their profile.
-- Change their avatar photo.
-- Create new doodles.
-- View doodles.
-- Delete their doodles.
-- View other user's doodles.
-- Like their own or other user's doodles.
-- Comment on their own or other user's doodles.
-- Search for users.
-- Toggle dark or light themes.
+- The User can sign up with a unique username and email address.
+- The User can sign in with Google.
+- The User can edit their profile and update their information.
+- The User can change their avatar photo.
+- The User can create new doodles.
+- The User can view their own and other user's doodles.
+- The User can delete their own doodles.
+- The User can like and comment on their own or other user's doodles.
+- The User can search for other users by username.
+- The User can toggle between a light and dark theme.
 
 ### General Features
 
-- All pages are built responsively for mobile and desktop.
-- All routes are protected on the server side, redirecting users if they are either logged in or not logged in.
-- Light/Dark theme.
-- Uses Cloudinary to host all doodles.
-- Pagination on feed with infinite scroll.
-- Sorts feed by most recent doodle.
-- Sorts comments in doodles by most recent comment.
-- Updates likes and comments in real time in feed and profiles by utilizing refetching after mutation events.
-- Adds validation errors to React Hook Forms using Yup.
-- Built Schemas for MongoDB using Mongoose.
-- Created REST API routes for CRUD methods.
-- Used React Query to help fetch the data from the API routes and then cache the data in the browsers memory.
+- Designed and implemented a responsive web application for both mobile and desktop devices.
+- Implemented secure server-side routing to protect user access and redirect as needed.
+  Offered a light/dark theme toggle for user customization.
+- Utilized Cloudinary to host and manage all images (doodles).
+- Incorporated pagination and infinite scroll on the feed to optimize performance and user experience.
+- Sorted the feed by the most recent doodles and the comments in each doodle by the most recent comment.
+- Enabled real-time updates for likes and comments in the feed and profiles through React Query refetching after mutation events.
+- Validated user input using React Hook Forms and Yup.
+- Created MongoDB schemas and REST API routes for CRUD operations using Mongoose.
+- Used React Query to fetch data from the API routes and cache it in the browser's memory.
 
 ## How I Built the Pagination
 
@@ -141,9 +141,7 @@ export const getInfiniteQuriesAllDoodles = async (
 /*  */
 ```
 
-When we make a GET request to the API route, it will invoke the controller function for the GET method which will loop through all the documents in the Doodles collection in MongoDB. Then it will find Comments, LikesNum, and User documents using the referenced respective object id's living in the Doodle document. Then combine all the returned values into a new object. We added page as a query string which holds a default value of 1 unless stated otherwise. We also have a perPage value of 3, which will show 3 results per page. The skip variable represents the number of items to skip when on a page that's not the default 1st page. Also previousPage and nextPage variables will be used as cursors for our react query hook.
-
-We call the API through a custom hook we created that's using the useInfiniteQuery hook from React Query.
+The API route handles GET requests by invoking the controller function for the GET method. The controller function retrieves all documents in the Doodles collection in MongoDB, as well as Comments, LikesNum, and User documents referenced by the object id's in the Doodle documents. It combines the returned values into a new object and adds pagination using the `page` query string (default value: 1) and a `perPage` value of 3 (3 results per page). The `skip` variable represents the number of items to skip on pages other than the default first page. The `previousPage` and `nextPage` variables serve as cursors for the `useInfiniteQuery` hook from React Query, which is used in a custom hook to call the API.
 
 ```js
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -192,7 +190,7 @@ const useInfiniteQueriesAllDoodles = () => {
 export default useInfiniteQueriesAllDoodles;
 ```
 
-The getNextPageParam function retrieves the next page of results using the `nextPage` prop on `lastPage` which is the last page of results that was retrieved.
+The `getNextPageParam` function retrieves the next page of results by using the `nextPage` prop on the `lastPage` object, which represents the last page of results that was retrieved.
 
 ```js
 import { useInView } from 'react-intersection-observer';
@@ -202,7 +200,7 @@ import { useInView } from 'react-intersection-observer';
 const { ref, inView } = useInView();
 ```
 
-The useInView hook is used to track whether the element with the ref prop is in view. The inView variable is a boolean value that is true when the element is in view and false when it is not.
+The `useInView` hook tracks whether the element with the `ref` prop is in view. The `inView` variable is a boolean value that is `true` when the element is in view and `false` when it is not.
 
 ```js
 useEffect(() => {
@@ -238,25 +236,21 @@ useEffect(() => {
 </div>
 ```
 
-Place the button with the ref prop at the bottom of the page. Whenever inView boolean changes, fetch the next page of results.
+To implement pagination, place the button with the `ref` prop at the bottom of the page. Whenever the `inView` boolean value changes, fetch the next page of results.
 
 ## Liking System Problem
 
-The response time for liking and unliking a doodle is slow on the vercel app.
+The response time for liking and unliking a doodle is slow on the Vercel app.
 
-Currently, the way the liking system works is when a user clicks on a doodle to open up the modal for the 1st time, it will create a unique Likes document with a boolean prop. Then when the user clicks on the heart, if the heart is not filled in the onClick event will update the Likes document boolean value to true then it will create a LikesNum document. It would do the reverse when the user clicks a filled in heart to unfill it, setting the boolean prop to false and deleting a LikesNum document. The likes are counted by how many LikesNum documents there are that's referencing the Doodle document.
+Currently, the liking system works as follows: when a user clicks on a doodle to open the modal for the first time, a unique Likes document with a boolean prop is created. When the user clicks on the heart, the onClick event updates the Likes document's boolean value to true and creates a LikesNum document if the heart is not filled in. If the heart is already filled, the event sets the boolean prop to false and deletes the LikesNum document. The number of likes for a doodle is counted by the number of LikesNum documents referencing the Doodle document.
 
-The alternative is, instead of creating a LikesNum document, we increment a numerical value that's living as a prop on the Doodle document itself. I already tried implementing this method, but the response time was slower than the 1st method.
-
-## Using Postman to Test Routes
-
-![postman](https://i.imgur.com/ZtOxeeG.png)
+An alternative approach is to increment a numerical value as a prop on the Doodle document itself instead of creating a LikesNum document. However, this method resulted in slower response times compared to the current approach.
 
 ## Future Updates
 
-- Following system
-- Build out more Canvas API tools such as,
+- Implement a "following" system.
+- Enhance the Canvas API tools, including:
   - Erasing
-  - Recording strokes, apply a background color, then apply the recorded strokes.
+  - Recording strokes and applying a background color, then applying the recorded strokes.
   - Layers
-  - Optomize the touch events, make it usable for pen tablets.
+  - Optimizing touch events for use with pen tablets.
