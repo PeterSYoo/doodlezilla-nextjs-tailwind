@@ -91,7 +91,7 @@ switch (method) {
 }
 ```
 
-Controller function for GET method in API route -
+The controller function for the GET method in the API route handles GET requests. -
 
 ```js
 /* GET Infinite Scroll Pagination all Doodles */
