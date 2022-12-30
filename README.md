@@ -248,6 +248,10 @@ Currently, the way the liking system works is when a user clicks on a doodle to 
 
 The alternative is, instead of creating a LikesNum document, we increment a numerical value that's living as a prop on the Doodle document itself. I already tried implementing this method, but the response time was slower than the 1st method.
 
+## Using Postman to Test Routes
+
+![postman](https://i.imgur.com/ZtOxeeG.png)
+
 ## Future Updates
 
 - Following system
