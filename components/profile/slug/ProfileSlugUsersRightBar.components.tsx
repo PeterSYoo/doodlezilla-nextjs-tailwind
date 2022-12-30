@@ -29,10 +29,10 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
   return (
     <>
       {userData._id ? (
-        <div className="z-40 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-transparent md:flex-col px-1">
-          <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
-            <div className="flex justify-between items-center mt-[18px]">
-              <h1 className="font-semibold ml-2 lg:ml-0 dark:text-egg">
+        <div className="fixed right-0 z-40 hidden h-full border-l border-grayBorder bg-white px-1 dark:border-transparent dark:bg-midnight md:flex md:w-[159px] md:flex-col lg:w-[258px]">
+          <div className="md:mx-auto md:flex md:flex-col md:gap-6 lg:w-[187px]">
+            <div className="mt-[18px] flex items-center justify-between">
+              <h1 className="ml-2 font-semibold dark:text-egg lg:ml-0">
                 Profile
               </h1>
             </div>
@@ -47,7 +47,7 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
                 width={140}
                 height={140}
                 alt="profile avatar"
-                className="lg:hidden rounded-full"
+                className="rounded-full lg:hidden"
               />
               <Image
                 src={
@@ -58,19 +58,19 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
                 width={200}
                 height={200}
                 alt="profile avatar"
-                className="md:hidden lg:block rounded-full"
+                className="rounded-full md:hidden lg:block"
               />
             </div>
             {/*  */}
-            <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-start lg:items-start">
+            <div className="flex flex-col gap-1 md:items-start md:px-2 lg:items-start lg:px-0">
               {/* Username */}
-              <h1 className="font-bold w-full break-all text-lg dark:text-egg">
+              <h1 className="w-full break-all text-lg font-bold dark:text-egg">
                 {userData.name.toUpperCase()}
               </h1>
               {/*  */}
-              <div className="flex flex-col justify-between lg:items-start gap-6">
+              <div className="flex flex-col justify-between gap-6 lg:items-start">
                 {/* Doodles Count */}
-                <p className="font-semibold text-xs dark:text-egg">
+                <p className="text-xs font-semibold dark:text-egg">
                   {userDoodlesData.length}&nbsp;
                   <span className="text-placeholder dark:text-shadeText">
                     Doodles
@@ -87,8 +87,8 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
                 </p>
                 {/*  */}
                 {/* Location */}
-                <div className="flex flex-col lg:px-0 gap-1 lg:items-start">
-                  <p className="font-semibold text-xs dark:text-egg">
+                <div className="flex flex-col gap-1 lg:items-start lg:px-0">
+                  <p className="text-xs font-semibold dark:text-egg">
                     Location
                   </p>
                   <p className="text-xs text-placeholder dark:text-shadeText">
@@ -106,9 +106,9 @@ export const ProfileSlugUsersRightBar = ({ session, username }: Username) => {
         </div>
       ) : (
         <>
-          <div className="z-40 fixed bg-white right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder md:flex-col px-1">
-            <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6 h-full">
-              <div className="flex justify-center items-center h-full">
+          <div className="fixed right-0 z-40 hidden h-full border-l border-grayBorder bg-white px-1 md:flex md:w-[159px] md:flex-col lg:w-[258px]">
+            <div className="h-full md:mx-auto md:flex md:flex-col md:gap-6 lg:w-[187px]">
+              <div className="flex h-full items-center justify-center">
                 <h1 className="font-semibold">No User Found</h1>
               </div>
             </div>

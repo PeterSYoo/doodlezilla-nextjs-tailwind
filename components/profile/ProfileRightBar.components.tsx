@@ -23,15 +23,15 @@ export const ProfileRightBar = () => {
   return (
     <>
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
-      <div className="z-30 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-transparent md:flex-col px-1">
-        <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
-          <div className="flex justify-between items-center mt-[18px]">
-            <h1 className="font-semibold ml-2 lg:ml-0 dark:text-egg">
+      <div className="fixed right-0 z-30 hidden h-full border-l border-grayBorder bg-white px-1 dark:border-transparent dark:bg-midnight md:flex md:w-[159px] md:flex-col lg:w-[258px]">
+        <div className="md:mx-auto md:flex md:flex-col md:gap-6 lg:w-[187px]">
+          <div className="mt-[18px] flex items-center justify-between">
+            <h1 className="ml-2 font-semibold dark:text-egg lg:ml-0">
               Profile
             </h1>
             <button
               onClick={() => setIsModal(true)}
-              className="border py-1 px-5 text-xs rounded-lg border-placeholder dark:border-shadeDark transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white font-semibold mr-2 dark:text-egg dark:hover:border-transparent"
+              className="mr-2 rounded-lg border border-placeholder bg-gradient-to-tr py-1 px-5 text-xs font-semibold transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeDark dark:text-egg dark:hover:border-transparent"
             >
               Edit
             </button>
@@ -47,7 +47,7 @@ export const ProfileRightBar = () => {
               width={140}
               height={140}
               alt="profile avatar"
-              className="lg:hidden rounded-full aspect-square"
+              className="aspect-square rounded-full lg:hidden"
             />
             <Image
               src={
@@ -58,19 +58,19 @@ export const ProfileRightBar = () => {
               width={200}
               height={200}
               alt="profile avatar"
-              className="md:hidden lg:block rounded-full aspect-square"
+              className="aspect-square rounded-full md:hidden lg:block"
             />
           </div>
           {/*  */}
-          <div className="flex flex-col md:px-2 lg:px-0 gap-1 md:items-start lg:items-start">
+          <div className="flex flex-col gap-1 md:items-start md:px-2 lg:items-start lg:px-0">
             {/* Username */}
-            <h1 className="font-bold break-all text-lg lg:items-start w-3/4 lg:w-full dark:text-egg">
+            <h1 className="w-3/4 break-all text-lg font-bold dark:text-egg lg:w-full lg:items-start">
               {userData.name.toUpperCase()}
             </h1>
             {/*  */}
-            <div className="flex flex-col justify-between lg:items-start gap-6 w-3/4 lg:w-full">
+            <div className="flex w-3/4 flex-col justify-between gap-6 lg:w-full lg:items-start">
               {/* Doodles Count */}
-              <p className="font-semibold text-xs dark:text-egg">
+              <p className="text-xs font-semibold dark:text-egg">
                 {userDoodlesData.length}&nbsp;
                 <span className="text-placeholder dark:text-shadeText">
                   Doodles
@@ -87,8 +87,8 @@ export const ProfileRightBar = () => {
               </p>
               {/*  */}
               {/* Location */}
-              <div className="flex flex-col lg:px-0 gap-1 lg:items-start">
-                <p className="font-semibold text-xs dark:text-egg">Location</p>
+              <div className="flex flex-col gap-1 lg:items-start lg:px-0">
+                <p className="text-xs font-semibold dark:text-egg">Location</p>
                 <p className="text-xs text-placeholder dark:text-shadeText">
                   {userData.location ? (
                     userData.location

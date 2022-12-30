@@ -13,7 +13,7 @@ const CreatePage = () => {
 
   return (
     <>
-      <div className="md:ml-[94px] lg:ml-[213px] flex justify-center overflow-hidden bg-gray-300">
+      <div className="flex justify-center overflow-hidden bg-gray-300 md:ml-[94px] lg:ml-[213px]">
         <canvas
           id="drawing-canvas"
           onMouseDown={(event) => startDrawing(event)}

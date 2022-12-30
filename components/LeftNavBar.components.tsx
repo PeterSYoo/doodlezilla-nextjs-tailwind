@@ -32,10 +32,10 @@ export const LeftNavBar = () => {
 
   return (
     <>
-      <div className="z-40 fixed bg-white dark:bg-midnight h-full hidden md:flex md:w-[94px] lg:w-[213px] md:mr-[159px] lg:mr-[258px] border-r border-grayBorder dark:border-midnight md:flex-col">
-        <div className="w-full h-[425px] border-b border-grayBorder dark:border-shadeDark flex flex-col justify-between">
+      <div className="fixed z-40 hidden h-full border-r border-grayBorder bg-white dark:border-midnight dark:bg-midnight md:mr-[159px] md:flex md:w-[94px] md:flex-col lg:mr-[258px] lg:w-[213px]">
+        <div className="flex h-[425px] w-full flex-col justify-between border-b border-grayBorder dark:border-shadeDark">
           {/* Logo for Mobile and Desktop */}
-          <div className="w-full h-[41px] flex flex-col items-center justify-center mt-[19px]">
+          <div className="mt-[19px] flex h-[41px] w-full flex-col items-center justify-center">
             <Link href="/feed">
               <Image
                 src="https://res.cloudinary.com/dryh1nvhk/image/upload/v1670911646/nudoodle/assets/logo-sm_enm9mh.png"
@@ -58,15 +58,15 @@ export const LeftNavBar = () => {
             </Link>
           </div>
           {/*  */}
-          <div className="flex flex-col justify-between items-center w-full">
+          <div className="flex w-full flex-col items-center justify-between">
             {/* Profile Avatar */}
             {isProfilePage ? (
-              <div className="flex justify-start w-full pr-1 items-center">
-                <div className="w-[4px] h-[60px] lg:h-[72px] bg-sunset rounded-r-2xl"></div>
+              <div className="flex w-full items-center justify-start pr-1">
+                <div className="h-[60px] w-[4px] rounded-r-2xl bg-sunset lg:h-[72px]"></div>
                 <div className="flex w-full justify-center">
                   <Link href="/profile">
-                    <div className="animate-border rounded-full from-[#D055D3] via-sunset to-[#F97E1C] bg-[length:200%_200%] p-0.5 bg-black bg-gradient-to-tr duration-500">
-                      <div className="bg-white dark:bg-shadeDark rounded-full p-0.5 flex justify-center items-center h-[60px] w-[60px] lg:h-[72px] lg:w-[72px]">
+                    <div className="animate-border rounded-full bg-black bg-gradient-to-tr from-[#D055D3] via-sunset to-[#F97E1C] bg-[length:200%_200%] p-0.5 duration-500">
+                      <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-white p-0.5 dark:bg-shadeDark lg:h-[72px] lg:w-[72px]">
                         <Image
                           src={
                             userData.image
@@ -76,7 +76,7 @@ export const LeftNavBar = () => {
                           alt="avatar"
                           width={72}
                           height={72}
-                          className="rounded-full aspect-square"
+                          className="aspect-square rounded-full"
                         />
                       </div>
                     </div>
@@ -84,12 +84,12 @@ export const LeftNavBar = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex justify-start w-full pr-1 items-center">
-                <div className="w-[4px] h-[35px] bg-sunset rounded-r-2xl invisible"></div>
+              <div className="flex w-full items-center justify-start pr-1">
+                <div className="invisible h-[35px] w-[4px] rounded-r-2xl bg-sunset"></div>
                 <div className="flex w-full justify-center">
                   <Link href="/profile">
-                    <div className="hover:animate-border rounded-full hover:from-[#D055D3] hover:via-sunset hover:to-[#F97E1C] bg-[length:200%_200%] p-0.5 bg-white dark:bg-shadeDark bg-gradient-to-tr duration-500">
-                      <div className="bg-white dark:bg-shadeDark rounded-full p-0.5 flex justify-center items-center h-[60px] w-[60px] lg:h-[72px] lg:w-[72px]">
+                    <div className="rounded-full bg-white bg-gradient-to-tr bg-[length:200%_200%] p-0.5 duration-500 hover:animate-border hover:from-[#D055D3] hover:via-sunset hover:to-[#F97E1C] dark:bg-shadeDark">
+                      <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-white p-0.5 dark:bg-shadeDark lg:h-[72px] lg:w-[72px]">
                         <Image
                           src={
                             userData.image
@@ -99,7 +99,7 @@ export const LeftNavBar = () => {
                           alt="avatar"
                           width={72}
                           height={72}
-                          className="rounded-full aspect-square"
+                          className="aspect-square rounded-full"
                         />
                       </div>
                     </div>
@@ -109,7 +109,7 @@ export const LeftNavBar = () => {
             )}
             {/*  */}
             {/* Username */}
-            <p className="font-semibold mt-6 w-full break-words px-2 text-center dark:text-egg">
+            <p className="mt-6 w-full break-words px-2 text-center font-semibold dark:text-egg">
               {userData.name}
             </p>
             {/*  */}
@@ -119,7 +119,7 @@ export const LeftNavBar = () => {
             </p>
             {/*  */}
             {/* Number of Doodles */}
-            <div className="flex flex-col items-center my-9">
+            <div className="my-9 flex flex-col items-center">
               <p className="text-xs font-semibold dark:text-egg">
                 {userDoodlesData.length}
               </p>
@@ -131,19 +131,19 @@ export const LeftNavBar = () => {
           </div>
         </div>
         {/* Navigation */}
-        <div className="w-full border-b border-grayBorder dark:border-shadeDark flex flex-col items-center gap-11 text-grayText dark:text-egg pt-11 pb-11">
+        <div className="flex w-full flex-col items-center gap-11 border-b border-grayBorder pt-11 pb-11 text-grayText dark:border-shadeDark dark:text-egg">
           {/* If Feed Page */}
           {isFeedPage ? (
-            <div className="flex justify-start w-full pr-1 items-center">
-              <div className="w-[4px] h-[35px] bg-sunset rounded-r-2xl"></div>
+            <div className="flex w-full items-center justify-start pr-1">
+              <div className="h-[35px] w-[4px] rounded-r-2xl bg-sunset"></div>
               <Link
                 href="/feed"
-                className="flex justify-start mx-auto lg:ml-[45px]"
+                className="mx-auto flex justify-start lg:ml-[45px]"
               >
-                <div className="flex justify-center items-center">
-                  <button className="flex justify-center items-center text-xl text-sunset mx-auto lg:gap-5">
+                <div className="flex items-center justify-center">
+                  <button className="mx-auto flex items-center justify-center text-xl text-sunset lg:gap-5">
                     <AiFillHome />
-                    <span className="text-[15px] font-bold hidden text-sunset lg:block">
+                    <span className="hidden text-[15px] font-bold text-sunset lg:block">
                       Feed
                     </span>
                   </button>
@@ -151,16 +151,16 @@ export const LeftNavBar = () => {
               </Link>
             </div>
           ) : (
-            <div className="flex justify-start w-full pr-1 items-center">
-              <div className="w-[4px] h-[35px] bg-sunset rounded-r-2xl invisible"></div>
+            <div className="flex w-full items-center justify-start pr-1">
+              <div className="invisible h-[35px] w-[4px] rounded-r-2xl bg-sunset"></div>
               <Link
                 href="/feed"
-                className="flex justify-start mx-auto lg:ml-[45px] group"
+                className="group mx-auto flex justify-start lg:ml-[45px]"
               >
-                <div className="flex justify-center items-center">
-                  <button className="flex justify-center items-center text-xl text-grayText dark:text-egg group-hover:text-sunset mx-auto lg:gap-5">
+                <div className="flex items-center justify-center">
+                  <button className="mx-auto flex items-center justify-center text-xl text-grayText group-hover:text-sunset dark:text-egg lg:gap-5">
                     <AiFillHome />
-                    <span className="text-[15px] font-bold hidden text-grayText dark:text-shadeText group-hover:text-sunset lg:block">
+                    <span className="hidden text-[15px] font-bold text-grayText group-hover:text-sunset dark:text-shadeText lg:block">
                       Feed
                     </span>
                   </button>
@@ -171,34 +171,34 @@ export const LeftNavBar = () => {
           {/*  */}
           {/* If Create Page */}
           {isCreatePage ? (
-            <div className="flex justify-start w-full pr-1 items-center">
-              <div className="w-[4px] h-[35px] bg-sunset rounded-r-2xl"></div>
-              <div className="lg:flex lg:items-center mx-auto lg:gap-5 lg:pr-6 text-sunset">
+            <div className="flex w-full items-center justify-start pr-1">
+              <div className="h-[35px] w-[4px] rounded-r-2xl bg-sunset"></div>
+              <div className="mx-auto text-sunset lg:flex lg:items-center lg:gap-5 lg:pr-6">
                 <Link
                   href="/create"
-                  className="flex justify-start items-center mx-auto group lg:gap-5"
+                  className="group mx-auto flex items-center justify-start lg:gap-5"
                 >
-                  <button className="border-[2px] aspect-square h-5 w-5 flex justify-center items-center text-lg border-sunset rounded-md pl-[1px] lg:pl-0 lg:pr-[1px] pb-[2px] mx-auto">
+                  <button className="mx-auto flex aspect-square h-5 w-5 items-center justify-center rounded-md border-[2px] border-sunset pl-[1px] pb-[2px] text-lg lg:pl-0 lg:pr-[1px]">
                     +
                   </button>
-                  <span className="text-[15px] font-bold hidden lg:block">
+                  <span className="hidden text-[15px] font-bold lg:block">
                     Create
                   </span>
                 </Link>
               </div>
             </div>
           ) : (
-            <div className="flex justify-start w-full pr-1 items-center">
-              <div className="w-[4px] h-[35px] bg-sunset rounded-r-2xl invisible"></div>
-              <div className="lg:flex lg:items-center mx-auto lg:gap-5 lg:pr-6">
+            <div className="flex w-full items-center justify-start pr-1">
+              <div className="invisible h-[35px] w-[4px] rounded-r-2xl bg-sunset"></div>
+              <div className="mx-auto lg:flex lg:items-center lg:gap-5 lg:pr-6">
                 <Link
                   href="/create"
-                  className="flex justify-start items-center mx-auto group lg:gap-5"
+                  className="group mx-auto flex items-center justify-start lg:gap-5"
                 >
-                  <button className="border-[2px] aspect-square h-5 w-5 flex justify-center items-center text-lg border-grayText group-hover:border-sunset group-hover:text-sunset rounded-md pl-[1px] lg:pl-0 lg:pr-[1px] pb-[2px] mx-auto">
+                  <button className="mx-auto flex aspect-square h-5 w-5 items-center justify-center rounded-md border-[2px] border-grayText pl-[1px] pb-[2px] text-lg group-hover:border-sunset group-hover:text-sunset lg:pl-0 lg:pr-[1px]">
                     +
                   </button>
-                  <span className="text-[15px] font-bold hidden lg:block group-hover:text-sunset dark:text-shadeText">
+                  <span className="hidden text-[15px] font-bold group-hover:text-sunset dark:text-shadeText lg:block">
                     Create
                   </span>
                 </Link>
@@ -212,10 +212,10 @@ export const LeftNavBar = () => {
           {/* Logout */}
           <button
             onClick={() => signOut()}
-            className="text-[22px] flex items-center justify-center mt-11 ml-[37px] lg:ml-[48px] text-grayText hover:text-sunset lg:gap-5 group"
+            className="group mt-11 ml-[37px] flex items-center justify-center text-[22px] text-grayText hover:text-sunset lg:ml-[48px] lg:gap-5"
           >
-            <FiLogOut className="dark:text-egg group-hover:text-sunset" />
-            <span className="text-[15px] font-bold hidden lg:block dark:text-shadeText group-hover:text-sunset">
+            <FiLogOut className="group-hover:text-sunset dark:text-egg" />
+            <span className="hidden text-[15px] font-bold group-hover:text-sunset dark:text-shadeText lg:block">
               Logout
             </span>
           </button>

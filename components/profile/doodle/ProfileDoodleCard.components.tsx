@@ -216,12 +216,12 @@ export const ProfileDoodleCard = ({
           doodleWithCommentsData={doodleWithCommentsData}
         />
       ) : null}
-      <div className="bg-white dark:bg-midnight border border-grayBorder dark:border-shadeDark w-full h-3/4 md:h-5/6 max-h-[900px] max-w-[375px] flex flex-col items-center justify-center rounded-[50px] pt-5 pb-8 md:max-w-[575px]">
+      <div className="flex h-3/4 max-h-[900px] w-full max-w-[375px] flex-col items-center justify-center rounded-[50px] border border-grayBorder bg-white pt-5 pb-8 dark:border-shadeDark dark:bg-midnight md:h-5/6 md:max-w-[575px]">
         {/* Doodle Header */}
-        <div className="flex justify-between items-center w-10/12 pb-3">
+        <div className="flex w-10/12 items-center justify-between pb-3">
           <Link
             href={`/profile/${userData.name}`}
-            className="flex gap-3 items-center dark:text-egg dark:hover:text-sunset hover:text-sunset"
+            className="flex items-center gap-3 hover:text-sunset dark:text-egg dark:hover:text-sunset"
           >
             <Image
               src={
@@ -241,13 +241,13 @@ export const ProfileDoodleCard = ({
             {loggedInSession.user.name !== userData.name ? null : (
               <HiDotsHorizontal
                 onClick={() => setIsOptionsModal(true)}
-                className="text-2xl cursor-pointer hover:text-sunset dark:text-egg dark:hover:text-sunset"
+                className="cursor-pointer text-2xl hover:text-sunset dark:text-egg dark:hover:text-sunset"
               />
             )}
             {/* Close X Top Right Button */}
             <span
               onClick={() => setIsDoodleModal(false)}
-              className="text-3xl dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
+              className="cursor-pointer text-3xl hover:text-sunset dark:text-egg dark:hover:text-sunset"
             >
               <RiCloseFill />
             </span>
@@ -262,13 +262,13 @@ export const ProfileDoodleCard = ({
           width={533}
           height={900}
           alt="tree"
-          className="object-contain shrink rounded-3xl w-3/4 my-3 max-h-[275px] cursor-pointer"
+          className="my-3 max-h-[275px] w-3/4 shrink cursor-pointer rounded-3xl object-contain"
         />
         {/*  */}
-        <div className="h-[600px] w-full overflow-y-auto flex flex-col items-center pb-10">
+        <div className="flex h-[600px] w-full flex-col items-center overflow-y-auto pb-10">
           {/* Likes and Comments */}
           {doodleWithCommentsData.usersAndComments.length === 0 ? (
-            <div className="text-grayText dark:text-shadeText text-lg flex h-full justify-center items-center">
+            <div className="flex h-full items-center justify-center text-lg text-grayText dark:text-shadeText">
               No Comments
             </div>
           ) : (
@@ -283,10 +283,10 @@ export const ProfileDoodleCard = ({
                   <Fragment key={data.comments._id}>
                     <div
                       key={data.comments._id}
-                      className="flex flex-col w-10/12 gap-1 mt-4"
+                      className="mt-4 flex w-10/12 flex-col gap-1"
                     >
-                      <div className="flex flex-col w-full">
-                        <div className="text-sm flex flex-col gap-0.5">
+                      <div className="flex w-full flex-col">
+                        <div className="flex flex-col gap-0.5 text-sm">
                           <span>
                             <Link
                               href={`/profile/${data.user.name}`}
@@ -295,7 +295,7 @@ export const ProfileDoodleCard = ({
                               {data.user.name}
                             </Link>
                           </span>
-                          <span className="dark:text-[#a9a9ab] text-[#575757]">
+                          <span className="text-[#575757] dark:text-[#a9a9ab]">
                             {data.comments.comment}
                           </span>
                         </div>
@@ -341,35 +341,35 @@ export const ProfileDoodleCard = ({
           {/*  */}
         </div>
         <div className="w-full border-t border-grayBorder dark:border-shadeDark">
-          <div className="w-11/12 mx-auto gap-0 md:gap-3 my-3 px-0 md:px-4 grid grid-cols-12">
-            <div className="col-start-1 col-span-3 flex gap-1 items-center">
+          <div className="mx-auto my-3 grid w-11/12 grid-cols-12 gap-0 px-0 md:gap-3 md:px-4">
+            <div className="col-span-3 col-start-1 flex items-center gap-1">
               {dataLikesDocumentByUserAndDoodle.likes ? (
                 <AiFillHeart
                   onClick={() => handleLikeFalseOnClick()}
-                  className="text-2xl text-sunset cursor-pointer"
+                  className="cursor-pointer text-2xl text-sunset"
                 />
               ) : (
                 <AiOutlineHeart
                   onClick={() => handleLikeTrueOnClick()}
-                  className="text-2xl cursor-pointer dark:text-shadeText dark:hover:text-egg text-placeholder hover:text-black"
+                  className="cursor-pointer text-2xl text-placeholder hover:text-black dark:text-shadeText dark:hover:text-egg"
                 />
               )}
 
-              <p className="font-semibold text-xs dark:text-egg">
+              <p className="text-xs font-semibold dark:text-egg">
                 {dataGetAllLikesNum.length}&nbsp;
                 <span className="text-placeholder dark:text-shadeText">
                   likes
                 </span>
               </p>
             </div>
-            <div className="col-start-4 col-span-4 md:col-span-3 flex gap-2 items-center">
-              <FaRegComment className="text-[22px] transform -scale-x-100 dark:text-shadeText text-placeholder" />
-              <p className="font-semibold text-xs dark:text-egg">
+            <div className="col-span-4 col-start-4 flex items-center gap-2 md:col-span-3">
+              <FaRegComment className="-scale-x-100 transform text-[22px] text-placeholder dark:text-shadeText" />
+              <p className="text-xs font-semibold dark:text-egg">
                 {doodleWithCommentsData.usersAndComments.length}&nbsp;
                 <span className="text-placeholder">comments</span>
               </p>
             </div>
-            <div className="col-start-9 col-span-4 md:col-start-8 md:col-span-6 flex gap-2 items-center justify-end">
+            <div className="col-span-4 col-start-9 flex items-center justify-end gap-2 md:col-span-6 md:col-start-8">
               <p className="text-xs text-placeholder dark:text-shadeText">
                 Created&nbsp;
                 {getDayDifference(doodleWithCommentsData.doodle.created_at) >
@@ -431,13 +431,13 @@ export const ProfileDoodleCard = ({
                 placeholder="Comment"
                 className={
                   errors.comment
-                    ? 'w-full h-full focus:outline-none overflow-auto resize-none border border-red-600 rounded-md px-2 py-1 text-sm dark:text-egg dark:bg-shadeMedium'
-                    : 'w-full h-full focus:outline-none overflow-auto resize-none rounded-md px-2 py-1 text-sm dark:text-egg dark:bg-shadeMedium'
+                    ? 'h-full w-full resize-none overflow-auto rounded-md border border-red-600 px-2 py-1 text-sm focus:outline-none dark:bg-shadeMedium dark:text-egg'
+                    : 'h-full w-full resize-none overflow-auto rounded-md px-2 py-1 text-sm focus:outline-none dark:bg-shadeMedium dark:text-egg'
                 }
                 {...register('comment')}
               />
               {errors.comment ? (
-                <span className="text-grayText dark:text-shadeText font-semibold text-sm cursor-default">
+                <span className="cursor-default text-sm font-semibold text-grayText dark:text-shadeText">
                   Post
                 </span>
               ) : (
@@ -455,7 +455,7 @@ export const ProfileDoodleCard = ({
                 >
                   <button
                     type="submit"
-                    className="text-cobalt font-semibold text-sm hover:text-sunset"
+                    className="text-sm font-semibold text-cobalt hover:text-sunset"
                   >
                     Post
                   </button>

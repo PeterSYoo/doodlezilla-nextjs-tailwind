@@ -26,49 +26,49 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="z-40 fixed bottom-0 flex w-full h-[50px] bg-white dark:bg-midnight border-t border-grayBorder dark:border-transparent text-xl px-9 pt-3 text-placeholder backdrop-blur-sm bg-opacity-75 dark:bg-opacity-90 dark:backdrop-blur-sm">
-        <div className="flex justify-between w-full max-w-[375px] mx-auto">
+      <footer className="fixed bottom-0 z-40 flex h-[50px] w-full border-t border-grayBorder bg-white bg-opacity-75 px-9 pt-3 text-xl text-placeholder backdrop-blur-sm dark:border-transparent dark:bg-midnight dark:bg-opacity-90 dark:backdrop-blur-sm">
+        <div className="mx-auto flex w-full max-w-[375px] justify-between">
           {/* Feed Button */}
           {isFeedPage ? (
-            <div className="flex flex-col justify-between items-center">
+            <div className="flex flex-col items-center justify-between">
               <Link href="/feed">
                 <button>
                   <AiFillHome className="text-sunset" />
                 </button>
               </Link>
-              <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl"></div>
+              <div className="h-[4px] w-[35px] rounded-t-2xl bg-sunset"></div>
             </div>
           ) : (
-            <div className="flex flex-col justify-between dark:text-egg items-center">
+            <div className="flex flex-col items-center justify-between dark:text-egg">
               <Link href="/feed">
                 <button>
                   <AiFillHome className="hover:text-sunset dark:hover:text-sunset" />
                 </button>
               </Link>
-              <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl invisible"></div>
+              <div className="invisible h-[4px] w-[35px] rounded-t-2xl bg-sunset"></div>
             </div>
           )}
           {/*  */}
           {/* Create Button */}
           {isCreatePage ? (
-            <div className="flex flex-col justify-between items-center">
+            <div className="flex flex-col items-center justify-between">
               <Link href="/create">
                 <MdCreate className="text-sunset" />
               </Link>
-              <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl"></div>
+              <div className="h-[4px] w-[35px] rounded-t-2xl bg-sunset"></div>
             </div>
           ) : (
             <Link href="/create">
-              <MdCreate className="dark:text-egg hover:text-sunset dark:hover:text-sunset" />
+              <MdCreate className="hover:text-sunset dark:text-egg dark:hover:text-sunset" />
             </Link>
           )}
           {/*  */}
           {/* Profile Button */}
           {isProfilePage ? (
-            <div className="-mt-1 flex flex-col justify-between items-center">
+            <div className="-mt-1 flex flex-col items-center justify-between">
               <Link href="/profile">
-                <div className="animate-border rounded-full from-[#D055D3] via-sunset to-[#F97E1C] bg-[length:400%_400%] p-0.5 bg-black bg-gradient-to-tr duration-300">
-                  <button className="bg-white rounded-full p-0.5 flex justify-center items-center">
+                <div className="animate-border rounded-full bg-black bg-gradient-to-tr from-[#D055D3] via-sunset to-[#F97E1C] bg-[length:400%_400%] p-0.5 duration-300">
+                  <button className="flex items-center justify-center rounded-full bg-white p-0.5">
                     <Image
                       src={
                         userData.image
@@ -83,13 +83,13 @@ export const Footer = () => {
                   </button>
                 </div>
               </Link>
-              <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl"></div>
+              <div className="h-[4px] w-[35px] rounded-t-2xl bg-sunset"></div>
             </div>
           ) : (
-            <div className="-mt-1 flex flex-col justify-between items-center">
+            <div className="-mt-1 flex flex-col items-center justify-between">
               <Link href="/profile">
-                <div className="animate-border rounded-full from-transparent via-transparent to-transparent bg-[length:400%_400%] p-0.5 bg-transparent bg-gradient-to-tr duration-300 dark:hover:from-[#D055D3] dark:hover:via-sunset dark:hover:to-[#F97E1C]">
-                  <button className="bg-white rounded-full p-0.5 flex justify-center items-center">
+                <div className="animate-border rounded-full bg-transparent bg-gradient-to-tr from-transparent via-transparent to-transparent bg-[length:400%_400%] p-0.5 duration-300 dark:hover:from-[#D055D3] dark:hover:via-sunset dark:hover:to-[#F97E1C]">
+                  <button className="flex items-center justify-center rounded-full bg-white p-0.5">
                     <Image
                       src={
                         userData.image
@@ -104,13 +104,13 @@ export const Footer = () => {
                   </button>
                 </div>
               </Link>
-              <div className="w-[35px] h-[4px] bg-sunset rounded-t-2xl invisible"></div>
+              <div className="invisible h-[4px] w-[35px] rounded-t-2xl bg-sunset"></div>
             </div>
           )}
           {/*  */}
           {/* Logout Button */}
           <button onClick={() => signOut()} className="flex">
-            <FiLogOut className="dark:text-egg hover:text-sunset dark:hover:text-sunset" />
+            <FiLogOut className="hover:text-sunset dark:text-egg dark:hover:text-sunset" />
           </button>
           {/*  */}
         </div>

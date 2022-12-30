@@ -45,19 +45,19 @@ export const CreateFooter = () => {
 
   return (
     <>
-      <footer className="z-40 fixed bottom-[22px] dark:border-b dark:border-b-shadeMedium md:bottom-0 w-full h-[130px] backdrop-blur-sm bg-opacity-75 flex md:flex flex-col md:h-[75px] md:ml-[94px] md:pr-[94px] lg:ml-[213px] lg:pr-[213px]">
+      <footer className="fixed bottom-[22px] z-40 flex h-[130px] w-full flex-col bg-opacity-75 backdrop-blur-sm dark:border-b dark:border-b-shadeMedium md:bottom-0 md:ml-[94px] md:flex md:h-[75px] md:pr-[94px] lg:ml-[213px] lg:pr-[213px]">
         {/* Drawings Tools Desktop */}
-        <div className="flex flex-col w-full justify-center h-full items-center">
-          <div className="flex justify-between w-full h-[75px] items-center bg-opacity-75 dark:bg-opacity-90 bg-white dark:bg-midnight dark:md:bg-shadeDark border-t dark:border-b dark:md:border-transparent border-grayBorder dark:border-shadeMedium">
+        <div className="flex h-full w-full flex-col items-center justify-center">
+          <div className="flex h-[75px] w-full items-center justify-between border-t border-grayBorder bg-white bg-opacity-75 dark:border-b dark:border-shadeMedium dark:bg-midnight dark:bg-opacity-90 dark:md:border-transparent dark:md:bg-shadeDark">
             {/* Pen Color */}
-            <div className="flex justify-center w-3/12 border-r border-grayBorder dark:border-shadeMedium h-full items-center">
+            <div className="flex h-full w-3/12 items-center justify-center border-r border-grayBorder dark:border-shadeMedium">
               {/* Pen Color Picker Modal */}
               {isPenColorModal ? (
-                <div className="flex flex-col justify-center items-center absolute mb-[320px] md:mb-[290px] ml-36 md:ml-0">
-                  <div className="flex justify-end bg-black w-[200px] bg-opacity-50 -mb-2 pb-2 rounded-t-md pr-1">
+                <div className="absolute mb-[320px] ml-36 flex flex-col items-center justify-center md:mb-[290px] md:ml-0">
+                  <div className="-mb-2 flex w-[200px] justify-end rounded-t-md bg-black bg-opacity-50 pb-2 pr-1">
                     <span
                       onClick={() => setIsPenColorModal(false)}
-                      className="text-3xl text-white cursor-pointer"
+                      className="cursor-pointer text-3xl text-white"
                     >
                       <RiCloseFill />
                     </span>
@@ -74,30 +74,30 @@ export const CreateFooter = () => {
                 </div>
               ) : null}
               {/*  */}
-              <div className="flex flex-col md:flex-row gap-1 md:gap-3 items-center">
+              <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
                 <span
                   onClick={() => setIsPenColorModal(!isPenColorModal)}
-                  className="aspect-square lg:aspect-auto border border-placeholder dark:border-shadeText w-[91px] h-[47px] flex items-center justify-center rounded-xl cursor-pointer"
+                  className="flex aspect-square h-[47px] w-[91px] cursor-pointer items-center justify-center rounded-xl border border-placeholder dark:border-shadeText lg:aspect-auto"
                 >
                   <span
-                    className="aspect-square lg:aspect-auto border border-placeholder dark:border-shadeText w-[74px] h-[31px] flex items-center justify-center rounded-lg"
+                    className="flex aspect-square h-[31px] w-[74px] items-center justify-center rounded-lg border border-placeholder dark:border-shadeText lg:aspect-auto"
                     style={{ backgroundColor: penColorState }}
                   ></span>
                 </span>
-                <p className="font-semibold text-sm md:block lg:hidden dark:text-egg">
+                <p className="text-sm font-semibold dark:text-egg md:block lg:hidden">
                   Pen
                 </p>
               </div>
             </div>
             {/*  */}
             {/* Pen Width */}
-            <div className="flex justify-center w-3/12 border-r border-grayBorder dark:border-shadeMedium h-full items-center">
-              <div className="flex flex-col md:flex-row gap-1 md:gap-3 items-center">
-                <div className="border border-placeholder dark:border-shadeText py-1 px-2 rounded-lg">
+            <div className="flex h-full w-3/12 items-center justify-center border-r border-grayBorder dark:border-shadeMedium">
+              <div className="flex flex-col items-center gap-1 md:flex-row md:gap-3">
+                <div className="rounded-lg border border-placeholder py-1 px-2 dark:border-shadeText">
                   <select
                     onChange={handlePenWidthChange}
                     defaultValue="5"
-                    className="focus:outline-none bg-transparent dark:text-egg"
+                    className="bg-transparent focus:outline-none dark:text-egg"
                   >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -128,31 +128,31 @@ export const CreateFooter = () => {
                     <option value="160">160</option>
                   </select>
                 </div>
-                <p className="font-semibold text-sm md:block lg:hidden dark:text-egg">
+                <p className="text-sm font-semibold dark:text-egg md:block lg:hidden">
                   Width
                 </p>
               </div>
             </div>
             {/*  */}
             {/* Clear Button */}
-            <div className="flex justify-center w-3/12 border-r border-grayBorder dark:border-shadeMedium h-full items-center">
+            <div className="flex h-full w-3/12 items-center justify-center border-r border-grayBorder dark:border-shadeMedium">
               <span
                 onClick={clearCanvas}
-                className="border border-placeholder rounded-2xl py-3 px-4 md:px-6 font-semibold cursor-pointer transition duration-75 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-transparent hover:text-white flex justify-center items-center dark:text-egg dark:hover:border-transparent dark:border-shadeText"
+                className="flex cursor-pointer items-center justify-center rounded-2xl border border-placeholder bg-gradient-to-tr py-3 px-4 font-semibold transition duration-75 ease-in-out hover:animate-button hover:border-transparent hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeText dark:text-egg dark:hover:border-transparent md:px-6"
               >
                 Clear
               </span>
             </div>
             {/*  */}
             {/* Upload Button */}
-            <div className="flex justify-center w-3/12 items-center">
+            <div className="flex w-3/12 items-center justify-center">
               <button
                 onClick={() => mutate()}
                 disabled={isLoading ? true : false}
                 className={
                   isLoading
-                    ? 'bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 rounded-2xl py-3 px-4 md:px-10 font-semibold'
-                    : 'bg-gradient-to-t from-[#5755D3] to-cobalt text-white rounded-2xl py-3 px-3 md:px-6 font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] dark:hover:border-transparent'
+                    ? 'rounded-2xl bg-gradient-to-t from-gray-700 to-gray-500 py-3 px-4 font-semibold text-gray-400 md:px-10'
+                    : 'rounded-2xl bg-gradient-to-t from-[#5755D3] to-cobalt py-3 px-3 font-semibold text-white transition duration-300 ease-in-out hover:animate-button hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:bg-[length:400%_400%] dark:hover:border-transparent md:px-6'
                 }
               >
                 {isLoading ? <LoaderSpinnerInline /> : <>Submit</>}

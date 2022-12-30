@@ -41,9 +41,9 @@ export const ProfileUserMobile = ({
   console.log(userDoodlesWithAllCommentsAndLikesNumData);
   return (
     <>
-      <div className="md:hidden grid grid-cols-12 w-[375px] gap-8">
+      <div className="grid w-[375px] grid-cols-12 gap-8 md:hidden">
         {/* Column 1 */}
-        <div className="col-start-1 col-span-5 flex flex-col items-center gap-4 border border-grayBorder dark:border-shadeMedium rounded-2xl py-4 px-2">
+        <div className="col-span-5 col-start-1 flex flex-col items-center gap-4 rounded-2xl border border-grayBorder py-4 px-2 dark:border-shadeMedium">
           <div className="flex flex-col items-center gap-1">
             <Image
               src={
@@ -54,25 +54,25 @@ export const ProfileUserMobile = ({
               width={75}
               height={75}
               alt="profile avatar mobile"
-              className="rounded-full aspect-square"
+              className="aspect-square rounded-full"
             />
-            <h1 className="font-bold break-all text-center dark:text-egg">
+            <h1 className="break-all text-center font-bold dark:text-egg">
               {userData.name}
             </h1>
-            <p className="font-semibold text-xs dark:text-egg">
+            <p className="text-xs font-semibold dark:text-egg">
               {userDoodlesWithAllCommentsAndLikesNumData.length}&nbsp;
               <span className="font-normal text-placeholder dark:text-shadeText">
                 DOODLES
               </span>
             </p>
           </div>
-          <p className="font-semibold text-xs text-placeholder dark:text-egg">
+          <p className="text-xs font-semibold text-placeholder dark:text-egg">
             {userData.location ? userData.location : null}
           </p>
           {isUsernamePage ? null : (
             <button
               onClick={() => setIsModal(true)}
-              className="border py-1 w-10/12 text-xs rounded-lg border-placeholder dark:border-shadeText transition duration-100 ease-in-out hover:animate-button hover:bg-[length:400%_400%] bg-gradient-to-tr hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:border-white hover:text-white font-semibold dark:text-egg dark:hover:border-transparent"
+              className="w-10/12 rounded-lg border border-placeholder bg-gradient-to-tr py-1 text-xs font-semibold transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeText dark:text-egg dark:hover:border-transparent"
             >
               Edit
             </button>
@@ -80,7 +80,7 @@ export const ProfileUserMobile = ({
         </div>
         {/*  */}
         {/* Column 2 */}
-        <div className="col-start-6 col-span-7 mt-4 flex flex-col gap-3">
+        <div className="col-span-7 col-start-6 mt-4 flex flex-col gap-3">
           <p className="text-xs dark:text-egg">
             {userData.biography ? (
               userData.biography

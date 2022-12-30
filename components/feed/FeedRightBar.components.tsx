@@ -27,19 +27,19 @@ export const FeedRightBar = () => {
 
   return (
     <>
-      <div className="z-50 fixed bg-white dark:bg-midnight right-0 h-full hidden md:flex md:w-[159px] lg:w-[258px] border-l border-grayBorder dark:border-midnight md:flex-col px-1">
-        <div className="md:flex md:flex-col lg:w-[187px] md:mx-auto md:gap-6">
-          <h1 className="font-semibold ml-4 mt-[18px] lg:ml-0 dark:text-egg">
+      <div className="fixed right-0 z-50 hidden h-full border-l border-grayBorder bg-white px-1 dark:border-midnight dark:bg-midnight md:flex md:w-[159px] md:flex-col lg:w-[258px]">
+        <div className="md:mx-auto md:flex md:flex-col md:gap-6 lg:w-[187px]">
+          <h1 className="ml-4 mt-[18px] font-semibold dark:text-egg lg:ml-0">
             Sponsored
           </h1>
           {/* Sponsored Card */}
           <FeedRightBarSponsoredCard />
           {/*  */}
           {/* Suggestions For You */}
-          <h1 className="font-semibold mt-[18px] text-[15px] text-center lg:flex dark:text-egg">
+          <h1 className="mt-[18px] text-center text-[15px] font-semibold dark:text-egg lg:flex">
             Suggestions for you
           </h1>
-          <div className="flex flex-col px-2 gap-4">
+          <div className="flex flex-col gap-4 px-2">
             {/* User Suggestions */}
             {allUsersData
               .slice()
@@ -50,7 +50,7 @@ export const FeedRightBar = () => {
                   {userData._id === user._id ? null : (
                     <Link
                       href={`/profile/${user.name}`}
-                      className="flex items-center gap-3 group w-fit"
+                      className="group flex w-fit items-center gap-3"
                     >
                       <Image
                         src={
@@ -63,7 +63,7 @@ export const FeedRightBar = () => {
                         alt="suggestions avatar"
                         className="rounded-full"
                       />
-                      <p className="font-semibold text-sm break-all dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset">
+                      <p className="break-all text-sm font-semibold group-hover:text-sunset dark:text-egg dark:group-hover:text-sunset">
                         {user.name}
                       </p>
                     </Link>

@@ -85,13 +85,13 @@ export default function App({ Component, pageProps }: AppProps) {
               <Hydrate state={pageProps.dehydratedState}>
                 <ThemeProvider attribute="class" defaultTheme="dark">
                   <CanvasProvider>
-                    <div className="min-h-screen min-w-screen flex flex-col dark:bg-shadeDark">
+                    <div className="min-w-screen flex min-h-screen flex-col dark:bg-shadeDark">
                       {isLoginPage || isSignupPage ? (
-                        <div className="flex flex-col flex-grow">
+                        <div className="flex flex-grow flex-col">
                           <Component {...pageProps} />
                         </div>
                       ) : (
-                        <div className="flex flex-col flex-grow dark:bg-shadeDark">
+                        <div className="flex flex-grow flex-col dark:bg-shadeDark">
                           {isFeedPage || isProfilePage || isUsernamePage ? (
                             <HeaderCompressed />
                           ) : (
@@ -105,7 +105,7 @@ export default function App({ Component, pageProps }: AppProps) {
                         </div>
                       )}
                       {isLoginPage || isSignupPage ? null : (
-                        <div className="flex md:hidden dark:bg-shadeDark">
+                        <div className="flex dark:bg-shadeDark md:hidden">
                           <Footer />
                         </div>
                       )}

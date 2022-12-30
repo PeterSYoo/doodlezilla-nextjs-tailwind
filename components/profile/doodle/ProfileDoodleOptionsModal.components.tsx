@@ -30,9 +30,9 @@ export const ProfileDoodleOptionsModal = ({
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
+      <div className="fixed top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 dark:bg-white dark:bg-opacity-50">
         <div className="container mx-auto w-11/12 md:w-96">
-          <div className="relative py-6 bg-white dark:bg-midnight rounded-3xl flex flex-col gap-6 items-center">
+          <div className="relative flex flex-col items-center gap-6 rounded-3xl bg-white py-6 dark:bg-midnight">
             {isDelete ? null : (
               <button
                 onClick={() => setIsDelete(true)}
@@ -42,7 +42,7 @@ export const ProfileDoodleOptionsModal = ({
               </button>
             )}
             {isDelete ? (
-              <div className="font-semibold flex gap-3 text-placeholder dark:text-shadeText">
+              <div className="flex gap-3 font-semibold text-placeholder dark:text-shadeText">
                 <span
                   onClick={() =>
                     mutateDeleteDoodle(doodleWithCommentsData.doodle._id)
@@ -60,7 +60,7 @@ export const ProfileDoodleOptionsModal = ({
                 </span>
               </div>
             ) : null}
-            <div className="border-b border-grayBorder w-11/12 dark:border-shadeDark"></div>
+            <div className="w-11/12 border-b border-grayBorder dark:border-shadeDark"></div>
             <button
               onClick={() => setIsOptionsModal(false)}
               className="font-semibold text-grayText hover:text-neutral-800 dark:text-shadeText dark:hover:text-egg"

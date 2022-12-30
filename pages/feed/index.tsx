@@ -157,12 +157,12 @@ const FeedPage = ({ session }: FeedPageProps) => {
         />
       ) : null}
       {/*  */}
-      <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-center items-center gap-2 md:gap-2 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
+      <div className="mt-24 mb-32 flex flex-grow flex-col items-center justify-center gap-2 dark:bg-shadeDark md:ml-[94px] md:mr-[159px] md:justify-start md:gap-2 lg:ml-[213px] lg:mr-[258px]">
         {/* Editor's Picks */}
-        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg w-5/6 text-xl">
+        <h1 className="w-5/6 justify-start text-xl font-bold dark:text-egg md:flex md:text-2xl">
           Editor&apos;s Picks
         </h1>
-        <div className="grid grid-cols-3 w-5/6 mb-3 gap-3">
+        <div className="mb-3 grid w-5/6 grid-cols-3 gap-3">
           {/* Pick 1 */}
           <FeedEditorsPickCard
             handleModalClickUser={handleModalClickUser}
@@ -186,8 +186,8 @@ const FeedPage = ({ session }: FeedPageProps) => {
           {/*  */}
         </div>
         {/*  */}
-        <div className="border-b border-grayBorder dark:border-shadeMedium w-5/6"></div>
-        <h1 className="font-bold md:text-2xl md:flex justify-start dark:text-egg px-10 w-full md:w-5/6 lg:w-2/3 text-xl mt-5 mb-7">
+        <div className="w-5/6 border-b border-grayBorder dark:border-shadeMedium"></div>
+        <h1 className="mt-5 mb-7 w-full justify-start px-10 text-xl font-bold dark:text-egg md:flex md:w-5/6 md:text-2xl lg:w-2/3">
           Feed
         </h1>
         {/* Doodle Card */}
@@ -199,7 +199,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
         {/*  */}
       </div>
       {/* Pagination Load More Button */}
-      <div className="flex flex-col justify-center mb-48 md:-ml-10 md:mb-20">
+      <div className="mb-48 flex flex-col justify-center md:-ml-10 md:mb-20">
         <button
           ref={ref}
           onClick={() => fetchNextPageInfiniteQueriesAllDoodles()}
@@ -207,7 +207,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
             !hasNextPageInfiniteQueriesAllDoodles ||
             isFetchingNextPageInfiniteQueriesAllDoodles
           }
-          className="text-placeholder text-xs mb-5"
+          className="mb-5 text-xs text-placeholder"
         >
           {isFetchingNextPageInfiniteQueriesAllDoodles ? (
             <LoaderSpinnerInline />

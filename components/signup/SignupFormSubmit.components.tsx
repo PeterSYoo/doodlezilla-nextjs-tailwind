@@ -95,8 +95,8 @@ export const SignupFormSubmit = () => {
           <label
             className={
               errors.username
-                ? 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-red-600'
-                : 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-transparent'
+                ? 'w-[278px] rounded-full border border-red-600 bg-grayLight py-2 px-4'
+                : 'w-[278px] rounded-full border border-transparent bg-grayLight py-2 px-4'
             }
           >
             <input
@@ -109,11 +109,11 @@ export const SignupFormSubmit = () => {
           {errors.username && (
             <>
               {errors.username.message === 'Please Enter a Username' ? null : (
-                <div className="text-red-600 text-xs -mt-2 max-w-[260px] mx-auto grid grid-cols-12">
-                  <div className="col-start-1 col-span-1">
+                <div className="mx-auto -mt-2 grid max-w-[260px] grid-cols-12 text-xs text-red-600">
+                  <div className="col-span-1 col-start-1">
                     <BsFillExclamationCircleFill className="mt-0.5" />
                   </div>
-                  <div className="col-start-2 col-span-11">
+                  <div className="col-span-11 col-start-2">
                     <p className="break-all">{errors.username.message}</p>
                   </div>
                 </div>
@@ -125,8 +125,8 @@ export const SignupFormSubmit = () => {
           <label
             className={
               errors.email
-                ? 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-red-600'
-                : 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-transparent'
+                ? 'w-[278px] rounded-full border border-red-600 bg-grayLight py-2 px-4'
+                : 'w-[278px] rounded-full border border-transparent bg-grayLight py-2 px-4'
             }
           >
             <input
@@ -139,11 +139,11 @@ export const SignupFormSubmit = () => {
           {errors.email && (
             <>
               {errors.email.message === 'Please Enter Your Email' ? null : (
-                <div className="text-red-600 text-xs -mt-2 max-w-[260px] mx-auto grid grid-cols-12">
-                  <div className="col-start-1 col-span-1">
+                <div className="mx-auto -mt-2 grid max-w-[260px] grid-cols-12 text-xs text-red-600">
+                  <div className="col-span-1 col-start-1">
                     <BsFillExclamationCircleFill className="mt-0.5" />
                   </div>
-                  <div className="col-start-2 col-span-11">
+                  <div className="col-span-11 col-start-2">
                     <p className="break-all">{errors.email.message}</p>
                   </div>
                 </div>
@@ -155,8 +155,8 @@ export const SignupFormSubmit = () => {
           <label
             className={
               errors.password
-                ? 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-red-600 flex items-center'
-                : 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-transparent flex items-center'
+                ? 'flex w-[278px] items-center rounded-full border border-red-600 bg-grayLight py-2 px-4'
+                : 'flex w-[278px] items-center rounded-full border border-transparent bg-grayLight py-2 px-4'
             }
           >
             <input
@@ -167,18 +167,18 @@ export const SignupFormSubmit = () => {
             />
             <FaRegEye
               onClick={() => setShowPassword(!showPassword)}
-              className="w-1/12 flex justify-end text-xl text-placeholder cursor-pointer hover:text-neutral-800"
+              className="flex w-1/12 cursor-pointer justify-end text-xl text-placeholder hover:text-neutral-800"
             />
           </label>
           {errors.password && (
             <>
               {errors.password.message ===
               'Please Enter Your Password' ? null : (
-                <div className="text-red-600 text-xs -mt-2 max-w-[260px] mx-auto grid grid-cols-12">
-                  <div className="col-start-1 col-span-1">
+                <div className="mx-auto -mt-2 grid max-w-[260px] grid-cols-12 text-xs text-red-600">
+                  <div className="col-span-1 col-start-1">
                     <BsFillExclamationCircleFill className="mt-0.5" />
                   </div>
-                  <div className="col-start-2 col-span-11">
+                  <div className="col-span-11 col-start-2">
                     <p className="break-all">{errors.password.message}</p>
                   </div>
                 </div>
@@ -190,8 +190,8 @@ export const SignupFormSubmit = () => {
           <label
             className={
               errors.cpassword
-                ? 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-red-600 flex items-center'
-                : 'w-[278px] bg-grayLight py-2 px-4 rounded-full border border-transparent flex items-center'
+                ? 'flex w-[278px] items-center rounded-full border border-red-600 bg-grayLight py-2 px-4'
+                : 'flex w-[278px] items-center rounded-full border border-transparent bg-grayLight py-2 px-4'
             }
           >
             <input
@@ -202,18 +202,18 @@ export const SignupFormSubmit = () => {
             />
             <FaRegEye
               onClick={() => setShowPassword(!showPassword)}
-              className="w-1/12 flex justify-end text-xl text-placeholder cursor-pointer hover:text-neutral-800"
+              className="flex w-1/12 cursor-pointer justify-end text-xl text-placeholder hover:text-neutral-800"
             />
           </label>
           {errors.cpassword && (
             <>
               {errors.cpassword.message ===
               'Please Confirm Your Password' ? null : (
-                <div className="text-red-600 text-xs -mt-2 max-w-[260px] mx-auto grid grid-cols-12">
-                  <div className="col-start-1 col-span-1">
+                <div className="mx-auto -mt-2 grid max-w-[260px] grid-cols-12 text-xs text-red-600">
+                  <div className="col-span-1 col-start-1">
                     <BsFillExclamationCircleFill className="mt-0.5" />
                   </div>
-                  <div className="col-start-2 col-span-11">
+                  <div className="col-span-11 col-start-2">
                     <p className="break-all">{errors.cpassword.message}</p>
                   </div>
                 </div>
@@ -226,7 +226,7 @@ export const SignupFormSubmit = () => {
           errors.email ||
           errors.password ||
           errors.cpassword ? (
-            <span className="py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold cursor-default">
+            <span className="flex cursor-default items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 py-2 px-10 font-semibold text-gray-400">
               Sign up
             </span>
           ) : (
@@ -235,8 +235,8 @@ export const SignupFormSubmit = () => {
               disabled={isLoadingCreateNewUser ? true : false}
               className={
                 isLoadingCreateNewUser
-                  ? 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 text-gray-400 font-semibold'
-                  : 'py-2 px-10 flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt w-[278px] text-white font-semibold transition duration-300 ease-in-out hover:animate-button hover:bg-[length:400%_400%] hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3]'
+                  ? 'flex items-center justify-center gap-3 rounded-full bg-gradient-to-t from-gray-700 to-gray-500 py-2 px-10 font-semibold text-gray-400'
+                  : 'flex w-[278px] items-center justify-center gap-3 rounded-full bg-gradient-to-t from-[#5755D3] to-cobalt py-2 px-10 font-semibold text-white transition duration-300 ease-in-out hover:animate-button hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:bg-[length:400%_400%]'
               }
             >
               {isLoadingCreateNewUser ? <LoaderSpinnerInline /> : <>Sign up</>}

@@ -76,7 +76,7 @@ export const ProfileDoodleCardModal = ({
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-white dark:bg-opacity-50 bg-opacity-50 flex justify-center items-center">
+      <div className="fixed top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 dark:bg-white dark:bg-opacity-50">
         <ProfileDoodleCard
           doodleWithCommentsData={doodleWithCommentsData}
           userData={userData}

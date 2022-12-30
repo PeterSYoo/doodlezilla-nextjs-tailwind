@@ -70,8 +70,8 @@ export const FeedCommentedUser = ({
 
   return (
     <>
-      <div className="border-b border-borderGray dark:border-shadeMedium mx-1 my-3"></div>
-      <div className="text-xs px-1 flex flex-col gap-0.5">
+      <div className="border-borderGray mx-1 my-3 border-b dark:border-shadeMedium"></div>
+      <div className="flex flex-col gap-0.5 px-1 text-xs">
         <span>
           <Link
             href={`/profile/${userData.name}`}
@@ -80,7 +80,7 @@ export const FeedCommentedUser = ({
             {userData.name}
           </Link>
         </span>
-        <span className="dark:text-[#a9a9ab] text-[#575757]">
+        <span className="text-[#575757] dark:text-[#a9a9ab]">
           {comment.comment}
         </span>
         <div>
@@ -89,7 +89,7 @@ export const FeedCommentedUser = ({
               handleModalClickUser(doodle.doodle.user);
               handleModalClick(doodle.doodle._id);
             }}
-            className="dark:text-shadeText mt-2 cursor-pointer dark:hover:text-sunset w-fit hover:text-sunset text-placeholder"
+            className="mt-2 w-fit cursor-pointer text-placeholder hover:text-sunset dark:text-shadeText dark:hover:text-sunset"
           >
             View more comments...
           </p>

@@ -58,7 +58,7 @@ export const FeedDoodleCard = ({
                   {/* User Avatar and Username */}
                   <Link
                     href={`/profile/${doodle.user.name}`}
-                    className="flex items-center gap-3 mb-3 group w-fit px-1"
+                    className="group mb-3 flex w-fit items-center gap-3 px-1"
                   >
                     <Image
                       src={
@@ -71,7 +71,7 @@ export const FeedDoodleCard = ({
                       alt="avatar feed"
                       className="rounded-full"
                     />
-                    <span className="font-semibold break-all w-7/8 text-center text-sm dark:text-egg dark:group-hover:text-sunset group-hover:text-sunset cursor-pointer">
+                    <span className="w-7/8 cursor-pointer break-all text-center text-sm font-semibold group-hover:text-sunset dark:text-egg dark:group-hover:text-sunset">
                       {doodle.user.name}
                     </span>
                   </Link>
@@ -82,7 +82,7 @@ export const FeedDoodleCard = ({
                       handleModalClickUser(doodle.doodle.user);
                       handleModalClick(doodle.doodle._id);
                     }}
-                    className="overlay-container rounded-3xl overflow-hidden relative group"
+                    className="overlay-container group relative overflow-hidden rounded-3xl"
                   >
                     <Image
                       src={doodle.doodle.image}
@@ -90,13 +90,13 @@ export const FeedDoodleCard = ({
                       width="0"
                       height="0"
                       sizes="100vw"
-                      className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+                      className="h-full w-full cursor-pointer rounded-3xl border border-grayBorder object-cover dark:border-transparent"
                     />
                   </div>
                   {/*  */}
-                  <div className="flex justify-between items-center px-2 mt-2">
+                  <div className="mt-2 flex items-center justify-between px-2">
                     {/* Likes and Comments */}
-                    <div className="flex items-center gap-2 dark:text-shadeText text-xs">
+                    <div className="flex items-center gap-2 text-xs dark:text-shadeText">
                       <div className="flex items-center gap-2">
                         {doodle.likesNum.length} likes
                       </div>
@@ -144,7 +144,7 @@ export const FeedDoodleCard = ({
                     {/*  */}
                   </div>
                   {/* Most Recent Comment */}
-                  <div className="flex flex-col w-full px-1">
+                  <div className="flex w-full flex-col px-1">
                     {doodle.comments[0] ? (
                       <FeedCommentedUser
                         doodle={doodle}

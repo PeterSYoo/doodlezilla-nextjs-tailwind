@@ -67,7 +67,7 @@ export const FeedEditorsPickCard = ({
           handleModalClickUser(data.doodle.user);
           handleModalClick(data.doodle._id);
         }}
-        className="overlay-container rounded-3xl overflow-hidden relative group"
+        className="overlay-container group relative overflow-hidden rounded-3xl"
       >
         <Image
           src={data.doodle.image}
@@ -75,17 +75,17 @@ export const FeedEditorsPickCard = ({
           width="0"
           height="0"
           sizes="100vw"
-          className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+          className="h-full w-full cursor-pointer rounded-3xl border border-grayBorder object-cover dark:border-transparent"
         />
-        <div className="overlay group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm absolute top-0 cursor-pointer text-white w-full h-full rounded-3xl">
-          <div className="overlay-text p-4 flex justify-center gap-5 items-center h-full w-full invisible group-hover:visible flex-col">
-            <div className="flex items-center gap-5 md:gap-6 lg:gap-8 dark:text-midnight">
+        <div className="overlay absolute top-0 h-full w-full cursor-pointer rounded-3xl text-white group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm">
+          <div className="overlay-text invisible flex h-full w-full flex-col items-center justify-center gap-5 p-4 group-hover:visible">
+            <div className="flex items-center gap-5 dark:text-midnight md:gap-6 lg:gap-8">
               <div className="flex items-center gap-2">
                 <AiFillHeart />
                 {data.likesNum.length}
               </div>
               <div className="flex items-center gap-2">
-                <FaComment className="transform -scale-x-100" />
+                <FaComment className="-scale-x-100 transform" />
                 {data.comments.length}
               </div>
             </div>

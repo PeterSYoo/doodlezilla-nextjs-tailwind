@@ -117,7 +117,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
       ) : null}
       {/*  */}
       {isModal ? <ProfileEditModal setIsModal={setIsModal} /> : null}
-      <div className="md:ml-[94px] md:mr-[159px] lg:ml-[213px] lg:mr-[258px] flex-grow flex flex-col justify-start items-center gap-5 mt-24 mb-32 md:justify-start dark:bg-shadeDark">
+      <div className="mt-24 mb-32 flex flex-grow flex-col items-center justify-start gap-5 dark:bg-shadeDark md:ml-[94px] md:mr-[159px] md:justify-start lg:ml-[213px] lg:mr-[258px]">
         {/* Mobile Profile Avatar & bio */}
         <ProfileUserMobile
           userData={userData}
@@ -127,23 +127,23 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
           setIsModal={setIsModal}
         />
         {/*  */}
-        <div className="border-b border-grayBorder dark:border-shadeMedium w-[375px] md:hidden"></div>
+        <div className="w-[375px] border-b border-grayBorder dark:border-shadeMedium md:hidden"></div>
         {/* If no Doodles Exist */}
         {userDoodlesWithAllCommentsAndLikesNumData.length === 0 ? (
           <>
-            <h1 className="flex justify-center mt-20 dark:text-shadeText text-placeholder text-2xl">
+            <h1 className="mt-20 flex justify-center text-2xl text-placeholder dark:text-shadeText">
               No Doodles
             </h1>
           </>
         ) : (
           <>
             {/* Header Text */}
-            <h1 className="hidden font-bold text-2xl md:flex justify-start dark:text-egg px-24 w-full">
+            <h1 className="hidden w-full justify-start px-24 text-2xl font-bold dark:text-egg md:flex">
               Doodles
             </h1>
             {/*  */}
             {/* Doodles List */}
-            <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 2xl:columns-5 3xl:columns-6 px-5 md:px-20 lg:px-20">
+            <div className="columns-1 px-5 md:columns-2 md:px-20 lg:columns-3 lg:px-20 xl:columns-4 2xl:columns-5 3xl:columns-6">
               <div>
                 {userDoodlesWithAllCommentsAndLikesNumData
                   .sort((a: DoodleData, b: DoodleData) => {
@@ -168,7 +168,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
                           onClick={() => {
                             handleModalClick(doodle.doodle._id);
                           }}
-                          className="overlay-container rounded-3xl overflow-hidden relative group h-full w-full"
+                          className="overlay-container group relative h-full w-full overflow-hidden rounded-3xl"
                         >
                           <Image
                             src={doodle.doodle.image}
@@ -176,16 +176,16 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
                             width="0"
                             height="0"
                             sizes="100vw"
-                            className="rounded-3xl border border-grayBorder dark:border-transparent object-cover h-full w-full cursor-pointer"
+                            className="h-full w-full cursor-pointer rounded-3xl border border-grayBorder object-cover dark:border-transparent"
                           />
-                          <div className="overlay group-hover:bg-black dark:group-hover:bg-white dark:group-hover:bg-opacity-30 group-hover:bg-opacity-30 absolute top-0 w-full h-full cursor-pointer text-white dark:text-black group-hover:backdrop-blur-sm dark:group-hover:backdrop-blur-sm">
-                            <div className="overlay-text p-4 flex justify-center gap-8 items-center h-full w-full invisible group-hover:visible">
+                          <div className="overlay absolute top-0 h-full w-full cursor-pointer text-white group-hover:bg-black group-hover:bg-opacity-30 group-hover:backdrop-blur-sm dark:text-black dark:group-hover:bg-white dark:group-hover:bg-opacity-30 dark:group-hover:backdrop-blur-sm">
+                            <div className="overlay-text invisible flex h-full w-full items-center justify-center gap-8 p-4 group-hover:visible">
                               <div className="flex items-center gap-2">
                                 <AiFillHeart />
                                 {doodle.likesNum.length}
                               </div>
                               <div className="flex items-center gap-2">
-                                <FaComment className="transform -scale-x-100" />
+                                <FaComment className="-scale-x-100 transform" />
                                 {doodle.comments.length}
                               </div>
                             </div>

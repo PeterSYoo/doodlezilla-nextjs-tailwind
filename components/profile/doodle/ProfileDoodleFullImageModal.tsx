@@ -12,8 +12,8 @@ export const ProfileDoodleFullImageModal = ({
 }: ProfileDoodleFullImageModalProps) => {
   return (
     <>
-      <div className="fixed top-0 left-0 w-full h-screen z-50 bg-black dark:bg-black dark:bg-opacity-80 bg-opacity-50 flex flex-col justify-center items-center">
-        <div className="flex flex-col justify-center items-center gap-3 w-full">
+      <div className="fixed top-0 left-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-80">
+        <div className="flex w-full flex-col items-center justify-center gap-3">
           <Image
             src={
               doodleImage
@@ -24,13 +24,13 @@ export const ProfileDoodleFullImageModal = ({
             height="0"
             sizes="100vw"
             alt="doodle full image"
-            className="w-3/4 aspect-video object-contain"
+            className="aspect-video w-3/4 object-contain"
           />
           {/* Close X Top Right Button */}
           <div>
             <span
               onClick={() => setIsImageModal(false)}
-              className="text-3xl text-egg dark:text-egg cursor-pointer dark:hover:text-sunset hover:text-sunset"
+              className="cursor-pointer text-3xl text-egg hover:text-sunset dark:text-egg dark:hover:text-sunset"
             >
               <RiCloseFill />
             </span>
