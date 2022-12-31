@@ -63,12 +63,12 @@ The finished app design is slightly different from the initial wireframe due to 
 
 - Designed and implemented a responsive web application for both mobile and desktop devices.
 - Implemented secure server-side routing to protect user access and redirect as needed.
-  Offered a light/dark theme toggle for user customization.
+- Offered a light/dark theme toggle.
 - Utilized Cloudinary to host and manage all images (doodles).
 - Incorporated pagination and infinite scroll on the feed to optimize performance and user experience.
 - Sorted the feed by the most recent doodles and the comments in each doodle by the most recent comment.
 - Enabled real-time updates for likes and comments in the feed and profiles through React Query refetching after mutation events.
-- Validated user input using React Hook Forms and Yup.
+- Validated user input using React Hook Form and Yup.
 - Created MongoDB schemas and REST API routes for CRUD operations using Mongoose.
 - Used React Query to fetch data from the API routes and cache it in the browser's memory.
 
@@ -91,7 +91,7 @@ switch (method) {
 }
 ```
 
-The controller function for the GET method in the API route handles GET requests. -
+The controller function for the GET method in the API route that handles GET requests. -
 
 ```js
 /* GET Infinite Scroll Pagination all Doodles */
@@ -236,7 +236,7 @@ useEffect(() => {
 </div>
 ```
 
-To implement pagination, place the button with the `ref` prop at the bottom of the page. Whenever the `inView` boolean value changes, fetch the next page of results.
+To implement the pagination, placed the button with the `ref` prop at the bottom of the page. Whenever the `inView` boolean value changes, fetches the next page of results.
 
 ## Liking System Problem
 
@@ -244,7 +244,7 @@ The response time for liking and unliking a doodle is slow on the Vercel app.
 
 Currently, the liking system works as follows: when a user clicks on a doodle to open the modal for the first time, a unique Likes document with a boolean prop is created. When the user clicks on the heart, the onClick event updates the Likes document's boolean value to true and creates a LikesNum document if the heart is not filled in. If the heart is already filled, the event sets the boolean prop to false and deletes the LikesNum document. The number of likes for a doodle is counted by the number of LikesNum documents referencing the Doodle document.
 
-An alternative approach is to increment a numerical value as a prop on the Doodle document itself instead of creating a LikesNum document. However, this method resulted in slower response times compared to the current approach.
+An alternative approach is to increment a numerical value as a prop on the Doodle document itself instead of creating a LikesNum document. However, this method resulted in slower response times compared to the current approach so I opted for the 1st approach, which is still slow.
 
 ## Future Updates
 
