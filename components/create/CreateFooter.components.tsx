@@ -26,17 +26,7 @@ export const CreateFooter = () => {
   const { mutate, isLoading } = useMutation(async () => uploadImage());
 
   useEffect(() => {
-    const handleMouseUp = () => {
-      setIsPenColorModal(false);
-    };
-
     setColor(penColorState, false);
-
-    window.addEventListener('mouseup', handleMouseUp);
-
-    return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
   }, [penColorState]);
 
   useEffect(() => {
@@ -53,11 +43,11 @@ export const CreateFooter = () => {
             <div className="flex h-full w-3/12 items-center justify-center border-r border-grayBorder dark:border-shadeMedium">
               {/* Pen Color Picker Modal */}
               {isPenColorModal ? (
-                <div className="absolute mb-[320px] ml-36 flex flex-col items-center justify-center md:mb-[290px] md:ml-0">
-                  <div className="-mb-2 flex w-[200px] justify-end rounded-t-md bg-black bg-opacity-50 pb-2 pr-1">
+                <div className="absolute mb-[370px] ml-36 flex flex-col items-center justify-center md:mb-[380px] md:ml-0">
+                  <div className="-mb-2 flex w-[200px] justify-end rounded-t-xl bg-black bg-opacity-75 pb-2 pr-1">
                     <span
                       onClick={() => setIsPenColorModal(false)}
-                      className="cursor-pointer text-3xl text-white"
+                      className="cursor-pointer text-3xl text-white hover:text-sunset dark:hover:text-sunset"
                     >
                       <RiCloseFill />
                     </span>
@@ -66,11 +56,14 @@ export const CreateFooter = () => {
                     color={penColorState}
                     onChange={setPenColorState}
                   />
-
-                  <div className="w-3/12 px-1"></div>
-                  <div className="w-2/12 px-1"></div>
-                  <div className="w-2/12 px-1"></div>
-                  <div className="w-2/12 px-1"></div>
+                  <div className="-mt-2 flex w-[200px] rounded-b-xl bg-black bg-opacity-75 pb-2 px-3 pt-5">
+                    <span
+                      onClick={() => setIsPenColorModal(false)}
+                      className="flex cursor-pointer items-center justify-center rounded-xl border text-xs border-placeholder bg-gradient-to-tr py-2 font-semibold transition duration-75 ease-in-out hover:animate-button hover:border-transparent hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeText dark:text-egg dark:hover:border-transparent w-full text-white"
+                    >
+                      OK
+                    </span>
+                  </div>
                 </div>
               ) : null}
               {/*  */}
