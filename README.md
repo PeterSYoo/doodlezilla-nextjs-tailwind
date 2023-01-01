@@ -11,6 +11,12 @@ Username: apple
 Password: Abcd1234!
 ```
 
+## Screenshots
+
+![feed](https://i.imgur.com/i5bIBon.png)
+![create](https://i.imgur.com/TwvLNmh.png)
+![mobile](https://i.imgur.com/KzBDw7z.png)
+
 ## Wireframes & Database Models
 
 ![figma](https://i.imgur.com/w5hHJT7.jpg)
