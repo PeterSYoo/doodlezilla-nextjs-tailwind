@@ -254,3 +254,7 @@ An alternative approach is to increment a numerical value as a prop on the Doodl
   - Recording strokes and applying a background color, then applying the recorded strokes.
   - Layers
   - Optimizing touch events for use with pen tablets.
+
+## If I had to refactor
+
+I realized that I could have made things easier for myself by designing the schemas with more one-to-one relationships, such as a relationship between a user and a comment or a boolean for likes associated with a specific user, rather than having many one-to-many relationships and needing to do extra work on the API layer to transform them into one-to-one relationships.
