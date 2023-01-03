@@ -254,12 +254,8 @@ An alternative approach is to increment a numerical value as a prop on the Doodl
 
 ## Future Updates
 
-- Implement a "following" system.
-- Enhance the Canvas API tools, including:
-  - Erasing
-  - Recording strokes and applying a background color, then applying the recorded strokes.
-  - Layers
-  - Optimizing touch events for use with pen tablets.
+- Implement a feature that allows users to follow other users or content.
+- Improve the Canvas API tools by adding the ability to erase drawings, record strokes and apply a background color, use layers, and optimize touch events for use with pen tablets.
 
 ## If I had to refactor
 
