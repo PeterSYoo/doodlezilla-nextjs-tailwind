@@ -216,7 +216,7 @@ export const ProfileDoodleCard = ({
           doodleWithCommentsData={doodleWithCommentsData}
         />
       ) : null}
-      <div className="flex h-3/4 max-h-[900px] w-full max-w-[375px] flex-col items-center justify-center rounded-[50px] border border-grayBorder bg-white pt-5 pb-8 dark:border-shadeDark dark:bg-midnight md:h-5/6 md:max-w-[575px] -mt-24">
+      <div className="flex h-3/4 max-h-[900px] w-full max-w-[375px] flex-col items-center justify-center rounded-[50px] border border-grayBorder bg-white pt-5 pb-8 dark:border-shadeDark dark:bg-midnight md:h-5/6 md:max-w-[575px] -mt-40 md:mt-0">
         {/* Doodle Header */}
         <div className="flex w-10/12 items-center justify-between pb-3">
           <Link
