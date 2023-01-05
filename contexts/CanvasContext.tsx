@@ -82,8 +82,9 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     let offsetX: number;
     let offsetY: number;
     if (event.type === 'touchmove' && 'touches' in event) {
-      offsetX = event.touches[0].pageX;
-      offsetY = event.touches[0].pageY;
+      const rect = canvasRef.current!.getBoundingClientRect();
+      offsetX = event.touches[0].clientX - rect.left;
+      offsetY = event.touches[0].clientY - rect.top;
     } else {
       offsetX = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetX;
       offsetY = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetY;
