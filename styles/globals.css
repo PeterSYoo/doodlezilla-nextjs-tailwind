@@ -10,3 +10,7 @@ html {
 body::-webkit-scrollbar {
   display: none;
 }
+
+canvas {
+  touch-action: none;
+}
