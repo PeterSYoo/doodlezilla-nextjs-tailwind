@@ -56,48 +56,6 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     contextRef.current = context;
   };
 
-  const startDrawing = (
-    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
-  ) => {
-    let offsetX: number;
-    let offsetY: number;
-    if (event.type === 'touchstart' && 'touches' in event) {
-      offsetX = event.touches[0].pageX;
-      offsetY = event.touches[0].pageY;
-    } else {
-      offsetX = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetX;
-      offsetY = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetY;
-    }
-    contextRef.current!.beginPath();
-    contextRef.current!.moveTo(offsetX, offsetY);
-    setIsDrawing(true);
-  };
-
-  const draw = (
-    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
-  ) => {
-    if (!isDrawing) {
-      return;
-    }
-    let offsetX: number;
-    let offsetY: number;
-    if (event.type === 'touchmove' && 'touches' in event) {
-      const rect = canvasRef.current!.getBoundingClientRect();
-      offsetX = event.touches[0].clientX - rect.left;
-      offsetY = event.touches[0].clientY - rect.top;
-    } else {
-      offsetX = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetX;
-      offsetY = (event as MouseEvent<HTMLCanvasElement>).nativeEvent.offsetY;
-    }
-    contextRef.current!.lineTo(offsetX, offsetY);
-    contextRef.current!.stroke();
-  };
-
-  const finishDrawing = () => {
-    contextRef.current!.closePath();
-    setIsDrawing(false);
-  };
-
   const setColor = (color: string, isBackground: boolean) => {
     const canvas = canvasRef.current!;
     const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
@@ -167,6 +125,63 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const startDrawing = (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => {
+    // Prevent the page from scrolling when touching the canvas
+    if (event.type === 'touchstart') {
+      event.preventDefault();
+    }
+
+    const canvas = canvasRef.current!;
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
+
+    if (event.type === 'mousedown' || event.type === 'touchstart') {
+      setIsDrawing(true);
+      ctx.beginPath();
+      ctx.moveTo(getX(event), getY(event));
+    }
+  };
+
+  const finishDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const draw = (event: MouseEvent<HTMLCanvasElement> | any) => {
+    if (!isDrawing) return;
+
+    const canvas = canvasRef.current!;
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!;
+
+    if (event.type === 'touchmove') {
+      const touch = event.touches[0];
+      ctx.lineTo(touch.clientX, touch.clientY);
+    } else {
+      ctx.lineTo(event.clientX, event.clientY);
+    }
+    ctx.stroke();
+  };
+
+  const getX = (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => {
+    if (event.type === 'mousemove' || event.type === 'mousedown') {
+      return (event as MouseEvent).clientX;
+    } else {
+      return (event as TouchEvent).touches[0].clientX;
+    }
+  };
+
+  const getY = (
+    event: MouseEvent<HTMLCanvasElement> | TouchEvent<HTMLCanvasElement>
+  ) => {
+    if (event.type === 'mousemove' || event.type === 'mousedown') {
+      return (event as MouseEvent).clientY;
+    } else {
+      return (event as TouchEvent).touches[0].clientY;
     }
   };
 
