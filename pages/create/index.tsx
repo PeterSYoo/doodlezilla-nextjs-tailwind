@@ -13,19 +13,17 @@ const CreatePage = () => {
 
   return (
     <>
-      <div className="flex justify-center overflow-hidden bg-gray-300">
-        <canvas
-          id="drawing-canvas"
-          onMouseDown={(event) => startDrawing(event)}
-          onMouseUp={() => finishDrawing()}
-          onMouseMove={(event) => draw(event)}
-          onTouchStart={(event) => startDrawing(event)}
-          onTouchEnd={() => finishDrawing()}
-          onTouchMove={(event) => draw(event)}
-          onTouchCancel={() => finishDrawing()}
-          ref={canvasRef}
-        />
-      </div>
+      <canvas
+        id="drawing-canvas"
+        onMouseDown={(event) => startDrawing(event)}
+        onMouseUp={() => finishDrawing()}
+        onMouseMove={(event) => draw(event)}
+        onTouchStart={(event) => startDrawing(event)}
+        onTouchEnd={() => finishDrawing()}
+        onTouchMove={(event) => draw(event)}
+        onTouchCancel={() => finishDrawing()}
+        ref={canvasRef}
+      />
     </>
   );
 };
