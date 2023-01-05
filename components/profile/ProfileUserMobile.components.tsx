@@ -38,7 +38,6 @@ export const ProfileUserMobile = ({
   setIsModal,
   isUsernamePage,
 }: ProfileUserMobileProps) => {
-  console.log(userDoodlesWithAllCommentsAndLikesNumData);
   return (
     <>
       <div className="grid w-[375px] grid-cols-12 gap-8 md:hidden">
