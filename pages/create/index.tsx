@@ -11,43 +11,9 @@ const CreatePage = () => {
     prepareCanvas();
   }, []);
 
-  useEffect(() => {
-    // Get a reference to the canvas element
-    const canvas = document.getElementById('drawing-canvas');
-
-    // Prevent scrolling when touching the canvas
-    document.body.addEventListener(
-      'touchstart',
-      function (e) {
-        if (e.target == canvas) {
-          e.preventDefault();
-        }
-      },
-      false
-    );
-    document.body.addEventListener(
-      'touchend',
-      function (e) {
-        if (e.target == canvas) {
-          e.preventDefault();
-        }
-      },
-      false
-    );
-    document.body.addEventListener(
-      'touchmove',
-      function (e) {
-        if (e.target == canvas) {
-          e.preventDefault();
-        }
-      },
-      false
-    );
-  }, []);
-
   return (
     <>
-      <div className="flex justify-center overflow-hidden bg-gray-300 md:ml-[94px] lg:ml-[213px]">
+      <div className="flex justify-center overflow-hidden bg-gray-300">
         <canvas
           id="drawing-canvas"
           onMouseDown={(event) => startDrawing(event)}
