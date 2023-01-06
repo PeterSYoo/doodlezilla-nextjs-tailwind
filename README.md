@@ -19,7 +19,9 @@ Password: Abcd1234!
 
 ## Video Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jIndNFS_bgc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![demo video]
+(https://img.youtube.com/vi/jIndNFS_bgc/maxresdefault.jpg)]
+(https://www.youtube.com/watch?v=jIndNFS_bgc)
 
 ## Wireframes & Database Models
 
