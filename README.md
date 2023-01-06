@@ -19,9 +19,7 @@ Password: Abcd1234!
 
 ## Video Demo
 
-[![demo video]
-(https://img.youtube.com/vi/jIndNFS_bgc/maxresdefault.jpg)]
-(https://www.youtube.com/watch?v=jIndNFS_bgc)
+[![demo](https://img.youtube.com/vi/jIndNFS_bgc/maxresdefault.jpg)](https://www.youtube.com/watch?v=jIndNFS_bgc)
 
 ## Wireframes & Database Models
 
