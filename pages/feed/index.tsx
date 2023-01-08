@@ -44,7 +44,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
     isLoadingDoodleWithCommentsAndLikes: isLoadingEditorsPick1,
     isErrorDoodleWithCommentsAndLikes: isErrorEditorsPick1,
     refetchDoodleWithCommentsAndLikes: refetchEditorsPick1,
-  } = useFetchDoodleWithCommentsAndLikes('63aa808d80e21b4f1c0ef5ac');
+  } = useFetchDoodleWithCommentsAndLikes('63b90af9922153029e9feb6f');
 
   const {
     dataDoodleWithCommentsAndLikes: dataEditorsPick2,
