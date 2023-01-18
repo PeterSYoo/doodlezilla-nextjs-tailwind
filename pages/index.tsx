@@ -8,6 +8,7 @@ import { LoginForm } from '../components/login/LoginForm.components';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { FiLogIn } from 'react-icons/fi';
+import { BiUser } from 'react-icons/bi';
 
 export default function Home() {
   /* Google Handler Function */
@@ -55,7 +56,7 @@ export default function Home() {
                 >
                   <FcGoogle className="text-3xl group-hover:hidden" />
                   <AiOutlineGoogle className="hidden text-3xl group-hover:block" />
-                  <span className="font-semibold">Sign In with Google</span>
+                  <span className="font-semibold">Sign in With Google</span>
                 </button>
                 {/*  */}
                 <div className="flex w-[278px] items-center justify-center">

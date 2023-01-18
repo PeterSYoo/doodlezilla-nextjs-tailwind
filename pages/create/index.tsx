@@ -23,6 +23,7 @@ const CreatePage = () => {
         onTouchMove={(event) => draw(event)}
         onTouchCancel={() => finishDrawing()}
         ref={canvasRef}
+        className="bg-gray-300 dark:bg-shadeDark mx-auto"
       />
     </>
   );

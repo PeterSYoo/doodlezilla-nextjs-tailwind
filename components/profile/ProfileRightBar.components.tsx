@@ -29,12 +29,14 @@ export const ProfileRightBar = () => {
             <h1 className="ml-2 font-semibold dark:text-egg lg:ml-0">
               Profile
             </h1>
-            <button
-              onClick={() => setIsModal(true)}
-              className="mr-2 rounded-lg border border-placeholder bg-gradient-to-tr py-1 px-5 text-xs font-semibold transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeDark dark:text-egg dark:hover:border-transparent"
-            >
-              Edit
-            </button>
+            {session.user.name !== 'guest' ? (
+              <button
+                onClick={() => setIsModal(true)}
+                className="mr-2 rounded-lg border border-placeholder bg-gradient-to-tr py-1 px-5 text-xs font-semibold transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#D055D3] hover:bg-[length:400%_400%] hover:text-white dark:border-shadeDark dark:text-egg dark:hover:border-transparent"
+              >
+                Edit
+              </button>
+            ) : null}
           </div>
           {/* Profile Avatar */}
           <div className="flex justify-center">
