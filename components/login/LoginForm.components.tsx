@@ -92,7 +92,7 @@ export const LoginForm = () => {
       </button>
       {/*  */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 mt-3">
           {/* Username */}
           <label
             className={
