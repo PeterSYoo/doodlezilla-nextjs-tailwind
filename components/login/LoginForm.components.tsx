@@ -82,14 +82,25 @@ export const LoginForm = () => {
         </>
       ) : null}
       {/* Guest Sign in */}
-      <button
-        onClick={handleGuestSignin}
-        className="group flex items-center gap-3 rounded-full border border-neutral-300 bg-gradient-to-t from-white to-white py-2 px-10 transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:bg-[length:400%_400%] hover:text-white md:max-w-[278px] justify-center"
-      >
-        <BiUser className="text-2xl group-hover:hidden" />
-        <BiUser className="hidden text-2xl group-hover:block" />
-        <span className="font-semibold">Sign in as Guest</span>
-      </button>
+      {isLoadingHandleSignin ? (
+        <button
+          disabled={true}
+          className="group flex items-center gap-3 rounded-full border border-neutral-300 bg-gradient-to-t from-white to-white py-2 px-10 transition duration-100 ease-in-out md:max-w-[278px] justify-center"
+        >
+          <BiUser className="text-2xl group-hover:hidden" />
+          <BiUser className="hidden text-2xl group-hover:block" />
+          <span className="font-semibold">Sign in as Guest</span>
+        </button>
+      ) : (
+        <button
+          onClick={handleGuestSignin}
+          className="group flex items-center gap-3 rounded-full border border-neutral-300 bg-gradient-to-t from-white to-white py-2 px-10 transition duration-100 ease-in-out hover:animate-button hover:border-white hover:from-[#F97E1C] hover:via-sunset hover:to-[#5755D3] hover:bg-[length:400%_400%] hover:text-white md:max-w-[278px] justify-center"
+        >
+          <BiUser className="text-2xl group-hover:hidden" />
+          <BiUser className="hidden text-2xl group-hover:block" />
+          <span className="font-semibold">Sign in as Guest</span>
+        </button>
+      )}
       {/*  */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-3 mt-3">
