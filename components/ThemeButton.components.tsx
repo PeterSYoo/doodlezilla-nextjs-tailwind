@@ -3,13 +3,16 @@ import { useTheme } from 'next-themes';
 import { BsFillSunFill, BsMoonStars } from 'react-icons/bs';
 
 export const ThemeButton = () => {
+  // States ------------------------------------------------------------- ***
   const { systemTheme, theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // JSX ------------------------------------------------------------------ ***
   const renderThemeChanger = () => {
     if (!mounted) return null;
 

@@ -60,6 +60,7 @@ export const FeedEditorsPickCard = ({
   handleModalClickUser,
   data,
 }: FeedEditorsPickCardProps) => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div

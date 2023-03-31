@@ -4,13 +4,16 @@ import { useCanvas } from '../../contexts/CanvasContext';
 import { getSession } from 'next-auth/react';
 
 const CreatePage = () => {
+  // States ------------------------------------------------------------- ***
   const { canvasRef, prepareCanvas, startDrawing, finishDrawing, draw } =
     useCanvas();
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     prepareCanvas();
   }, []);
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <canvas
@@ -32,6 +35,7 @@ const CreatePage = () => {
 export default CreatePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  // States ------------------------------------------------------------- ***
   const session = await getSession(context);
 
   if (!session) {

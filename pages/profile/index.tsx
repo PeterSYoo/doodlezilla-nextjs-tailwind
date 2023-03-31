@@ -49,6 +49,7 @@ type DoodleData = {
 };
 
 const ProfilePage = ({ session }: ProfilePageProps) => {
+  // States ------------------------------------------------------------- ***
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
   const [tempUserId, setTempUserId] = useState<string>('');
@@ -72,6 +73,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
     userDoodlesWithAllCommentsAndLikesNumIsFetching,
   } = useFetchUserDoodlesWithAllCommentsAndLikesNum(session?.user?.id);
 
+  // Custom Functions ---------------------------------------------------- ***
   const handleModalClick = (doodleId: string) => {
     setIsHandleClick(!isHandleClick);
     setTempDoodleId(doodleId);
@@ -84,6 +86,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
     }
   };
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     setTempUserId(loggedInSession?.user?.id);
   }, []);
@@ -100,6 +103,7 @@ const ProfilePage = ({ session }: ProfilePageProps) => {
   if (userIsError || userDoodlesWithAllCommentsAndLikesNumIsError)
     return <>Error</>;
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       {/* Open Doodle Modal */}

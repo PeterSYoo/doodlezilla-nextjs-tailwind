@@ -6,15 +6,17 @@ import { LoaderSpinnerInline } from '../LoaderSpinnerInline.components';
 import { RiCloseFill } from 'react-icons/ri';
 
 export const CreateFooter = () => {
+  // States ------------------------------------------------------------- ***
   const [penColorState, setPenColorState] = useState<string>('#000000');
   const [backgroundColorState, setBackgroundColorState] =
     useState<string>('#ffffff');
   const [isPenColorModal, setIsPenColorModal] = useState<boolean>(false);
-  const [isBackgroundColorModal, setIsBackgroundColorModal] =
-    useState<boolean>(false);
 
   const { clearCanvas, uploadImage, setColor, setPenWidth } = useCanvas();
 
+  const { mutate, isLoading } = useMutation(async () => uploadImage());
+
+  // Custom Functions ---------------------------------------------------- ***
   const handlePenWidthChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -23,8 +25,7 @@ export const CreateFooter = () => {
     setPenWidth(parseInt(selectedOption, 10));
   };
 
-  const { mutate, isLoading } = useMutation(async () => uploadImage());
-
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     setColor(penColorState, false);
   }, [penColorState]);
@@ -33,6 +34,7 @@ export const CreateFooter = () => {
     setColor(backgroundColorState, true);
   }, [backgroundColorState]);
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <footer className="fixed bottom-[22px] z-40 flex h-[130px] w-full flex-col bg-opacity-75 backdrop-blur-sm dark:border-b dark:border-b-shadeMedium md:bottom-0 md:ml-[94px] md:flex md:h-[75px] md:pr-[94px] lg:ml-[213px] lg:pr-[213px]">

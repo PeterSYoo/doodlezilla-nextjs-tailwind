@@ -31,19 +31,20 @@ const openSans = Open_Sans({
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  // States ------------------------------------------------------------- ***
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
-  /* Grabs URL Pathname */
+  // Constants ----------------------------------------------------------- ***
   const isLoginPage = router.asPath === '/';
   const isSignupPage = router.asPath === '/signup';
   const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
   const isUsernamePage = router.pathname === '/profile/[username]';
-  /*  */
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     const start = () => {
       setLoading(true);
@@ -64,6 +65,7 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <Head>

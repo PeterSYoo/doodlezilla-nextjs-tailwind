@@ -6,8 +6,10 @@ type Props = {
 };
 
 export const CreateSuccessModal: React.FC<Props> = ({ setIsSuccessModal }) => {
+  // States ------------------------------------------------------------- ***
   const router = useRouter();
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="fixed top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 dark:bg-white dark:bg-opacity-50">

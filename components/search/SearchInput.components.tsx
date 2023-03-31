@@ -12,16 +12,19 @@ type User = {
 };
 
 export const SearchInput = () => {
+  // States ------------------------------------------------------------- ***
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
 
   const { allUsersData, allUsersIsLoading, allUsersIsError } =
     useFetchAllUsers();
 
+  // Custom Functions ---------------------------------------------------- ***
   const handleSearchOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     const filtered = allUsersData?.filter((user: User) => {
       return user.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -29,6 +32,7 @@ export const SearchInput = () => {
     setFilteredUsers(filtered);
   }, [searchTerm]);
 
+  // JSX ------------------------------------------------------------------ ***
   if (false) return <LoaderSpinner />;
   if (allUsersIsError) return <>Error</>;
 

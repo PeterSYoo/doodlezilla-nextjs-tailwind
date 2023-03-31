@@ -22,12 +22,14 @@ export const ProfileDoodleOptionsModal = ({
   doodleWithCommentsData,
   setIsOptionsModal,
 }: DoodleCardModalProps) => {
+  // States ------------------------------------------------------------- ***
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
   const router = useRouter();
 
   const { mutateDeleteDoodle, isLoadingDeleteDoodle } = useDeleteDoodle(router);
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="fixed top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-black bg-opacity-50 dark:bg-white dark:bg-opacity-50">

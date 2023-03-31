@@ -63,6 +63,7 @@ type DoodleData = {
 };
 
 const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
+  // States ------------------------------------------------------------- ***
   const [isModal, setIsModal] = useState<boolean>(false);
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
@@ -87,6 +88,7 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
     userDoodlesWithAllCommentsAndLikesNumIsFetching,
   } = useFetchUserDoodlesWithAllCommentsAndLikesNum(userData?._id);
 
+  // Custom Functions ---------------------------------------------------- ***
   const handleModalClick = (doodleId: string) => {
     setIsHandleClick(!isHandleClick);
     setTempDoodleId(doodleId);
@@ -99,6 +101,7 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
     }
   };
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     setTempUserId(loggedInSession?.user?.id);
   }, []);
@@ -115,6 +118,7 @@ const UserIdPage = ({ session, username }: ProfileUserIdPageProps) => {
   if (userIsError || userDoodlesWithAllCommentsAndLikesNumIsError)
     return <>Error</>;
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <ProfileSlugUsersRightBar username={username} session={session} />

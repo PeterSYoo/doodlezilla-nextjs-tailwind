@@ -7,6 +7,7 @@ import { LoaderSpinner } from '../LoaderSpinner.components';
 import { ProfileEditModal } from './ProfileEditModal.components';
 
 export const ProfileRightBar = () => {
+  // States ------------------------------------------------------------- ***
   const [isModal, setIsModal] = useState<boolean>();
 
   const { data: session }: any = useSession();
@@ -17,6 +18,7 @@ export const ProfileRightBar = () => {
   const { userDoodlesData, userDoodlesIsLoading, userDoodlesIsError } =
     useFetchUserDoodles(session?.user?.id);
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
   if (userIsError || userDoodlesIsError) return <>Error</>;
 

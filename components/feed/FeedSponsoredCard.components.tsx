@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 export const FeedSponsoredCard = () => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="flex w-full max-w-[375px] flex-col items-center justify-center rounded-[50px] border border-grayBorder bg-white pt-5 pb-8 md:hidden">

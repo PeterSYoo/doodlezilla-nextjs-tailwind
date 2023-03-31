@@ -47,24 +47,23 @@ export const FeedCommentedUser = ({
   handleModalClick,
   handleModalClickUser,
 }: FeedCommentedUserProps) => {
+  // Custom Functions ---------------------------------------------------- ***
   const findMostRecentComment = (object: Doodle) => {
     const comments = object.comments;
-
     const sortedComments = comments.sort((a: any, b: any) => {
       return a.created_at - b.created_at;
     });
-
     const mostRecentComment = sortedComments[sortedComments.length - 1];
-
     return mostRecentComment;
   };
 
+  // States ------------------------------------------------------------- ***
   const comment = findMostRecentComment(doodle);
-
   const { userData, userIsLoading, userIsError, userRefetch } = useFetchUser(
     comment.user
   );
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading) return <LoaderSpinner />;
   if (userIsError) return <>Error</>;
 

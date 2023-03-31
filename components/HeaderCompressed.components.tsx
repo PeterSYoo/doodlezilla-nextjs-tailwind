@@ -4,6 +4,7 @@ import { SearchInput } from './search/SearchInput.components';
 import { ThemeButton } from './ThemeButton.components';
 
 export const HeaderCompressed = () => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <header className="lg:-ml-5.5 fixed top-0 z-30 flex h-[75px] w-full flex-col justify-center rounded-b-3xl border-b border-r border-l border-grayBorder bg-white bg-opacity-80 px-3.5 backdrop-blur-sm dark:border-transparent dark:bg-midnight dark:bg-opacity-80 dark:backdrop-blur-sm md:-ml-2 md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 dark:md:bg-shadeDark dark:md:bg-opacity-80 dark:md:backdrop-blur-sm lg:mr-[258px]">

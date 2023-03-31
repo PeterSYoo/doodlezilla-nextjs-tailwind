@@ -33,6 +33,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
+  // States ------------------------------------------------------------- ***
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isUsernameErrorModalOpen, setIsUsernameErrorModalOpen] =
     useState<boolean>(false);
@@ -54,6 +55,7 @@ export const LoginForm = () => {
     router
   );
 
+  // Custom Functions ---------------------------------------------------- ***
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     await mutateHandleSignin(data);
   };
@@ -65,6 +67,7 @@ export const LoginForm = () => {
     });
   };
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       {isUsernameErrorModalOpen || isPasswordErrorModalOpen ? (

@@ -47,6 +47,7 @@ export const FeedDoodleCard = ({
   handleModalClickUser,
   handleModalClick,
 }: FeedDoodleCardProps) => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="columns-1 px-10 md:w-5/6 lg:w-2/3">

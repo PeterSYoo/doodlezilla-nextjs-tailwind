@@ -47,6 +47,7 @@ export const ProfileDoodleCardModal = ({
   refetchEditorsPick2,
   refetchEditorsPick3,
 }: ProfileDoodleCardModalProps) => {
+  // States ------------------------------------------------------------- ***
   const { data: session }: any = useSession();
 
   const {
@@ -63,6 +64,7 @@ export const ProfileDoodleCardModal = ({
     doodleWithCommentsRefetch,
   } = useFetchDoodleWithAllComments(doodleId);
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     mutateCreateNewLikesDocument({
       doodle: doodleId,
@@ -70,6 +72,7 @@ export const ProfileDoodleCardModal = ({
     });
   }, []);
 
+  // JSX ------------------------------------------------------------------ ***
   if (doodleWithCommentsIsLoading || isLoadingSessionUser)
     return <LoaderSpinner />;
   if (doodleWithCommentsIsError || isErrorSessionUser) return <>Error!</>;

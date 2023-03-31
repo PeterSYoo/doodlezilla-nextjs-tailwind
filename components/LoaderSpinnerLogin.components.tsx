@@ -1,4 +1,5 @@
 export const LoaderSpinnerLogin = () => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="fixed top-0 left-0 z-50 flex h-screen w-full items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">

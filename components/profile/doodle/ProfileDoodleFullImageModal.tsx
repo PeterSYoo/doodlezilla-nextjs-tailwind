@@ -10,6 +10,7 @@ export const ProfileDoodleFullImageModal = ({
   setIsImageModal,
   doodleImage,
 }: ProfileDoodleFullImageModalProps) => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="fixed top-0 left-0 z-50 flex h-screen w-full flex-col items-center justify-center bg-black bg-opacity-50 dark:bg-black dark:bg-opacity-80">

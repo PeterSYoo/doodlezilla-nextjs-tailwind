@@ -10,6 +10,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 
 export const LeftNavBar = () => {
+  // States ------------------------------------------------------------- ***
   const { systemTheme, theme, setTheme } = useTheme();
   const { data: session }: any = useSession();
 
@@ -23,10 +24,12 @@ export const LeftNavBar = () => {
 
   const router = useRouter();
 
+  // Constants ----------------------------------------------------------- ***
   const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading || userDoodlesIsLoading) return <LoaderSpinner />;
   if (userIsError || userDoodlesIsError) return <>Error</>;
 

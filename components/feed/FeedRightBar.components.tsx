@@ -14,6 +14,7 @@ type User = {
 };
 
 export const FeedRightBar = () => {
+  // States ------------------------------------------------------------- ***
   const { data: session }: any = useSession();
 
   const { userData, userIsLoading, userIsError } = useFetchUser(
@@ -22,6 +23,7 @@ export const FeedRightBar = () => {
   const { allUsersData, allUsersIsLoading, allUsersIsError } =
     useFetchAllUsers();
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading || allUsersIsLoading) return <LoaderSpinner />;
   if (userIsError || allUsersIsError) return <>Error</>;
 

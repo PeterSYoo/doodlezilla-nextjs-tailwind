@@ -28,6 +28,7 @@ type FeedPageProps = {
 };
 
 const FeedPage = ({ session }: FeedPageProps) => {
+  // States ------------------------------------------------------------- ***
   const [isDoodleModal, setIsDoodleModal] = useState<boolean>(false);
   const [tempDoodleId, setTempDoodleId] = useState<string>('');
   const [tempUserId, setTempUserId] = useState<string>('');
@@ -85,6 +86,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
   const { userData, userIsLoading, userIsError, userRefetch } =
     useFetchUser(tempUserFeed);
 
+  // Custom Functions ---------------------------------------------------- ***
   const handleModalClickUser = (userId: string) => {
     setTempUserFeed(userId);
   };
@@ -101,6 +103,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
     }
   };
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     setTempUserId(session?.user?.id);
   }, []);
@@ -136,6 +139,7 @@ const FeedPage = ({ session }: FeedPageProps) => {
   )
     return <>Error</>;
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       {/* Open Doodle Modal */}

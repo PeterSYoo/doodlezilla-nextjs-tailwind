@@ -9,6 +9,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { MdCreate } from 'react-icons/md';
 
 export const Footer = () => {
+  // States ------------------------------------------------------------- ***
   const router = useRouter();
 
   const { data: session }: any = useSession();
@@ -17,10 +18,12 @@ export const Footer = () => {
     session?.user?.id
   );
 
+  // Constants ----------------------------------------------------------- ***
   const isProfilePage = router.asPath === '/profile';
   const isFeedPage = router.asPath === '/feed';
   const isCreatePage = router.asPath === '/create';
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading) return <LoaderSpinner />;
   if (userIsError) return <>Error</>;
 

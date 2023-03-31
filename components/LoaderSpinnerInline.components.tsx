@@ -1,4 +1,5 @@
 export const LoaderSpinnerInline = () => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="z-50 flex items-center justify-center bg-transparent bg-opacity-80">

@@ -4,6 +4,7 @@ import { SearchInput } from './search/SearchInput.components';
 import { ThemeButton } from './ThemeButton.components';
 
 export const Header = () => {
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <header className="fixed top-0 z-30 flex h-[75px] w-full rounded-b-3xl border-b border-r border-l border-grayBorder bg-white bg-opacity-75 px-3.5 backdrop-blur-sm dark:border-transparent dark:bg-midnight md:ml-[80px] md:max-w-none md:rounded-none md:border-r-0 md:border-l-0 md:pr-[80px] lg:ml-[199px] lg:pr-[199px]">

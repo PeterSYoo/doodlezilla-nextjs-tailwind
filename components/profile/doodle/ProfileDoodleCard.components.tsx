@@ -105,6 +105,7 @@ export const ProfileDoodleCard = ({
   refetchEditorsPick2,
   refetchEditorsPick3,
 }: ProfileDoodleCardProps) => {
+  // States ------------------------------------------------------------- ***
   const [isOptionsModal, setIsOptionsModal] = useState<boolean>(false);
   const [isImageModal, setIsImageModal] = useState<boolean>(false);
   const [commentHeight, setCommentHeight] = useState<string>(
@@ -152,6 +153,7 @@ export const ProfileDoodleCard = ({
   const { mutateCreateNewComment, isLoadingCreateNewComment } =
     useCreateNewComment();
 
+  // Custom Functions ---------------------------------------------------- ***
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     reset({ comment: '' });
     await mutateCreateNewComment({
@@ -193,10 +195,12 @@ export const ProfileDoodleCard = ({
     }
   };
 
+  // Effects ------------------------------------------------------------- ***
   useEffect(() => {
     refetchLikesDocumentByUserAndDoodle();
   }, [dataGetAllLikesNum]);
 
+  // JSX ------------------------------------------------------------------ ***
   if (isLoadingLikesDocumentByUserAndDoodle || isLoadingGetAllLikesNum)
     return <LoaderSpinner />;
   if (isErrorLikesDocumentByUserAndDoodle || isErrorGetAllLikesNum)

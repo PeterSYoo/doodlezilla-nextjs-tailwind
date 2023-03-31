@@ -39,6 +39,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const SignupFormSubmit = () => {
+  // States ------------------------------------------------------------- ***
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
   const [isUsernameErrorModalOpen, setIsUsernameErrorModalOpen] =
@@ -60,6 +61,7 @@ export const SignupFormSubmit = () => {
     setIsSuccessModalOpen
   );
 
+  // Custom Functions ---------------------------------------------------- ***
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     await mutateCreateNewUser({
       name: data.username.toLowerCase(),
@@ -68,6 +70,7 @@ export const SignupFormSubmit = () => {
     });
   };
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       {isUsernameErrorModalOpen ||

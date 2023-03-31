@@ -11,14 +11,14 @@ import { FiLogIn } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 
 export default function Home() {
-  /* Google Handler Function */
+  // Custom Functions ---------------------------------------------------- ***
   const handleGoogleSignin = async () => {
     signIn('google', {
       callbackUrl: process.env.NEXT_PUBLIC_APP_URL,
     });
   };
-  /*  */
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       <div className="flex h-full flex-grow items-center justify-center bg-gradient-to-tr from-[#5755D3] via-[#D2436C] to-[#F97E1C]">

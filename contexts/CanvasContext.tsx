@@ -34,6 +34,7 @@ type CanvasProviderProps = {
 };
 
 export const CanvasProvider = ({ children }: CanvasProviderProps) => {
+  // States ------------------------------------------------------------- ***
   const [isSuccessModal, setIsSuccessModal] = useState<boolean>(false);
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -41,6 +42,7 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
 
   const { data: session }: any = useSession();
 
+  // Custom Functions ---------------------------------------------------- ***
   const prepareCanvas = () => {
     const canvas = canvasRef.current!;
     canvas.width = window.innerWidth * 2;
@@ -185,6 +187,7 @@ export const CanvasProvider = ({ children }: CanvasProviderProps) => {
     }
   };
 
+  // JSX ------------------------------------------------------------------ ***
   return (
     <>
       {isSuccessModal ? (

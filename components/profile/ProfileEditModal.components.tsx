@@ -37,6 +37,7 @@ type DoodleCardModalProps = {
   setIsModal: (isModal: boolean) => void;
 };
 export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
+  // States ------------------------------------------------------------- ***
   const { data: session }: any = useSession();
   const [imageSrc, setImageSrc] = useState<string>('');
   const [isUsernameErrorModal, setIsUsernameErrorModal] =
@@ -62,6 +63,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
     resolver: yupResolver(EditSchema),
   });
 
+  // Custom Functions ---------------------------------------------------- ***
   const handleInputFileClick = () => {
     if (inputFileRef.current) {
       inputFileRef.current.click();
@@ -112,6 +114,7 @@ export const ProfileEditModal = ({ setIsModal }: DoodleCardModalProps) => {
     }
   };
 
+  // JSX ------------------------------------------------------------------ ***
   if (userIsLoading) return <LoaderSpinner />;
   if (userIsError) return <>Error</>;
 
